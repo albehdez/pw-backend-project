@@ -1,0 +1,35 @@
+/* eslint-disable prettier/prettier */
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { TuristicGroupService } from './turistic_group.service';
+import { turistic_group } from './entities';
+import { CreateTuristicGroupDto, UpdateTuristicGroupDto } from './dto';
+
+@Controller('turistic-group')
+export class TuristicGroupController {
+    constructor(private readonly turistic_groupService: TuristicGroupService) {}
+
+    @Get()
+    get_turistic_groups(): Promise<turistic_group[]> {
+        return this.turistic_groupService.get_turistic_groups();
+    }
+
+    @Get(':id')
+    get_turistic_group(@Param('id') id: number): Promise<turistic_group> {
+        return this.turistic_groupService.get_turistic_group(id);
+    }
+
+    @Post()
+    create_car(@Body() createTuristicGroupDto: CreateTuristicGroupDto): Promise<turistic_group> {
+        return this.turistic_groupService.create_turistic_group(createTuristicGroupDto);
+    }
+
+    @Patch(':id')
+    update_car(@Param('id')id:number,@Body() updateTuristicGroupDto: UpdateTuristicGroupDto){
+        return this.turistic_groupService.update_turistic_group(id,updateTuristicGroupDto);
+
+    }
+
+    @Delete(':id')
+    delete_car(@Param('id') id: number): Promise<void> {
+        return this.turistic_groupService.delete_turistic_group(id);
+    }}
