@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { car } from "src/modules/car/entities";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { request } from "src/modules/request/entities";
+import { roadmap_request } from "src/modules/roadmap_request/entities";
+import { Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class roadmap{
@@ -16,6 +18,12 @@ export class roadmap{
     @OneToOne(() => car, { cascade: true })
     @JoinColumn({ name: 'car_id' })
     car: car;
+
+    @ManyToMany(() => request, request => request.roadmaps)
+     requests: request[];
+
+    @OneToMany(() => roadmap_request, roadmap_request => roadmap_request.roadmap)
+    roadmap_request: roadmap_request[];
 
 
 
