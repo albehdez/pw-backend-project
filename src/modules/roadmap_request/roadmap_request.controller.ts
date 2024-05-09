@@ -9,17 +9,17 @@ export class RoadmapRequestController {
     }
 
     @Get()
-    get_cars_inside():Promise<roadmap_request[]>{
+    get_roadmaps_request():Promise<roadmap_request[]>{
         return this.roadmap_request_service.get_roadmaps_request();
     }
 
     @Get(':id')
-    get_car_inside(@Param('id') id:number):Promise<roadmap_request>{
+    get_roadmap_request(@Param('id') id:number):Promise<roadmap_request>{
         return this.roadmap_request_service.get_roadmap_request(id);
     }
 
     @Delete(':id')
-    delete_car_inside(@Param('id')id:number):Promise<void>{
+    delete_roadmap_request(@Param('id')id:number):Promise<void>{
         return this.roadmap_request_service.delete_roadmap_request(id);
     }
     

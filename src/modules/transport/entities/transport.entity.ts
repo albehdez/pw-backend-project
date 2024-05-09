@@ -1,7 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { car } from "src/modules/car/entities";
 import { driver } from "src/modules/driver/entities/driver.entitty";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { request } from "src/modules/request/entities";
+import { request_transport } from "src/modules/request_transport/entities";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
  @Entity()
  export class transport{
@@ -19,4 +21,10 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
   @JoinColumn({ name: 'driver_id' })
   driver:driver
 
+   @ManyToMany(() => request, request => request.transport)
+    request: request[];
+
+
+    @OneToMany(() => request_transport, request_transport => request_transport.request)
+    request_transport: request_transport[];
  }
