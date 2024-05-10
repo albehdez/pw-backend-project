@@ -9,22 +9,22 @@ export class RoleController { constructor(private readonly role_service:RoleServ
     }
 
     @Get()
-    get_cars_situation():Promise<role[]>{
+    get_roles():Promise<role[]>{
         return this.role_service.get_roles();
     }
 
     @Get(':id')
-    get_car_situation(@Param('id') id:number):Promise<role>{
+    get_role(@Param('id') id:number):Promise<role>{
         return this.role_service.get_role(id);
     }
 
     @Post()
-    create_car_situation(@Body() type_situation: CreateRoleDto): Promise<role> {
+    create_role(@Body() type_situation: CreateRoleDto): Promise<role> {
         return this.role_service.create_role(type_situation);
     }
 
 
     @Delete(':id')
-    delete_car_situation(@Param('id')id:number):Promise<void>{
+    delete_role(@Param('id')id:number):Promise<void>{
         return this.role_service.delete_role(id);
     }}

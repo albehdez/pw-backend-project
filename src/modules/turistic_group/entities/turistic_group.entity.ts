@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { country } from "src/modules/country/entities";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { request } from "src/modules/request/entities";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 
 @Entity()
@@ -15,7 +16,7 @@ export class turistic_group{
     @JoinColumn({name:"country_id"})
     country:country;
 
-    //@OneToOne(()=> request,(request)=>request.turistic_group)
-    //request:request[];
+    @OneToMany(()=> request,(request)=>request.group)
+    request:request[];
 
 }

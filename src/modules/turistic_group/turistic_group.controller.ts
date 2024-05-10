@@ -19,17 +19,17 @@ export class TuristicGroupController {
     }
 
     @Post()
-    create_car(@Body() createTuristicGroupDto: CreateTuristicGroupDto): Promise<turistic_group> {
+    create_turistic_group(@Body() createTuristicGroupDto: CreateTuristicGroupDto): Promise<turistic_group> {
         return this.turistic_groupService.create_turistic_group(createTuristicGroupDto);
     }
 
     @Patch(':id')
-    update_car(@Param('id')id:number,@Body() updateTuristicGroupDto: UpdateTuristicGroupDto){
+    update_turistic_group(@Param('id')id:number,@Body() updateTuristicGroupDto: UpdateTuristicGroupDto){
         return this.turistic_groupService.update_turistic_group(id,updateTuristicGroupDto);
 
     }
 
     @Delete(':id')
-    delete_car(@Param('id') id: number): Promise<void> {
+    delete_turistic_group(@Param('id') id: number): Promise<void> {
         return this.turistic_groupService.delete_turistic_group(id);
     }}

@@ -20,12 +20,12 @@ export class ChangeController {
     }
 
     @Post()
-    create_cgange(@Body() createChangeDto: CreateChangeDto): Promise<change> {
+    create_change(@Body() createChangeDto: CreateChangeDto): Promise<change> {
         return this.changeService.create_change(createChangeDto);
     }    
 
     @Delete(':id')
-    delete_changes(@Param('id') id: number): Promise<void> {
+    delete_change(@Param('id') id: number): Promise<void> {
         return this.changeService.delete_change(id);
     }
 }

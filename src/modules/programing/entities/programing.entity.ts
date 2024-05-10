@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 
 import { programing_type } from "src/modules/programing_type/entities/programing_type.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { request } from "src/modules/request/entities";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class programing{
@@ -26,5 +27,9 @@ id:number;
 
     @Column()
     delay:number;
+
+     @OneToMany(()=> request,(request)=>request.group)
+    request:request[];
+
 
 }
