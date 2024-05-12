@@ -10,22 +10,22 @@ export class RoadmapController {
     constructor(private readonly roadmapService: RoadmapService) {}
 
     @Get()
-    get_cars(): Promise<roadmap[]> {
+    get_raodmaps(): Promise<roadmap[]> {
         return this.roadmapService.get_raodmaps();
     }
 
     @Get(':id')
-    get_car(@Param('id') id: number): Promise<roadmap> {
+    get_raodmap(@Param('id') id: number): Promise<roadmap> {
         return this.roadmapService.get_raodmap(id);
     }
 
     @Post()
-    create_car(@Body() createCarDto: CreateRoadmapDto): Promise<roadmap> {
+    create_roadmap(@Body() createCarDto: CreateRoadmapDto): Promise<roadmap> {
         return this.roadmapService.create_roadmap(createCarDto);
     }    
 
     @Delete(':id')
-    delete_car(@Param('id') id: number): Promise<void> {
+    delete_roadmap(@Param('id') id: number): Promise<void> {
         return this.roadmapService.delete_roadmap(id);
     }
 }
