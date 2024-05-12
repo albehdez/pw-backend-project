@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarModule } from './modules/car/car.module';
 import { InsideModule } from './modules/inside/inside.module';
@@ -16,13 +16,13 @@ import { RoleModule } from './modules/role/role.module';
 import { ChangeTypeModule } from './modules/change_type/change_type.module';
 import { ChangeModule } from './modules/change/change.module';
 import { RequestModule } from './modules/request/request.module';
-import { ClientModule } from './modules/client/client.module';
 import { RequestTransportModule } from './modules/request_transport/request_transport.module';
 import { RoadmapModule } from './modules/roadmap/roadmap.module';
 import { RoadmapRequestModule } from './modules/roadmap_request/roadmap_request.module';
 import { TransportModule } from './modules/transport/transport.module';
 import { UserModule } from './modules/user/user.module';
-import { WorkerModule } from './modules/worker/worker.module';
+import { AuthModule } from './modules/auth/auth.module';
+
 
 
 
@@ -30,14 +30,14 @@ import { WorkerModule } from './modules/worker/worker.module';
   imports: [TypeOrmModule.forRoot({
     type:'postgres',
     host:'localhost',
-    port: 5433,
+    port: 5432,
     username:'postgres',
-    password:'javi020428',
+    password:'cocoloco02',
     database:'pw_bd_proyecto_final',
     autoLoadEntities:true,
     synchronize:true,
 
-  }),CarModule,InsideModule,CarSituationModule, DriverModule, DriverSituationModule, DriverCategoryModule, VacationModule, ProgramingModule, ProgramingTypeModule, CountryModule, TuristicGroupModule, RoleModule, ChangeTypeModule, ChangeModule, RequestModule, ClientModule, RequestTransportModule, RoadmapModule, RoadmapRequestModule, TransportModule, UserModule, WorkerModule],
+  }),CarModule,InsideModule,CarSituationModule, DriverModule, DriverSituationModule, DriverCategoryModule, VacationModule, ProgramingModule, ProgramingTypeModule, CountryModule, TuristicGroupModule, RoleModule, ChangeTypeModule, ChangeModule, RequestModule, RequestTransportModule, RoadmapModule, RoadmapRequestModule, TransportModule, UserModule, AuthModule],
   controllers: [],
   providers: [],
 
