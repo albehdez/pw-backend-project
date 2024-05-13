@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.driver_situation = void 0;
 const driver_entitty_1 = require("../../driver/entities/driver.entitty");
+const vacation_entity_1 = require("../../vacation/entities/vacation.entity");
 const typeorm_1 = require("typeorm");
 let driver_situation = class driver_situation {
 };
@@ -27,6 +28,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => driver_entitty_1.driver, driver => driver.driver_situation),
     __metadata("design:type", Array)
 ], driver_situation.prototype, "drivers", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => vacation_entity_1.vacation, vacation => vacation.situation),
+    __metadata("design:type", Array)
+], driver_situation.prototype, "vacation", void 0);
 exports.driver_situation = driver_situation = __decorate([
     (0, typeorm_1.Entity)(),
     (0, typeorm_1.Unique)(['type_situation'])

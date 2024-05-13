@@ -26,10 +26,10 @@ let ChangeController = class ChangeController {
     get_change(id) {
         return this.changeService.get_change(id);
     }
-    create_cgange(createChangeDto) {
+    create_change(createChangeDto) {
         return this.changeService.create_change(createChangeDto);
     }
-    delete_changes(id) {
+    delete_change(id) {
         return this.changeService.delete_change(id);
     }
 };
@@ -53,14 +53,14 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [dto_1.CreateChangeDto]),
     __metadata("design:returntype", Promise)
-], ChangeController.prototype, "create_cgange", null);
+], ChangeController.prototype, "create_change", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], ChangeController.prototype, "delete_changes", null);
+], ChangeController.prototype, "delete_change", null);
 exports.ChangeController = ChangeController = __decorate([
     (0, common_1.Controller)('change'),
     __metadata("design:paramtypes", [change_service_1.ChangeService])

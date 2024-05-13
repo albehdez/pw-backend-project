@@ -1,3 +1,4 @@
+import { Role } from "src/modules/auth/enums/role.enum";
 export declare class CreateRoleDto {
-    readonly role: string;
+    readonly role: Role;
 }

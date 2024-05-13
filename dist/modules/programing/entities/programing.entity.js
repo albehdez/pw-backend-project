@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.programing = void 0;
 const programing_type_entity_1 = require("../../programing_type/entities/programing_type.entity");
+const entities_1 = require("../../request/entities");
 const typeorm_1 = require("typeorm");
 let programing = class programing {
 };
@@ -44,6 +45,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], programing.prototype, "delay", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => entities_1.request, (request) => request.group),
+    __metadata("design:type", Array)
+], programing.prototype, "request", void 0);
 exports.programing = programing = __decorate([
     (0, typeorm_1.Entity)()
 ], programing);

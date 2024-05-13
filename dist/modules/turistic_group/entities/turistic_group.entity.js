@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.turistic_group = void 0;
 const entities_1 = require("../../country/entities");
+const entities_2 = require("../../request/entities");
 const typeorm_1 = require("typeorm");
 let turistic_group = class turistic_group {
 };
@@ -28,6 +29,10 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: "country_id" }),
     __metadata("design:type", entities_1.country)
 ], turistic_group.prototype, "country", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => entities_2.request, (request) => request.group),
+    __metadata("design:type", Array)
+], turistic_group.prototype, "request", void 0);
 exports.turistic_group = turistic_group = __decorate([
     (0, typeorm_1.Entity)()
 ], turistic_group);

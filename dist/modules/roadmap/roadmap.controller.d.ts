@@ -4,8 +4,8 @@ import { CreateRoadmapDto } from './dto';
 export declare class RoadmapController {
     private readonly roadmapService;
     constructor(roadmapService: RoadmapService);
-    get_cars(): Promise<roadmap[]>;
-    get_car(id: number): Promise<roadmap>;
-    create_car(createCarDto: CreateRoadmapDto): Promise<roadmap>;
-    delete_car(id: number): Promise<void>;
+    get_raodmaps(): Promise<roadmap[]>;
+    get_raodmap(id: number): Promise<roadmap>;
+    create_roadmap(createCarDto: CreateRoadmapDto): Promise<roadmap>;
+    delete_roadmap(id: number): Promise<void>;
 }

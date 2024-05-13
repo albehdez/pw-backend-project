@@ -26,13 +26,13 @@ let TuristicGroupController = class TuristicGroupController {
     get_turistic_group(id) {
         return this.turistic_groupService.get_turistic_group(id);
     }
-    create_car(createTuristicGroupDto) {
+    create_turistic_group(createTuristicGroupDto) {
         return this.turistic_groupService.create_turistic_group(createTuristicGroupDto);
     }
-    update_car(id, updateTuristicGroupDto) {
+    update_turistic_group(id, updateTuristicGroupDto) {
         return this.turistic_groupService.update_turistic_group(id, updateTuristicGroupDto);
     }
-    delete_car(id) {
+    delete_turistic_group(id) {
         return this.turistic_groupService.delete_turistic_group(id);
     }
 };
@@ -56,7 +56,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [dto_1.CreateTuristicGroupDto]),
     __metadata("design:returntype", Promise)
-], TuristicGroupController.prototype, "create_car", null);
+], TuristicGroupController.prototype, "create_turistic_group", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -64,14 +64,14 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, dto_1.UpdateTuristicGroupDto]),
     __metadata("design:returntype", void 0)
-], TuristicGroupController.prototype, "update_car", null);
+], TuristicGroupController.prototype, "update_turistic_group", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], TuristicGroupController.prototype, "delete_car", null);
+], TuristicGroupController.prototype, "delete_turistic_group", null);
 exports.TuristicGroupController = TuristicGroupController = __decorate([
     (0, common_1.Controller)('turistic-group'),
     __metadata("design:paramtypes", [turistic_group_service_1.TuristicGroupService])

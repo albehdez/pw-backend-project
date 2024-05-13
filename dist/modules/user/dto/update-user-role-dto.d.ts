@@ -1,3 +1,4 @@
+import { Role } from 'src/modules/auth/enums/role.enum';
 export declare class UpdateUserRoleDto {
-    role: string;
+    role: Role;
 }

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const class_validator_1 = require("class-validator");
+const role_enum_1 = require("../../auth/enums/role.enum");
 class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;

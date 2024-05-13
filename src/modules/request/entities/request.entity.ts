@@ -6,6 +6,7 @@ import { roadmap } from "src/modules/roadmap/entities";
 import { roadmap_request } from "src/modules/roadmap_request/entities";
 import { transport } from "src/modules/transport/entities";
 import { turistic_group } from "src/modules/turistic_group/entities";
+import { user } from "src/modules/user/entities";
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -25,6 +26,9 @@ export class request{
     //@ManyToOne(() => turistic_group, (turistic_group) => turistic_group.request, { cascade: true})
     //@JoinColumn({ name: 'id_group' })
    // client: client;
+    @ManyToOne(() => user, (user) => user.requests, { cascade: true})
+    @JoinColumn({ name: 'user_id' })
+    user: user;
 
     @Column()
     request_date: Date;

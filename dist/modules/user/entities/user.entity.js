@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.user = void 0;
 const typeorm_1 = require("typeorm");
 const role_entity_1 = require("../../role/entities/role.entity");
+const entities_1 = require("../../request/entities");
 let user = class user {
 };
 exports.user = user;
@@ -36,6 +37,10 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: "role_id" }),
     __metadata("design:type", role_entity_1.role)
 ], user.prototype, "role", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => entities_1.request, request => request.user),
+    __metadata("design:type", Array)
+], user.prototype, "requests", void 0);
 exports.user = user = __decorate([
     (0, typeorm_1.Entity)()
 ], user);

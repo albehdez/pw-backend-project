@@ -6,7 +6,7 @@ export declare class TuristicGroupController {
     constructor(turistic_groupService: TuristicGroupService);
     get_turistic_groups(): Promise<turistic_group[]>;
     get_turistic_group(id: number): Promise<turistic_group>;
-    create_car(createTuristicGroupDto: CreateTuristicGroupDto): Promise<turistic_group>;
-    update_car(id: number, updateTuristicGroupDto: UpdateTuristicGroupDto): Promise<turistic_group>;
-    delete_car(id: number): Promise<void>;
+    create_turistic_group(createTuristicGroupDto: CreateTuristicGroupDto): Promise<turistic_group>;
+    update_turistic_group(id: number, updateTuristicGroupDto: UpdateTuristicGroupDto): Promise<turistic_group>;
+    delete_turistic_group(id: number): Promise<void>;
 }

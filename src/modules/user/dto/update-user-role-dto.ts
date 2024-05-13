@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Role } from 'src/modules/auth/enums/role.enum';
 
 
 export class UpdateUserRoleDto {
@@ -6,5 +7,5 @@ export class UpdateUserRoleDto {
 
   @IsNotEmpty()
   @IsString()
-  role: string;
+  role: Role;
 }

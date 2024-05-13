@@ -20,16 +20,16 @@ let RoleController = class RoleController {
     constructor(role_service) {
         this.role_service = role_service;
     }
-    get_cars_situation() {
+    get_roles() {
         return this.role_service.get_roles();
     }
-    get_car_situation(id) {
+    get_role(id) {
         return this.role_service.get_role(id);
     }
-    create_car_situation(type_situation) {
+    create_role(type_situation) {
         return this.role_service.create_role(type_situation);
     }
-    delete_car_situation(id) {
+    delete_role(id) {
         return this.role_service.delete_role(id);
     }
 };
@@ -39,28 +39,28 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], RoleController.prototype, "get_cars_situation", null);
+], RoleController.prototype, "get_roles", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], RoleController.prototype, "get_car_situation", null);
+], RoleController.prototype, "get_role", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [dto_1.CreateRoleDto]),
     __metadata("design:returntype", Promise)
-], RoleController.prototype, "create_car_situation", null);
+], RoleController.prototype, "create_role", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], RoleController.prototype, "delete_car_situation", null);
+], RoleController.prototype, "delete_role", null);
 exports.RoleController = RoleController = __decorate([
     (0, common_1.Controller)('role'),
     __metadata("design:paramtypes", [role_service_1.RoleService])

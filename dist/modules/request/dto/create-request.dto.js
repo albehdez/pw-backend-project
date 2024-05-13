@@ -9,15 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateUserRoleDto = void 0;
+exports.CreateRequestDto = void 0;
 const class_validator_1 = require("class-validator");
-const role_enum_1 = require("../../auth/enums/role.enum");
-class UpdateUserRoleDto {
+class CreateRequestDto {
 }
-exports.UpdateUserRoleDto = UpdateUserRoleDto;
+exports.CreateRequestDto = CreateRequestDto;
+__decorate([
+    (0, class_validator_1.IsObject)(),
+    __metadata("design:type", Object)
+], CreateRequestDto.prototype, "group", void 0);
+__decorate([
+    (0, class_validator_1.IsObject)(),
+    __metadata("design:type", Object)
+], CreateRequestDto.prototype, "programing", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UpdateUserRoleDto.prototype, "role", void 0);
-//# sourceMappingURL=update-user-role-dto.js.map
+    (0, class_validator_1.IsDate)(),
+    __metadata("design:type", Date)
+], CreateRequestDto.prototype, "request_date", void 0);
+//# sourceMappingURL=create-request.dto.js.map

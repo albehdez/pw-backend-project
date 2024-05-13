@@ -20,16 +20,16 @@ let CountryController = class CountryController {
     constructor(country_service) {
         this.country_service = country_service;
     }
-    get_cars_situation() {
+    get_countrys() {
         return this.country_service.get_countrys();
     }
-    get_car_situation(id) {
+    get_country(id) {
         return this.country_service.get_country(id);
     }
-    create_car_situation(name) {
+    create_country(name) {
         return this.country_service.create_country(name);
     }
-    delete_car_situation(id) {
+    delete_country(id) {
         return this.country_service.delete_country(id);
     }
 };
@@ -39,28 +39,28 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], CountryController.prototype, "get_cars_situation", null);
+], CountryController.prototype, "get_countrys", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], CountryController.prototype, "get_car_situation", null);
+], CountryController.prototype, "get_country", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [dto_1.CreateCountryDto]),
     __metadata("design:returntype", Promise)
-], CountryController.prototype, "create_car_situation", null);
+], CountryController.prototype, "create_country", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], CountryController.prototype, "delete_car_situation", null);
+], CountryController.prototype, "delete_country", null);
 exports.CountryController = CountryController = __decorate([
     (0, common_1.Controller)('country'),
     __metadata("design:paramtypes", [country_service_1.CountryService])

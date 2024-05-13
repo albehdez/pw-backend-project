@@ -20,16 +20,16 @@ let RoadmapController = class RoadmapController {
     constructor(roadmapService) {
         this.roadmapService = roadmapService;
     }
-    get_cars() {
+    get_raodmaps() {
         return this.roadmapService.get_raodmaps();
     }
-    get_car(id) {
+    get_raodmap(id) {
         return this.roadmapService.get_raodmap(id);
     }
-    create_car(createCarDto) {
+    create_roadmap(createCarDto) {
         return this.roadmapService.create_roadmap(createCarDto);
     }
-    delete_car(id) {
+    delete_roadmap(id) {
         return this.roadmapService.delete_roadmap(id);
     }
 };
@@ -39,28 +39,28 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], RoadmapController.prototype, "get_cars", null);
+], RoadmapController.prototype, "get_raodmaps", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], RoadmapController.prototype, "get_car", null);
+], RoadmapController.prototype, "get_raodmap", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [dto_1.CreateRoadmapDto]),
     __metadata("design:returntype", Promise)
-], RoadmapController.prototype, "create_car", null);
+], RoadmapController.prototype, "create_roadmap", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], RoadmapController.prototype, "delete_car", null);
+], RoadmapController.prototype, "delete_roadmap", null);
 exports.RoadmapController = RoadmapController = __decorate([
     (0, common_1.Controller)('roadmap'),
     __metadata("design:paramtypes", [roadmap_service_1.RoadmapService])

@@ -11,10 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.request = void 0;
 const entities_1 = require("../../change/entities");
-const entities_2 = require("../../request_transport/entities");
-const entities_3 = require("../../roadmap/entities");
-const entities_4 = require("../../roadmap_request/entities");
-const entities_5 = require("../../transport/entities");
+const entities_2 = require("../../programing/entities");
+const entities_3 = require("../../request_transport/entities");
+const entities_4 = require("../../roadmap/entities");
+const entities_5 = require("../../roadmap_request/entities");
+const entities_6 = require("../../transport/entities");
+const entities_7 = require("../../turistic_group/entities");
+const entities_8 = require("../../user/entities");
 const typeorm_1 = require("typeorm");
 let request = class request {
 };
@@ -24,24 +27,43 @@ __decorate([
     __metadata("design:type", Number)
 ], request.prototype, "id", void 0);
 __decorate([
+    (0, typeorm_1.ManyToOne)(() => entities_7.turistic_group, (turistic_group) => turistic_group.request, { cascade: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'id_group' }),
+    __metadata("design:type", entities_7.turistic_group)
+], request.prototype, "group", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => entities_2.programing, (programing) => programing.request, { cascade: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'id_programing' }),
+    __metadata("design:type", entities_2.programing)
+], request.prototype, "programing", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => entities_8.user, (user) => user.requests, { cascade: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
+    __metadata("design:type", entities_8.user)
+], request.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Date)
+], request.prototype, "request_date", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => entities_1.change, change => change.request),
     (0, typeorm_1.JoinColumn)({ name: "change_id" }),
     __metadata("design:type", Array)
 ], request.prototype, "change", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => entities_3.roadmap, roadmap => roadmap.requests),
+    (0, typeorm_1.ManyToMany)(() => entities_4.roadmap, roadmap => roadmap.requests),
     __metadata("design:type", Array)
 ], request.prototype, "roadmaps", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_4.roadmap_request, roadmap_request => roadmap_request.request),
+    (0, typeorm_1.OneToMany)(() => entities_5.roadmap_request, roadmap_request => roadmap_request.request),
     __metadata("design:type", Array)
 ], request.prototype, "roadmap_request", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => entities_5.transport, transport => transport.request),
+    (0, typeorm_1.ManyToMany)(() => entities_6.transport, transport => transport.request),
     __metadata("design:type", Array)
 ], request.prototype, "transport", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_2.request_transport, request_transport => request_transport.request),
+    (0, typeorm_1.OneToMany)(() => entities_3.request_transport, request_transport => request_transport.request),
     __metadata("design:type", Array)
 ], request.prototype, "request_transport", void 0);
 exports.request = request = __decorate([

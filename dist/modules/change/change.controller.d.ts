@@ -6,6 +6,6 @@ export declare class ChangeController {
     constructor(changeService: ChangeService);
     get_changes(): Promise<change[]>;
     get_change(id: number): Promise<change>;
-    create_cgange(createChangeDto: CreateChangeDto): Promise<change>;
-    delete_changes(id: number): Promise<void>;
+    create_change(createChangeDto: CreateChangeDto): Promise<change>;
+    delete_change(id: number): Promise<void>;
 }

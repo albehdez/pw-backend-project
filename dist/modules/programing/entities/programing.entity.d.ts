@@ -1,4 +1,5 @@
 import { programing_type } from "src/modules/programing_type/entities/programing_type.entity";
+import { request } from "src/modules/request/entities";
 export declare class programing {
     id: number;
     programing_type: programing_type;
@@ -7,4 +8,5 @@ export declare class programing {
     description: string;
     km_to_travel: number;
     delay: number;
+    request: request[];
 }

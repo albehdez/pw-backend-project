@@ -5,9 +5,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { role } from "src/modules/role/entities/role.entity";
+import { request } from "src/modules/request/entities";
 
 @Entity()
 export class user {
@@ -29,4 +31,7 @@ export class user {
   @ManyToOne(() => role, (user_role) => user_role.users, { cascade: true })
   @JoinColumn({ name: "role_id" })
   role: role;
+
+  @OneToMany(() => request, request => request.user)
+  requests: request[];
 }
