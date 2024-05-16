@@ -25,6 +25,7 @@ export declare class AuthController {
         email: string;
     }>;
     login(loginDto: LoginDto): Promise<{
+        name: string;
         email: string;
         token: string;
     }>;
