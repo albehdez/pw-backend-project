@@ -12,13 +12,11 @@ import { LoginDto } from "./dto/login.dto";
 import { UserService } from "../user/user.service";
 import { UpdateUserCredentialsDto } from "./dto/update-user-credentials.dto";
 
-
-
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async register(registerUserDto: RegisterDto) {
@@ -35,7 +33,7 @@ export class AuthService {
 
     return {
       name,
-      email
+      email,
     };
   }
 
@@ -78,7 +76,7 @@ export class AuthService {
     await this.userService.update_user(email, { new_password: hashedPassword });
 
     return {
-     email,
+      email,
     };
   }
 
@@ -99,30 +97,34 @@ export class AuthService {
     const token = await this.jwtService.signAsync(payload);
 
     return {
-      name:user.name,
+      name: user.name,
       email: user.email,
       token: token,
     };
   }
 
-  // async getUserFromToken(token: string): Promise<any> {
-  //   try {
-  //     const payload = await this.jwtService.verifyAsync(token);
-  //     const user = await this.userService.findOneByEmail(payload.email);
-  //     if (!user) {
-  //       throw new UnauthorizedException("User not found");
-  //     }
-  //     return user;
-  //   } catch (error) {
-  //     throw new UnauthorizedException("Invalid token");
-  //   }
-  // }
+   /* async getUserFromToken(token: string): Promise<any> {
+     try {
+       const payload = await this.jwtService.verifyAsync(token);
+       const user = await this.userService.findOneByEmail(payload.email);
+       if (!user) {
+         throw new UnauthorizedException("User not found");
+       }
+      return user;
+     } catch (error) {
+       throw new UnauthorizedException("Invalid token");
+     }
+   } */
 
-
-  async get_profile({email,role}: {email: string, role: string}): Promise<{email: string, role: string}> {
+  async get_profile({
+    email,
+    role,
+  }: {
+    email: string;
+    role: string;
+  }): Promise<{ name:string,email: string; role: string }> {
     const user = await this.userService.findOneByEmail(email);
-    return { email: user.email, 
-              role: user.role.role };
+    return { name: user.name, email: user.email, role: user.role.role };
   }
 
   /* async get_profile({email, role}: {email: string, role: string}): Promise<{email: string, role: string}> {
@@ -132,5 +134,3 @@ export class AuthService {
     }
     return { email: user.email, role: user.role }; */
 }
-  
-

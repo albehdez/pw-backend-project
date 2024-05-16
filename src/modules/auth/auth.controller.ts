@@ -16,12 +16,14 @@ import { RegisterDto } from "./dto/register.dto";
 import { AuthService } from "./auth.service";
 import { UpdateUserCredentialsDto } from "./dto/update-user-credentials.dto";
 import { Request } from "express";
-import { Role } from './enums/role.enum';
-import { Auth } from "./decoradors/auth.decorator";
+import { Role } from '../common/enums/role.enum';
+import { Auth } from "../common/decorators/auth.decorador";
+import { ActiveUser } from "../common/decorators/active-user.decorator";
+import { UserInterface } from "../common/interfaces/user.interface";
 
 
 
-interface role {
+/* interface role {
   id: number;
   role: string;
 }
@@ -29,12 +31,12 @@ interface role {
 interface User {
   email: string;
   role: role;
-}
+} */
 
-interface RequestWithUser extends Request {
+/* interface RequestWithUser extends Request {
   user: User;
 }
-
+ */
 
 @UsePipes(new ValidationPipe())
 @Controller("auth")
@@ -79,10 +81,10 @@ export class AuthController {
   
   @Auth(Role.Admin) // Para cualquier endpoint hace falta copiar este decoreador para garantizar la autorización
   @Get("profile")
-  get_profile(@Req() req: RequestWithUser) {
+  get_profile(@ActiveUser()user:UserInterface) {
     return this.authService.get_profile({
-      email:req.user.email,
-      role:req.user.role.role,
+      email:user.email,
+      role:user.role.role,
     });
   }
 

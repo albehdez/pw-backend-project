@@ -2,18 +2,7 @@ import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { AuthService } from "./auth.service";
 import { UpdateUserCredentialsDto } from "./dto/update-user-credentials.dto";
-import { Request } from "express";
-interface role {
-    id: number;
-    role: string;
-}
-interface User {
-    email: string;
-    role: role;
-}
-interface RequestWithUser extends Request {
-    user: User;
-}
+import { UserInterface } from "../common/interfaces/user.interface";
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
@@ -29,9 +18,9 @@ export declare class AuthController {
         email: string;
         token: string;
     }>;
-    get_profile(req: RequestWithUser): Promise<{
+    get_profile(user: UserInterface): Promise<{
+        name: string;
         email: string;
         role: string;
     }>;
 }
-export {};

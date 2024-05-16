@@ -30,7 +30,7 @@ let AuthService = class AuthService {
         });
         return {
             name,
-            email
+            email,
         };
     }
     async update_user_credentials(email, updateCredentialsDto) {
@@ -66,10 +66,9 @@ let AuthService = class AuthService {
             token: token,
         };
     }
-    async get_profile({ email, role }) {
+    async get_profile({ email, role, }) {
         const user = await this.userService.findOneByEmail(email);
-        return { email: user.email,
-            role: user.role.role };
+        return { name: user.name, email: user.email, role: user.role.role };
     }
 };
 exports.AuthService = AuthService;

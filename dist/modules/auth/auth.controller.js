@@ -18,8 +18,9 @@ const login_dto_1 = require("./dto/login.dto");
 const register_dto_1 = require("./dto/register.dto");
 const auth_service_1 = require("./auth.service");
 const update_user_credentials_dto_1 = require("./dto/update-user-credentials.dto");
-const role_enum_1 = require("./enums/role.enum");
-const auth_decorator_1 = require("./decoradors/auth.decorator");
+const role_enum_1 = require("../common/enums/role.enum");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const active_user_decorator_1 = require("../common/decorators/active-user.decorator");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -33,10 +34,10 @@ let AuthController = class AuthController {
     login(loginDto) {
         return this.authService.login(loginDto);
     }
-    get_profile(req) {
+    get_profile(user) {
         return this.authService.get_profile({
-            email: req.user.email,
-            role: req.user.role.role,
+            email: user.email,
+            role: user.role.role,
         });
     }
 };
@@ -65,9 +66,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
 __decorate([
-    (0, auth_decorator_1.Auth)(role_enum_1.Role.Admin),
+    (0, auth_decorador_1.Auth)(role_enum_1.Role.Admin),
     (0, common_1.Get)("profile"),
-    __param(0, (0, common_1.Req)()),
+    __param(0, (0, active_user_decorator_1.ActiveUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)

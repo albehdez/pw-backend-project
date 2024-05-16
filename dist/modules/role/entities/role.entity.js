@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.role = void 0;
-const role_enum_1 = require("../../auth/enums/role.enum");
+const role_enum_1 = require("../../common/enums/role.enum");
 const entities_1 = require("../../user/entities");
 const typeorm_1 = require("typeorm");
 let role = class role {

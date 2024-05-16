@@ -19,10 +19,11 @@ export declare class AuthService {
         email: string;
         token: string;
     }>;
-    get_profile({ email, role }: {
+    get_profile({ email, role, }: {
         email: string;
         role: string;
     }): Promise<{
+        name: string;
         email: string;
         role: string;
     }>;

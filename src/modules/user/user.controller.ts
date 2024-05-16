@@ -14,9 +14,9 @@ import { UserService } from "./user.service";
 import { user } from "./entities";
 
 import { CreateUserDto, UpdateUserDto, UpdateUserRoleDto } from "./dto";
-import { Role } from "../auth/enums/role.enum";
-import { Roles } from "../auth/decoradors/roles.decoradors";
-import { Auth } from "../auth/decoradors/auth.decorator";
+import { Role } from "../common/enums/role.enum";
+import { Roles } from "../common/decorators/roles.decoradors";
+import { Auth } from "../common/decorators/auth.decorador";
 
 @UsePipes(new ValidationPipe())
 @Controller("user")

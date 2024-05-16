@@ -1,1 +1,1 @@
-{"version":3,"file":"update-user-role-dto.js","sourceRoot":"","sources":["../../../../src/modules/user/dto/update-user-role-dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAgE;AAChE,0DAAwD;AAGxD,MAAa,iBAAiB;CAM7B;AAND,8CAMC;AADC;IAFC,IAAA,4BAAU,GAAE;IACZ,IAAA,0BAAQ,GAAE;;+CACA"}
+{"version":3,"file":"update-user-role-dto.js","sourceRoot":"","sources":["../../../../src/modules/user/dto/update-user-role-dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAgE;AAChE,4DAA0D;AAG1D,MAAa,iBAAiB;CAM7B;AAND,8CAMC;AADC;IAFC,IAAA,4BAAU,GAAE;IACZ,IAAA,0BAAQ,GAAE;;+CACA"}
