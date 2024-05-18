@@ -11,8 +11,10 @@ import {
 import { CarService } from "./car.service";
 import { car } from "./entities";
 import { CreateCarDto, UpdateCarDto } from "./dto";
+import { Auth } from "../common/decorators/auth.decorador";
+import { Role } from "../common/enums/role.enum";
 
-
+@Auth(Role.Manager)
 @Controller("car")
 export class CarController {
   constructor(private readonly carService: CarService) {}
@@ -42,19 +44,16 @@ export class CarController {
 
   @Get("simple/:id")
   get_car_simple(@Param("id") id: number): Promise<
-  {
-    brand: string;
-    number_seats: number;
-    km_available: number;
-    license_plate: string;
-    car_situation: string;
-  }[]
->{
+    {
+      brand: string;
+      number_seats: number;
+      km_available: number;
+      license_plate: string;
+      car_situation: string;
+    }[]
+  > {
     return this.carService.get_car_simple(id);
-
-}
- 
-  
+  }
 
   @Post()
   create_car(@Body() createCarDto: CreateCarDto): Promise<car> {
@@ -76,18 +75,16 @@ export class CarController {
     const buffer = await this.carService.generatePDF();
 
     res.set({
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename=example.pdf',
-      'Content-Length': buffer.length,
-    })
+      "Content-Type": "application/pdf",
+      "Content-Disposition": "attachment; filename=example.pdf",
+      "Content-Length": buffer.length,
+    });
 
     res.end(buffer);
   }
 
- /*  @Get('pdf/download')
+  /*  @Get('pdf/download')
   async generatePdf() {
     return this.carService.generatePdf();
   } */
-
 }
-

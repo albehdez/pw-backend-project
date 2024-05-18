@@ -16,6 +16,8 @@ exports.CarController = void 0;
 const common_1 = require("@nestjs/common");
 const car_service_1 = require("./car.service");
 const dto_1 = require("./dto");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let CarController = class CarController {
     constructor(carService) {
         this.carService = carService;
@@ -44,9 +46,9 @@ let CarController = class CarController {
     async generatePDF(res) {
         const buffer = await this.carService.generatePDF();
         res.set({
-            'Content-Type': 'application/pdf',
-            'Content-Disposition': 'attachment; filename=example.pdf',
-            'Content-Length': buffer.length,
+            "Content-Type": "application/pdf",
+            "Content-Disposition": "attachment; filename=example.pdf",
+            "Content-Length": buffer.length,
         });
         res.end(buffer);
     }
@@ -108,6 +110,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CarController.prototype, "generatePDF", null);
 exports.CarController = CarController = __decorate([
+    (0, auth_decorador_1.Auth)(role_enum_1.Role.Manager),
     (0, common_1.Controller)("car"),
     __metadata("design:paramtypes", [car_service_1.CarService])
 ], CarController);
