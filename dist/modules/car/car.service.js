@@ -28,12 +28,35 @@ let CarService = class CarService {
     async get_cars() {
         return await this.carRepository.find({ relations: ['car_situation', 'inside'] });
     }
+    async get_cars_simple() {
+        const cars = await this.carRepository.find({ relations: ['car_situation'] });
+        return cars.map(car => ({
+            brand: car.brand,
+            number_seats: car.number_seats,
+            km_available: car.km_available,
+            license_plate: car.license_plate,
+            car_situation: car.car_situation.type_situation
+        }));
+    }
     async get_car(id) {
         const foundCar = await this.carRepository.findOne({ where: { id }, relations: ['car_situation', 'inside'] });
         if (!foundCar) {
             throw new common_1.NotFoundException(`Car with id ${id} not found`);
         }
         return foundCar;
+    }
+    async get_car_simple(id) {
+        const foundCar = await this.carRepository.findOne({ where: { id }, relations: ['car_situation'] });
+        if (!foundCar) {
+            throw new common_1.NotFoundException(`Car with id ${id} not found`);
+        }
+        return [{
+                brand: foundCar.brand,
+                number_seats: foundCar.number_seats,
+                km_available: foundCar.km_available,
+                license_plate: foundCar.license_plate,
+                car_situation: foundCar.car_situation.type_situation
+            }];
     }
     async create_car({ brand, number_seats, km_available, license_plate, situation, return_date }) {
         const foundSituation = await this.car_situationRepository.findOne({ where: { type_situation: situation.type_situation } });

@@ -19,6 +19,18 @@ export class CarService {
     async get_cars(): Promise<car[]> {
         return await this.carRepository.find({ relations: ['car_situation','inside'] });
     }
+    
+    async get_cars_simple(): Promise<{ brand: string; number_seats: number; km_available: number; license_plate: string; car_situation: string }[]> {
+        const cars = await this.carRepository.find({ relations: ['car_situation'] });
+        return cars.map(car => ({
+            brand: car.brand,
+            number_seats: car.number_seats,
+            km_available: car.km_available,
+            license_plate: car.license_plate,
+            car_situation: car.car_situation.type_situation
+        }));
+    }
+    
 
     async get_car(id: number): Promise<car> {
         const foundCar = await this.carRepository.findOne({ where: { id },relations:['car_situation','inside'] });
@@ -26,6 +38,20 @@ export class CarService {
             throw new NotFoundException(`Car with id ${id} not found`);
         }
         return foundCar;
+    }
+
+    async get_car_simple(id: number): Promise<{ brand: string; number_seats: number; km_available: number; license_plate: string; car_situation: string }[]> {
+        const foundCar = await this.carRepository.findOne({ where: { id }, relations: ['car_situation'] });
+        if (!foundCar) {
+            throw new NotFoundException(`Car with id ${id} not found`);
+        }
+        return [{
+            brand: foundCar.brand,
+            number_seats: foundCar.number_seats,
+            km_available: foundCar.km_available,
+            license_plate: foundCar.license_plate,
+            car_situation: foundCar.car_situation.type_situation
+        }];
     }
 
     async create_car({ brand, number_seats, km_available, license_plate, situation, return_date }: CreateCarDto & { return_date?: Date }): Promise<car> {

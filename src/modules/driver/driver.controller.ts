@@ -2,7 +2,7 @@ import { Body, Controller, Param, Patch, Post,Delete, Get } from '@nestjs/common
 import { DriverService } from './driver.service';
 import { CreateDriverDto, UpdateDriverDto } from './dto';
 import { driver } from './entities/driver.entitty';
-
+//git commit m "agregando servicio para devolver los datos de los carros de manera simple"
 @Controller('driver')
 export class DriverController {
     constructor(private readonly driverService: DriverService) {}
@@ -11,6 +11,7 @@ export class DriverController {
     get_drivers(): Promise<driver[]> {
         return this.driverService.get_drivers();
     }
+    
 
     @Get(':id')
     get_driver(@Param('id') id: number): Promise<driver> {
