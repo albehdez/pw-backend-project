@@ -23,4 +23,5 @@ export declare class CarController {
     create_car(createCarDto: CreateCarDto): Promise<car>;
     update_car(id: number, updateCarDto: UpdateCarDto): Promise<car>;
     delete_car(id: number): Promise<void>;
+    generatePDF(res: any): Promise<void>;
 }

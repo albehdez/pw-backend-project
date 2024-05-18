@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -7,10 +6,12 @@ import {
   Delete,
   Body,
   Param,
+  Res,
 } from "@nestjs/common";
 import { CarService } from "./car.service";
-import { car } from "./entities"; // Assuming you have an entity named 'Car'
+import { car } from "./entities";
 import { CreateCarDto, UpdateCarDto } from "./dto";
+
 
 @Controller("car")
 export class CarController {
@@ -69,4 +70,24 @@ export class CarController {
   delete_car(@Param("id") id: number): Promise<void> {
     return this.carService.delete_car(id);
   }
+
+  @Get("pdf/generate")
+  async generatePDF(@Res() res): Promise<void> {
+    const buffer = await this.carService.generatePDF();
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename=example.pdf',
+      'Content-Length': buffer.length,
+    })
+
+    res.end(buffer);
+  }
+
+ /*  @Get('pdf/download')
+  async generatePdf() {
+    return this.carService.generatePdf();
+  } */
+
 }
+

@@ -41,6 +41,15 @@ let CarController = class CarController {
     delete_car(id) {
         return this.carService.delete_car(id);
     }
+    async generatePDF(res) {
+        const buffer = await this.carService.generatePDF();
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': 'attachment; filename=example.pdf',
+            'Content-Length': buffer.length,
+        });
+        res.end(buffer);
+    }
 };
 exports.CarController = CarController;
 __decorate([
@@ -91,6 +100,13 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], CarController.prototype, "delete_car", null);
+__decorate([
+    (0, common_1.Get)("pdf/generate"),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], CarController.prototype, "generatePDF", null);
 exports.CarController = CarController = __decorate([
     (0, common_1.Controller)("car"),
     __metadata("design:paramtypes", [car_service_1.CarService])

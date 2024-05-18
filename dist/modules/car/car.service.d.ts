@@ -1,8 +1,9 @@
-import { car } from './entities/car.entity';
-import { Repository } from 'typeorm';
-import { CreateCarDto, UpdateCarDto } from './dto';
-import { car_situation } from '../car_situation/entities';
-import { inside } from '../inside/entities/inside.entity';
+/// <reference types="node" />
+import { car } from "./entities/car.entity";
+import { Repository } from "typeorm";
+import { CreateCarDto, UpdateCarDto } from "./dto";
+import { car_situation } from "../car_situation/entities";
+import { inside } from "../inside/entities/inside.entity";
 export declare class CarService {
     private readonly carRepository;
     private readonly car_situationRepository;
@@ -24,11 +25,12 @@ export declare class CarService {
         license_plate: string;
         car_situation: string;
     }[]>;
-    create_car({ brand, number_seats, km_available, license_plate, situation, return_date }: CreateCarDto & {
+    create_car({ brand, number_seats, km_available, license_plate, situation, return_date, }: CreateCarDto & {
         return_date?: Date;
     }): Promise<car>;
-    update_car(id: number, { brand, number_seats, km_available, license_plate, situation, return_date }: UpdateCarDto & {
+    update_car(id: number, { brand, number_seats, km_available, license_plate, situation, return_date, }: UpdateCarDto & {
         return_date?: Date;
     }): Promise<car>;
     delete_car(id: number): Promise<void>;
+    generatePDF(): Promise<Buffer>;
 }
