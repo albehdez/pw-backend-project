@@ -6,4 +6,5 @@ export declare class InsideController {
     get_cars_inside(): Promise<inside[]>;
     get_car_inside(id: number): Promise<inside>;
     delete_car_inside(id: number): Promise<void>;
+    generatePDF(res: any): Promise<void>;
 }

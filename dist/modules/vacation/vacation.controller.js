@@ -28,6 +28,15 @@ let VacationController = class VacationController {
     delete_driver_vacation(id) {
         return this.vacation_service.delete_driver_vacation(id);
     }
+    async generatePDF(res) {
+        const buffer = await this.vacation_service.generatePDF();
+        res.set({
+            "Content-Type": "application/pdf",
+            "Content-Disposition": "attachment; filename=example.pdf",
+            "Content-Length": buffer.length,
+        });
+        res.end(buffer);
+    }
 };
 exports.VacationController = VacationController;
 __decorate([
@@ -37,21 +46,28 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], VacationController.prototype, "get_drivers_vacation", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], VacationController.prototype, "get_driver_vacation", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], VacationController.prototype, "delete_driver_vacation", null);
+__decorate([
+    (0, common_1.Get)("pdf/generate"),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], VacationController.prototype, "generatePDF", null);
 exports.VacationController = VacationController = __decorate([
-    (0, common_1.Controller)('vacation'),
+    (0, common_1.Controller)("vacation"),
     __metadata("design:paramtypes", [vacation_service_1.VacationService])
 ], VacationController);
 //# sourceMappingURL=vacation.controller.js.map

@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { CreateDriverDto, UpdateDriverDto } from './dto';
 import { car } from '../car/entities';
 import { driver_category } from '../driver_category/entities';
+const PDFDocument = require('pdfkit-table');
 
 @Injectable()
 export class DriverService {
@@ -162,6 +163,89 @@ export class DriverService {
   
       await this.driverRepository.remove(driverToDelete);
   }
+
+  async generatePDF(): Promise<Buffer> {
+    const drivers = await this.driverRepository.find({ relations: ['driver_situation','driver_category'] });
+
+    const pdfBuffer: Buffer = await new Promise(resolve => {
+      const doc = new PDFDocument({
+        size: "LETTER",
+        bufferPages: true,
+        autoFirstPage: false,
+      });
+
+      let pageNumber = 0;
+      doc.on('pageAdded', () => {
+        pageNumber++;
+        let bottom = doc.page.margins.bottom;
+
+        if (pageNumber > 1) {
+          doc.moveTo(50, 55)
+          .lineTo(doc.page.width - 50, 55)
+          .stroke();
+        }
+
+        doc.page.margins.bottom = 0;
+        doc.font("Helvetica").fontSize(14);
+        doc.text(
+          'Pág. ' + pageNumber,
+          0.5 * (doc.page.width - 100),
+          doc.page.height - 50,
+          {
+            width: 100,
+            align: 'center',
+            lineBreak: false,
+          })
+        doc.page.margins.bottom = bottom;
+      });
+
+      doc.addPage();
+      doc.text('', 0, 400);
+      doc.font("Helvetica-Bold").fontSize(24);
+      doc.text("CubaTour", {
+        width: doc.page.width,
+        align: 'center'
+      });
+      doc.moveDown();
+
+      doc.addPage();
+      doc.text('', 50, 70);
+      doc.fontSize(24);
+      doc.moveDown();
+      doc.font("Helvetica").fontSize(20);
+
+      // Preparar los datos de la tabla
+      const rows = drivers.map(driver => [
+        driver.name,
+        driver.permanent_car? driver.permanent_car : '-',
+        driver.driver_situation.type_situation,
+        driver.driver_category.type_category,
+        driver.address,
+        driver.identify_card,
+      ]);
+
+      const table = {
+        title: "Choferes",
+        headers: ["Nombre", "Carro permanernte", "Situación", "Categoría", "Dirección", "Identificación"],
+        rows: rows
+      };
+
+      // Configurar el tamaño de las columnas según sea necesario
+      doc.table(table, {
+        columnsSize: [100, 100, 100, 100, 100,100], 
+      });
+
+      const buffer = [];
+      doc.on('data', buffer.push.bind(buffer));
+      doc.on('end', () => {
+        const data = Buffer.concat(buffer);
+        resolve(data);
+      });
+      doc.end();
+    });
+
+    return pdfBuffer;
+}
 
 
     

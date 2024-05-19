@@ -35,6 +35,15 @@ let ProgramingController = class ProgramingController {
     delete_programing(id) {
         return this.programingService.delete_programing(id);
     }
+    async generatePDF(res) {
+        const buffer = await this.programingService.generatePDF();
+        res.set({
+            "Content-Type": "application/pdf",
+            "Content-Disposition": "attachment; filename=example.pdf",
+            "Content-Length": buffer.length,
+        });
+        res.end(buffer);
+    }
 };
 exports.ProgramingController = ProgramingController;
 __decorate([
@@ -44,8 +53,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProgramingController.prototype, "get_programings", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -66,14 +75,21 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProgramingController.prototype, "update_programing", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)(":id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ProgramingController.prototype, "delete_programing", null);
+__decorate([
+    (0, common_1.Get)("pdf/generate"),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ProgramingController.prototype, "generatePDF", null);
 exports.ProgramingController = ProgramingController = __decorate([
-    (0, common_1.Controller)('programing'),
+    (0, common_1.Controller)("programing"),
     __metadata("design:paramtypes", [programing_service_1.ProgramingService])
 ], ProgramingController);
 //# sourceMappingURL=programing.controller.js.map

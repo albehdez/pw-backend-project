@@ -28,6 +28,15 @@ let InsideController = class InsideController {
     delete_car_inside(id) {
         return this.inside_service.delete_car_inside(id);
     }
+    async generatePDF(res) {
+        const buffer = await this.inside_service.generatePDF();
+        res.set({
+            "Content-Type": "application/pdf",
+            "Content-Disposition": "attachment; filename=example.pdf",
+            "Content-Length": buffer.length,
+        });
+        res.end(buffer);
+    }
 };
 exports.InsideController = InsideController;
 __decorate([
@@ -50,6 +59,13 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], InsideController.prototype, "delete_car_inside", null);
+__decorate([
+    (0, common_1.Get)("pdf/generate"),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], InsideController.prototype, "generatePDF", null);
 exports.InsideController = InsideController = __decorate([
     (0, common_1.Controller)('inside'),
     __metadata("design:paramtypes", [inside_service_1.InsideService])

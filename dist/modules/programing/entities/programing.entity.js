@@ -26,11 +26,11 @@ __decorate([
     __metadata("design:type", programing_type_entity_1.programing_type)
 ], programing.prototype, "programing_type", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)("time"),
     __metadata("design:type", Date)
 ], programing.prototype, "start_time", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)("time"),
     __metadata("design:type", Date)
 ], programing.prototype, "end_time", void 0);
 __decorate([
@@ -50,6 +50,7 @@ __decorate([
     __metadata("design:type", Array)
 ], programing.prototype, "request", void 0);
 exports.programing = programing = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)(),
+    (0, typeorm_1.Unique)(['programing_type', 'start_time', 'end_time', 'description', 'km_to_travel', 'delay'])
 ], programing);
 //# sourceMappingURL=programing.entity.js.map

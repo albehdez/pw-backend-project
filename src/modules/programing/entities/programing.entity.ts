@@ -2,9 +2,10 @@
 
 import { programing_type } from "src/modules/programing_type/entities/programing_type.entity";
 import { request } from "src/modules/request/entities";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
+@Unique(['programing_type', 'start_time', 'end_time', 'description', 'km_to_travel', 'delay'])
 export class programing{
 @PrimaryGeneratedColumn('increment')
 id:number;
@@ -13,10 +14,10 @@ id:number;
     @JoinColumn({name:'programing_type_id'})
     programing_type: programing_type;
 
-    @Column()
+    @Column("time")
     start_time:Date;
 
-    @Column()
+    @Column("time")
     end_time:Date;
 
     @Column()

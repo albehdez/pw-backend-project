@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { Repository } from 'typeorm';
 import { programing } from './entities';
 import { programing_type } from '../programing_type/entities';
@@ -11,4 +12,5 @@ export declare class ProgramingService {
     create_programing({ type, start_time, end_time, description, km_to_travel, delay }: CreateProgramingDto): Promise<programing>;
     update_programing(id: number, { type, start_time, end_time, description, km_to_travel, delay }: UpdateProgramingDto): Promise<programing>;
     delete_programing(id: number): Promise<void>;
+    generatePDF(): Promise<Buffer>;
 }

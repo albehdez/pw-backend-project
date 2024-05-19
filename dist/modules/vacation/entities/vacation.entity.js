@@ -21,17 +21,17 @@ __decorate([
     __metadata("design:type", Number)
 ], vacation.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date' }),
+    (0, typeorm_1.Column)({ type: "date" }),
     __metadata("design:type", Date)
 ], vacation.prototype, "return_date", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => driver_situation_entity_1.driver_situation),
-    (0, typeorm_1.JoinColumn)({ name: 'situation_id' }),
+    (0, typeorm_1.JoinColumn)({ name: "situation_id" }),
     __metadata("design:type", driver_situation_entity_1.driver_situation)
 ], vacation.prototype, "situation", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => driver_entitty_1.driver, { cascade: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'driver_id' }),
+    (0, typeorm_1.JoinColumn)({ name: "driver_id" }),
     __metadata("design:type", driver_entitty_1.driver)
 ], vacation.prototype, "driver", void 0);
 exports.vacation = vacation = __decorate([

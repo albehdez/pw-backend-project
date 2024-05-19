@@ -1,6 +1,6 @@
-import { DriverService } from './driver.service';
-import { CreateDriverDto, UpdateDriverDto } from './dto';
-import { driver } from './entities/driver.entitty';
+import { DriverService } from "./driver.service";
+import { CreateDriverDto, UpdateDriverDto } from "./dto";
+import { driver } from "./entities/driver.entitty";
 export declare class DriverController {
     private readonly driverService;
     constructor(driverService: DriverService);
@@ -9,4 +9,5 @@ export declare class DriverController {
     create_driver(createDriverDto: CreateDriverDto): Promise<driver>;
     update_driver(id: number, updateDriverDto: UpdateDriverDto): Promise<driver>;
     delete_driver(id: number): Promise<void>;
+    generatePDF(res: any): Promise<void>;
 }

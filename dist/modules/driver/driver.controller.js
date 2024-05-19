@@ -35,6 +35,15 @@ let DriverController = class DriverController {
     delete_driver(id) {
         return this.driverService.delete_driver(id);
     }
+    async generatePDF(res) {
+        const buffer = await this.driverService.generatePDF();
+        res.set({
+            "Content-Type": "application/pdf",
+            "Content-Disposition": "attachment; filename=example.pdf",
+            "Content-Length": buffer.length,
+        });
+        res.end(buffer);
+    }
 };
 exports.DriverController = DriverController;
 __decorate([
@@ -44,8 +53,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DriverController.prototype, "get_drivers", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -58,22 +67,29 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DriverController.prototype, "create_driver", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Patch)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, dto_1.UpdateDriverDto]),
     __metadata("design:returntype", void 0)
 ], DriverController.prototype, "update_driver", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], DriverController.prototype, "delete_driver", null);
+__decorate([
+    (0, common_1.Get)("pdf/generate"),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], DriverController.prototype, "generatePDF", null);
 exports.DriverController = DriverController = __decorate([
-    (0, common_1.Controller)('driver'),
+    (0, common_1.Controller)("driver"),
     __metadata("design:paramtypes", [driver_service_1.DriverService])
 ], DriverController);
 //# sourceMappingURL=driver.controller.js.map

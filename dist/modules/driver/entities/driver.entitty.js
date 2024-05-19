@@ -41,12 +41,12 @@ __decorate([
 ], driver.prototype, "permanent_car", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => driver_situation_entity_1.driver_situation, (driver_situation) => driver_situation.drivers, { cascade: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'driver_situation_id' }),
+    (0, typeorm_1.JoinColumn)({ name: "driver_situation_id" }),
     __metadata("design:type", driver_situation_entity_1.driver_situation)
 ], driver.prototype, "driver_situation", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => entities_2.driver_category, (driver_category) => driver_category.drivers, { cascade: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'category_id' }),
+    (0, typeorm_1.JoinColumn)({ name: "category_id" }),
     __metadata("design:type", entities_2.driver_category)
 ], driver.prototype, "driver_category", void 0);
 __decorate([
@@ -54,16 +54,16 @@ __decorate([
     __metadata("design:type", Array)
 ], driver.prototype, "vacation", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => entities_1.car, car => car.drivers),
+    (0, typeorm_1.ManyToMany)(() => entities_1.car, (car) => car.drivers),
     __metadata("design:type", Array)
 ], driver.prototype, "cars", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_3.transport, transport => transport.driver),
+    (0, typeorm_1.OneToMany)(() => entities_3.transport, (transport) => transport.driver),
     __metadata("design:type", Array)
 ], driver.prototype, "transport", void 0);
 exports.driver = driver = __decorate([
     (0, typeorm_1.Entity)(),
-    (0, typeorm_1.Unique)(['identify_card']),
-    (0, typeorm_1.Unique)(['permanent_car'])
+    (0, typeorm_1.Unique)(["identify_card"]),
+    (0, typeorm_1.Unique)(["permanent_car"])
 ], driver);
 //# sourceMappingURL=driver.entitty.js.map

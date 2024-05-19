@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { driver_situation } from '../driver_situation/entities/driver_situation.entity';
 import { driver } from './entities/driver.entitty';
 import { vacation } from '../vacation/entities/vacation.entity';
@@ -21,4 +22,5 @@ export declare class DriverService {
         return_date?: Date;
     }): Promise<driver>;
     delete_driver(id: number): Promise<void>;
+    generatePDF(): Promise<Buffer>;
 }
