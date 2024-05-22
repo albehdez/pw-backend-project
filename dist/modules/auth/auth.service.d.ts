@@ -17,6 +17,7 @@ export declare class AuthService {
     login({ email, password }: LoginDto): Promise<{
         name: string;
         email: string;
+        role: import("../common/enums/role.enum").Role;
         token: string;
     }>;
     get_profile({ email, role, }: {
