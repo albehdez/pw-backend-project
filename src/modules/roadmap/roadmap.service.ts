@@ -12,11 +12,11 @@ export class RoadmapService {
                 @InjectRepository(car) private readonly carRepository: Repository<car>) {}
 
     async get_raodmaps(): Promise<roadmap[]> {
-        return await this.roadmapRepository.find({ relations: ['car','request'] });
+        return await this.roadmapRepository.find({ relations: ['car'] });
     }
 
     async get_raodmap(id: number): Promise<roadmap> {
-        const foundRoadmap = await this.roadmapRepository.findOne({ where:{car:{id:id}},relations:['car','request'] });
+        const foundRoadmap = await this.roadmapRepository.findOne({ where:{car:{id:id}},relations:['car'] });
         if (!foundRoadmap) {
             throw new NotFoundException(`Roadmap with Car id ${id} not found`);
         }
