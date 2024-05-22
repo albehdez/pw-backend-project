@@ -1,6 +1,7 @@
 import { IsDate, IsNotEmpty, IsObject } from "class-validator";
 import { programing } from "src/modules/programing/entities";
 import { turistic_group } from "src/modules/turistic_group/entities";
+import { user } from "src/modules/user/entities";
 
 export class CreateRequestDto{
     @IsObject()
@@ -15,4 +16,9 @@ export class CreateRequestDto{
     @IsNotEmpty()
     @IsDate()
     request_date: Date;
+
+    @IsObject()
+    client: Partial<user>;
+
+
 }

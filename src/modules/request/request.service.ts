@@ -5,12 +5,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { turistic_group } from '../turistic_group/entities';
 import { programing } from '../programing/entities';
 import { CreateRequestDto } from './dto';
+import { user } from '../user/entities';
+import { Role } from '../common/enums/role.enum';
+import { TransportService } from '../transport/transport.service';
+import { RequestTransportService } from '../request_transport/request_transport.service';
+import { CreateRequestTransportDto } from '../request_transport/dto';
 
 @Injectable()
 export class RequestService {
     constructor(@InjectRepository(request) private readonly requestRepository: Repository<request>,
                 @InjectRepository(turistic_group) private readonly TGRepository: Repository<turistic_group>,
-                @InjectRepository(programing) private readonly programingRepository: Repository<programing>){}
+                @InjectRepository(programing) private readonly programingRepository: Repository<programing>,
+            @InjectRepository(user) private readonly clientRepository: Repository<user>,
+        private transportService:TransportService,
+    private RtransportService:RequestTransportService){}
                // @InjectRepository(car) private readonly carRepository: Repository<car>) {}
 
     async get_requests(): Promise<request[]> {
@@ -25,7 +33,17 @@ export class RequestService {
         return foundRequest;
     }
 
-    async create_request({ group, programing, request_date}: CreateRequestDto): Promise<request> {
+    async create_request({ group, programing, request_date,client}: CreateRequestDto, idTransport:number): Promise<request> {
+
+        if (client) {
+         var foundClient= await this.clientRepository.findOne({where:{id:client.id}})
+         if (!foundClient) {
+         throw new NotFoundException(`Client with id ${group.id} does not exist`);
+        }
+        if (foundClient.role.role!==Role.Client) {
+         throw new NotFoundException(`User with id ${group.id} does not Client`);
+        }
+    }
     
         if (group) {
          var foundGroup= await this.TGRepository.findOne({where:{id:group.id}})
@@ -39,9 +57,13 @@ export class RequestService {
          if (!foundPrograming) {
           throw new NotFoundException(`Programing with id ${programing.id} does not exist`);
         }
-    }
+    }  
+
         const newRequest=this.requestRepository.create({group:foundGroup,programing:foundPrograming,request_date})
-        const savedRequest = await this.requestRepository.save(newRequest);
+        const savedRequest = await this.requestRepository.save(newRequest);      
+        const transport=  this.transportService.get_transport(idTransport);
+        this.RtransportService.create_request_trasnport({request:newRequest,trasnport: await transport})
+
         return savedRequest
     }
 

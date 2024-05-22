@@ -16,9 +16,9 @@ export class RoadmapService {
     }
 
     async get_raodmap(id: number): Promise<roadmap> {
-        const foundRoadmap = await this.roadmapRepository.findOne({ where: { id },relations:['car','request'] });
+        const foundRoadmap = await this.roadmapRepository.findOne({ where:{car:{id:id}},relations:['car','request'] });
         if (!foundRoadmap) {
-            throw new NotFoundException(`Roadmap with id ${id} not found`);
+            throw new NotFoundException(`Roadmap with Car id ${id} not found`);
         }
         return foundRoadmap;
     }     
