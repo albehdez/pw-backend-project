@@ -4,7 +4,7 @@ import { TuristicGroupService } from './turistic_group.service';
 import { turistic_group } from './entities';
 import { CreateTuristicGroupDto, UpdateTuristicGroupDto } from './dto';
 
-@Controller('turistic-group')
+@Controller('turistic_group')
 export class TuristicGroupController {
     constructor(private readonly turistic_groupService: TuristicGroupService) {}
 

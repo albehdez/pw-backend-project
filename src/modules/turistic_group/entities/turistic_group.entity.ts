@@ -10,6 +10,9 @@ export class turistic_group{
     id:number;
 
     @Column()
+    id_group:string;
+
+    @Column()
     number_turist:number;
 
     @ManyToOne(()=> country, (country)=> country.turistic_group, {cascade:true})

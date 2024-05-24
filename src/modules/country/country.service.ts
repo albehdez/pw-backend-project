@@ -24,6 +24,11 @@ export class CountryService {
     }
 
     async create_country({name}:CreateCountryDto){
+         const foundCountry = await this.country_repository.findOne({ where: { name: name } });
+
+        if(!foundCountry){
+            throw new NotFoundException(`Country with name ${name} not found`);
+        }
         const country = this.country_repository.create({
             name
         });
