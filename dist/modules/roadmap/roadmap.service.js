@@ -24,12 +24,12 @@ let RoadmapService = class RoadmapService {
         this.carRepository = carRepository;
     }
     async get_raodmaps() {
-        return await this.roadmapRepository.find({ relations: ['car', 'request'] });
+        return await this.roadmapRepository.find({ relations: ['car'] });
     }
     async get_raodmap(id) {
-        const foundRoadmap = await this.roadmapRepository.findOne({ where: { id }, relations: ['car', 'request'] });
+        const foundRoadmap = await this.roadmapRepository.findOne({ where: { car: { id: id } }, relations: ['car'] });
         if (!foundRoadmap) {
-            throw new common_1.NotFoundException(`Roadmap with id ${id} not found`);
+            throw new common_1.NotFoundException(`Roadmap with Car id ${id} not found`);
         }
         return foundRoadmap;
     }

@@ -31,14 +31,14 @@ let DriverService = class DriverService {
         this.carRepository = carRepository;
     }
     async get_drivers() {
-        return await this.driverRepository.find({ relations: ['driver_situation', 'vacation'] });
+        return await this.driverRepository.find({ relations: ['driver_situation', 'vacation', 'driver_category'] });
     }
     async get_driver(id) {
-        const foundCar = await this.driverRepository.findOne({ where: { id }, relations: ['driver_situation', 'vacation'] });
-        if (!foundCar) {
+        const foundDriver = await this.driverRepository.findOne({ where: { id }, relations: ['driver_situation', 'vacation', 'driver_category'] });
+        if (!foundDriver) {
             throw new common_1.NotFoundException(`Driver with id ${id} not found`);
         }
-        return foundCar;
+        return foundDriver;
     }
     async create_driver({ name, address, identify_card, permanent_car, situation, category, return_date }) {
         if (permanent_car) {

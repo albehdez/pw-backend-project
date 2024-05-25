@@ -9,26 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateRequestDto = void 0;
+exports.CreateRequestTransportDto = void 0;
 const class_validator_1 = require("class-validator");
-class UpdateRequestDto {
+class CreateRequestTransportDto {
 }
-exports.UpdateRequestDto = UpdateRequestDto;
+exports.CreateRequestTransportDto = CreateRequestTransportDto;
 __decorate([
     (0, class_validator_1.IsObject)(),
     __metadata("design:type", Object)
-], UpdateRequestDto.prototype, "group", void 0);
+], CreateRequestTransportDto.prototype, "request", void 0);
 __decorate([
     (0, class_validator_1.IsObject)(),
     __metadata("design:type", Object)
-], UpdateRequestDto.prototype, "programing", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsDate)(),
-    __metadata("design:type", Date)
-], UpdateRequestDto.prototype, "request_date", void 0);
-__decorate([
-    (0, class_validator_1.IsObject)(),
-    __metadata("design:type", Object)
-], UpdateRequestDto.prototype, "client", void 0);
-//# sourceMappingURL=update-request.dto.js.map
+], CreateRequestTransportDto.prototype, "trasnport", void 0);
+//# sourceMappingURL=create-request_transport.dto.js.map

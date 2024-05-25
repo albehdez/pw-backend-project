@@ -38,7 +38,21 @@ let TuristicGroupService = class TuristicGroupService {
         if (!foundCountry) {
             throw new common_1.NotFoundException(`Country with name ${country.name} not found`);
         }
-        const newTuristic_group = this.turistic_groupRepository.create({ number_turist, country: foundCountry });
+        let cityInitials = foundCountry.name.slice(0, 3).toUpperCase();
+        let randomNumbers = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+        let id_group = `${cityInitials}${number_turist}${randomNumbers}`;
+        let uniqueIdGroup = false;
+        while (!uniqueIdGroup) {
+            const existingGroup = await this.turistic_groupRepository.findOne({ where: { id_group } });
+            if (existingGroup) {
+                randomNumbers = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+                id_group = `${cityInitials}${number_turist}${randomNumbers}`;
+            }
+            else {
+                uniqueIdGroup = true;
+            }
+        }
+        const newTuristic_group = this.turistic_groupRepository.create({ id_group, number_turist, country: foundCountry });
         const savedTuristic_group = await this.turistic_groupRepository.save(newTuristic_group);
         return savedTuristic_group;
     }
@@ -57,6 +71,21 @@ let TuristicGroupService = class TuristicGroupService {
         if (number_turist) {
             turistic_groupToUpdate.number_turist = number_turist;
         }
+        let cityInitials = turistic_groupToUpdate.country.name.slice(0, 3).toUpperCase();
+        let randomNumbers = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+        let newGroupId = `${cityInitials}${turistic_groupToUpdate.number_turist}${randomNumbers}`;
+        let uniqueGroupId = false;
+        while (!uniqueGroupId) {
+            const existingGroup = await this.turistic_groupRepository.findOne({ where: { id_group: newGroupId } });
+            if (existingGroup && existingGroup.id !== turistic_groupToUpdate.id) {
+                randomNumbers = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+                newGroupId = `${cityInitials}${turistic_groupToUpdate.number_turist}${randomNumbers}`;
+            }
+            else {
+                uniqueGroupId = true;
+            }
+        }
+        turistic_groupToUpdate.id_group = newGroupId;
         const updateTuristicGroup = await this.turistic_groupRepository.save(turistic_groupToUpdate);
         return updateTuristicGroup;
     }

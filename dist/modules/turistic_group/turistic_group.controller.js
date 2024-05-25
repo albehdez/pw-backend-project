@@ -73,7 +73,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TuristicGroupController.prototype, "delete_turistic_group", null);
 exports.TuristicGroupController = TuristicGroupController = __decorate([
-    (0, common_1.Controller)('turistic-group'),
+    (0, common_1.Controller)('turistic_group'),
     __metadata("design:paramtypes", [turistic_group_service_1.TuristicGroupService])
 ], TuristicGroupController);
 //# sourceMappingURL=turistic_group.controller.js.map

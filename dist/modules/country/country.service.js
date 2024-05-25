@@ -32,6 +32,10 @@ let CountryService = class CountryService {
         return country;
     }
     async create_country({ name }) {
+        const foundCountry = await this.country_repository.findOne({ where: { name: name } });
+        if (!foundCountry) {
+            throw new common_1.NotFoundException(`Country with name ${name} not found`);
+        }
         const country = this.country_repository.create({
             name
         });

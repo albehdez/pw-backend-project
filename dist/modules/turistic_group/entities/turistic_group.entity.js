@@ -22,6 +22,10 @@ __decorate([
 ], turistic_group.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], turistic_group.prototype, "id_group", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], turistic_group.prototype, "number_turist", void 0);
 __decorate([

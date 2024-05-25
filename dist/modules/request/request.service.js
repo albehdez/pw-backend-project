@@ -19,11 +19,18 @@ const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const entities_2 = require("../turistic_group/entities");
 const entities_3 = require("../programing/entities");
+const entities_4 = require("../user/entities");
+const role_enum_1 = require("../common/enums/role.enum");
+const transport_service_1 = require("../transport/transport.service");
+const request_transport_service_1 = require("../request_transport/request_transport.service");
 let RequestService = class RequestService {
-    constructor(requestRepository, TGRepository, programingRepository) {
+    constructor(requestRepository, TGRepository, programingRepository, clientRepository, transportService, RtransportService) {
         this.requestRepository = requestRepository;
         this.TGRepository = TGRepository;
         this.programingRepository = programingRepository;
+        this.clientRepository = clientRepository;
+        this.transportService = transportService;
+        this.RtransportService = RtransportService;
     }
     async get_requests() {
         return await this.requestRepository.find({ relations: ['turistic_group', 'programing'] });
@@ -35,7 +42,16 @@ let RequestService = class RequestService {
         }
         return foundRequest;
     }
-    async create_request({ group, programing, request_date }) {
+    async create_request({ group, programing, request_date, client }, idTransport) {
+        if (client) {
+            var foundClient = await this.clientRepository.findOne({ where: { id: client.id } });
+            if (!foundClient) {
+                throw new common_1.NotFoundException(`Client with id ${group.id} does not exist`);
+            }
+            if (foundClient.role.role !== role_enum_1.Role.Client) {
+                throw new common_1.NotFoundException(`User with id ${group.id} does not Client`);
+            }
+        }
         if (group) {
             var foundGroup = await this.TGRepository.findOne({ where: { id: group.id } });
             if (!foundGroup) {
@@ -50,6 +66,8 @@ let RequestService = class RequestService {
         }
         const newRequest = this.requestRepository.create({ group: foundGroup, programing: foundPrograming, request_date });
         const savedRequest = await this.requestRepository.save(newRequest);
+        const transport = this.transportService.get_transport(idTransport);
+        this.RtransportService.create_request_trasnport({ request: newRequest, trasnport: await transport });
         return savedRequest;
     }
 };
@@ -59,8 +77,12 @@ exports.RequestService = RequestService = __decorate([
     __param(0, (0, typeorm_2.InjectRepository)(entities_1.request)),
     __param(1, (0, typeorm_2.InjectRepository)(entities_2.turistic_group)),
     __param(2, (0, typeorm_2.InjectRepository)(entities_3.programing)),
+    __param(3, (0, typeorm_2.InjectRepository)(entities_4.user)),
     __metadata("design:paramtypes", [typeorm_1.Repository,
         typeorm_1.Repository,
-        typeorm_1.Repository])
+        typeorm_1.Repository,
+        typeorm_1.Repository,
+        transport_service_1.TransportService,
+        request_transport_service_1.RequestTransportService])
 ], RequestService);
 //# sourceMappingURL=request.service.js.map

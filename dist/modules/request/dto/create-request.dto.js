@@ -27,4 +27,8 @@ __decorate([
     (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)
 ], CreateRequestDto.prototype, "request_date", void 0);
+__decorate([
+    (0, class_validator_1.IsObject)(),
+    __metadata("design:type", Object)
+], CreateRequestDto.prototype, "client", void 0);
 //# sourceMappingURL=create-request.dto.js.map
