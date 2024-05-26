@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { CreateDriverDto, UpdateDriverDto } from './dto';
 import { car } from '../car/entities';
 import { driver_category } from '../driver_category/entities';
+import { transport } from '../transport/entities';
 const PDFDocument = require('pdfkit-table');
 
 @Injectable()
@@ -15,7 +16,8 @@ export class DriverService {
                 @InjectRepository(driver_situation) private readonly driver_situationRepository: Repository<driver_situation>,
                 @InjectRepository(driver_category) private readonly driver_categoryRepository: Repository<driver_category>,
                 @InjectRepository(vacation) private readonly vacationRepository: Repository<vacation>,
-                @InjectRepository(car) private readonly carRepository: Repository<car>) {}
+                @InjectRepository(car) private readonly carRepository: Repository<car>,
+                @InjectRepository(transport) private readonly transportRepository: Repository<transport>) {}
 
     async get_drivers(): Promise<driver[]> {
         return await this.driverRepository.find({ relations: ['driver_situation','vacation','driver_category'] });
@@ -27,6 +29,34 @@ export class DriverService {
             throw new NotFoundException(`Driver with id ${id} not found`);
         }
         return foundDriver;
+    }
+
+    async getDriverAvailable(plate:string,date:Date):Promise<driver[]>{
+      let driverWhithPC=await this.driverRepository.findOne({where:{permanent_car:plate , driver_situation:{type_situation: "Available"}},relations:['driver_situation']});
+      if(driverWhithPC){
+       return [driverWhithPC];        
+      }else{ 
+      const subQuery = this.driverRepository.createQueryBuilder('driver')
+        .leftJoinAndSelect('driver.transport', 'transport')
+        .leftJoinAndSelect('transport.request_transport', 'request_transport') 
+        .leftJoinAndSelect('request_transport.request', 'request') 
+        .where('request.request_date = :date', { date }) 
+        .andWhere('transport.id = request_transport.transport') 
+        .select('driver.id');
+      
+      const driversQuery = this.driverRepository.createQueryBuilder('driver')
+        .leftJoinAndSelect('driver.driver_situations', 'driverSituation')
+        .where('driver.permanent_car IS NULL')
+        .andWhere('driver.id NOT IN (' + subQuery.getSql() + ')')
+        .andWhere('driverSituation.type_situation = :availableType', { availableType: 'Available' });
+
+      const driversWithoutPermanentCarAndNoRequests = await driversQuery.getMany();
+
+      return driversWithoutPermanentCarAndNoRequests;
+
+      }
+
+      
     }
 
     async create_driver({ name, address, identify_card, permanent_car, situation, category, return_date }: CreateDriverDto & { return_date?: Date }): Promise<driver> {
@@ -78,23 +108,20 @@ export class DriverService {
       return savedDriver;
     }
 
-    async update_driver(id: number, { name, address, identify_card, permanent_car, situation, return_date }: UpdateDriverDto & { return_date?: Date }): Promise<driver> {
-      // Obtener el conductor a actualizar
+    async update_driver(id: number, { name, address, identify_card, permanent_car, situation, return_date }: UpdateDriverDto & { return_date?: Date }): Promise<driver> {      
       const driverToUpdate = await this.get_driver(id);
       if (!driverToUpdate) {
           throw new NotFoundException(`Driver with id ${id} not found`);
-      }
-  
-      // Actualizar la situación del conductor si se proporciona
+      }  
+      
       if (situation) {
           const foundSituation = await this.driver_situationRepository.findOne({ where: { type_situation: situation.type_situation } });
           if (!foundSituation) {
               throw new NotFoundException(`Driver situation with type ${situation.type_situation} not found`);
           }
           driverToUpdate.driver_situation = foundSituation;
-      }
-  
-      // Actualizar otros campos del conductor si se proporcionan
+      }  
+      
       if (name) {
           driverToUpdate.name = name;
       }
@@ -117,34 +144,33 @@ export class DriverService {
 
       }
 
-      // Guardar el conductor actualizado
+     
       const updatedDriver = await this.driverRepository.save(driverToUpdate);
   
-      // Manejar la lógica de vacaciones si se proporciona una fecha de regreso y la situación es "Vacation"
-      if (situation && return_date && situation.type_situation === "Vacation") {
+          if (situation && return_date && situation.type_situation === "Vacation") {
           const foundSituation = await this.driver_situationRepository.findOne({ where: { type_situation: situation.type_situation } });
           if (!foundSituation) {
               throw new NotFoundException(`Driver situation with type ${situation.type_situation} not found`);
           }
           
-          // Buscar la entrada de vacaciones asociada al conductor actualizado
+         
           let vacationEntry = await this.vacationRepository.findOne({ where: { driver: updatedDriver } });
           if (!vacationEntry) {
-              // Si no hay una entrada de vacaciones, crear una nueva
+          
               const newVacation = this.vacationRepository.create({ return_date, situation: foundSituation, driver: updatedDriver });
               vacationEntry = await this.vacationRepository.save(newVacation);
           } else {
-              // Si hay una entrada de vacaciones, actualizarla con la nueva fecha de regreso y situación
+              
               vacationEntry.return_date = return_date;
               vacationEntry.situation = foundSituation;
               await this.vacationRepository.save(vacationEntry);
           }
       } else {
-          // Si no se proporciona una fecha de regreso o la situación no es "Vacation", eliminar cualquier entrada de vacaciones asociada al conductor
+        
           await this.vacationRepository.delete({ driver: updatedDriver });
       }
       
-      // Devolver el conductor actualizado con las relaciones cargadas
+     
       const updatedDriverWithVacation = await this.driverRepository.findOne({ where: { id: updatedDriver.id }, relations: ['vacation'] });
   
       return updatedDriverWithVacation;
@@ -246,6 +272,7 @@ export class DriverService {
 
     return pdfBuffer;
 }
+
 
 
     

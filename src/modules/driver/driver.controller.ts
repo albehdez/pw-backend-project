@@ -26,6 +26,11 @@ export class DriverController {
     return this.driverService.get_driver(id);
   }
 
+  @Get("available")
+  get_driver_available(@Body("plate") plate:string, @Body('date') date:Date): Promise<driver[]> {
+    return this.driverService.getDriverAvailable(plate,date);
+  }
+
   @Post()
   create_driver(@Body() createDriverDto: CreateDriverDto): Promise<driver> {
     return this.driverService.create_driver(createDriverDto);

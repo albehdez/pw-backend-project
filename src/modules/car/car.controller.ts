@@ -25,7 +25,7 @@ export class CarController {
   }
 
   @Get("available")
-  get_cars_available(@Param("date")date:Date): Promise<car[]> {
+  get_cars_available(@Body("date")date:Date): Promise<car[]> {
     return this.carService.getCarsAvailableAndInTransport(date);
   }
 
