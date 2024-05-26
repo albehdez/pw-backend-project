@@ -1,6 +1,6 @@
-import { TuristicGroupService } from './turistic_group.service';
-import { turistic_group } from './entities';
-import { CreateTuristicGroupDto, UpdateTuristicGroupDto } from './dto';
+import { TuristicGroupService } from "./turistic_group.service";
+import { turistic_group } from "./entities";
+import { CreateTuristicGroupDto, UpdateTuristicGroupDto } from "./dto";
 export declare class TuristicGroupController {
     private readonly turistic_groupService;
     constructor(turistic_groupService: TuristicGroupService);
@@ -9,4 +9,5 @@ export declare class TuristicGroupController {
     create_turistic_group(createTuristicGroupDto: CreateTuristicGroupDto): Promise<turistic_group>;
     update_turistic_group(id: number, updateTuristicGroupDto: UpdateTuristicGroupDto): Promise<turistic_group>;
     delete_turistic_group(id: number): Promise<void>;
+    generatePDF(res: any): Promise<void>;
 }

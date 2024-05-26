@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -8,12 +9,15 @@ import { Repository } from "typeorm";
 import { user } from "./entities/user.entity";
 import { role } from "../role/entities";
 import { CreateUserDto, UpdateUserDto, UpdateUserRoleDto } from "./dto";
+import { Role } from "../common/enums/role.enum";
+import { MailService } from "../mail/mail.service";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(user) private readonly userRepository: Repository<user>,
-    @InjectRepository(role) private readonly roleRepository: Repository<role>
+    @InjectRepository(role) private readonly roleRepository: Repository<role>,
+    private mailService:MailService
   ) {}
 
   async create_user(createUserDto: CreateUserDto) {
@@ -41,6 +45,15 @@ export class UserService {
     newUser.role = foundRole; 
 
     const createdUser = await this.userRepository.save(newUser);
+
+    if(newUser.role.role===Role.Client){
+      try {
+        await this.mailService.sendMail(newUser.email, newUser.name);
+      } catch (error) {
+        console.error('Failed to send welcome email:', error);
+        throw new InternalServerErrorException('Failed to send welcome email',error);
+      }
+    }
 
     return createdUser;
   }

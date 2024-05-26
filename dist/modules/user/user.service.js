@@ -18,10 +18,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const entities_1 = require("../role/entities");
+const role_enum_1 = require("../common/enums/role.enum");
+const mail_service_1 = require("../mail/mail.service");
 let UserService = class UserService {
-    constructor(userRepository, roleRepository) {
+    constructor(userRepository, roleRepository, mailService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.mailService = mailService;
     }
     async create_user(createUserDto) {
         const foundRole = await this.roleRepository.findOne({
@@ -40,6 +43,15 @@ let UserService = class UserService {
         newUser.password = createUserDto.password;
         newUser.role = foundRole;
         const createdUser = await this.userRepository.save(newUser);
+        if (newUser.role.role === role_enum_1.Role.Client) {
+            try {
+                await this.mailService.sendMail(newUser.email, newUser.name);
+            }
+            catch (error) {
+                console.error('Failed to send welcome email:', error);
+                throw new common_1.InternalServerErrorException('Failed to send welcome email', error);
+            }
+        }
         return createdUser;
     }
     async get_users() {
@@ -101,6 +113,7 @@ exports.UserService = UserService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.user)),
     __param(1, (0, typeorm_1.InjectRepository)(entities_1.role)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository])
+        typeorm_2.Repository,
+        mail_service_1.MailService])
 ], UserService);
 //# sourceMappingURL=user.service.js.map

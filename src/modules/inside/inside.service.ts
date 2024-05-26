@@ -89,7 +89,7 @@ export class InsideService {
           ]);
     
           const table = {
-            title: "Veículos en el interior",
+            title: "Vehículos en el interior",
             headers: ["Matrícula", "Marca", "Fecha de regreso"],
             rows: rows,
           };

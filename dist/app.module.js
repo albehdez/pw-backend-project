@@ -30,6 +30,7 @@ const roadmap_request_module_1 = require("./modules/roadmap_request/roadmap_requ
 const transport_module_1 = require("./modules/transport/transport.module");
 const user_module_1 = require("./modules/user/user.module");
 const auth_module_1 = require("./modules/auth/auth.module");
+const mail_module_1 = require("./modules/mail/mail.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -44,7 +45,7 @@ exports.AppModule = AppModule = __decorate([
                 database: 'pw_bd_proyecto_final',
                 autoLoadEntities: true,
                 synchronize: true,
-            }), car_module_1.CarModule, inside_module_1.InsideModule, car_situation_module_1.CarSituationModule, driver_module_1.DriverModule, driver_situation_module_1.DriverSituationModule, driver_category_module_1.DriverCategoryModule, vacation_module_1.VacationModule, programing_module_1.ProgramingModule, programing_type_module_1.ProgramingTypeModule, country_module_1.CountryModule, turistic_group_module_1.TuristicGroupModule, role_module_1.RoleModule, change_type_module_1.ChangeTypeModule, change_module_1.ChangeModule, request_module_1.RequestModule, request_transport_module_1.RequestTransportModule, roadmap_module_1.RoadmapModule, roadmap_request_module_1.RoadmapRequestModule, transport_module_1.TransportModule, user_module_1.UserModule, auth_module_1.AuthModule],
+            }), car_module_1.CarModule, inside_module_1.InsideModule, car_situation_module_1.CarSituationModule, driver_module_1.DriverModule, driver_situation_module_1.DriverSituationModule, driver_category_module_1.DriverCategoryModule, vacation_module_1.VacationModule, programing_module_1.ProgramingModule, programing_type_module_1.ProgramingTypeModule, country_module_1.CountryModule, turistic_group_module_1.TuristicGroupModule, role_module_1.RoleModule, change_type_module_1.ChangeTypeModule, change_module_1.ChangeModule, request_module_1.RequestModule, request_transport_module_1.RequestTransportModule, roadmap_module_1.RoadmapModule, roadmap_request_module_1.RoadmapRequestModule, transport_module_1.TransportModule, user_module_1.UserModule, auth_module_1.AuthModule, mail_module_1.MailModule],
         controllers: [],
         providers: [],
     })

@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { Repository } from 'typeorm';
 import { country } from '../country/entities';
 import { turistic_group } from './entities';
@@ -11,4 +12,5 @@ export declare class TuristicGroupService {
     create_turistic_group({ number_turist, country }: CreateTuristicGroupDto): Promise<turistic_group>;
     update_turistic_group(id: number, { number_turist, country }: UpdateTuristicGroupDto): Promise<turistic_group>;
     delete_turistic_group(id: number): Promise<void>;
+    generatePDF(): Promise<Buffer>;
 }

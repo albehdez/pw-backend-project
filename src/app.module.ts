@@ -22,6 +22,7 @@ import { RoadmapRequestModule } from './modules/roadmap_request/roadmap_request.
 import { TransportModule } from './modules/transport/transport.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { MailModule } from './modules/mail/mail.module';
 
 
 
@@ -37,7 +38,7 @@ import { AuthModule } from './modules/auth/auth.module';
     autoLoadEntities:true,
     synchronize:true,
 
-  }),CarModule,InsideModule,CarSituationModule, DriverModule, DriverSituationModule, DriverCategoryModule, VacationModule, ProgramingModule, ProgramingTypeModule, CountryModule, TuristicGroupModule, RoleModule, ChangeTypeModule, ChangeModule, RequestModule, RequestTransportModule, RoadmapModule, RoadmapRequestModule, TransportModule, UserModule, AuthModule],
+  }),CarModule,InsideModule,CarSituationModule, DriverModule, DriverSituationModule, DriverCategoryModule, VacationModule, ProgramingModule, ProgramingTypeModule, CountryModule, TuristicGroupModule, RoleModule, ChangeTypeModule, ChangeModule, RequestModule, RequestTransportModule, RoadmapModule, RoadmapRequestModule, TransportModule, UserModule, AuthModule,MailModule],
   controllers: [],
   providers: [],
 
