@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const entities_1 = require("./entities");
+const dto_1 = require("./dto");
 let CountryService = class CountryService {
     constructor(country_repository) {
         this.country_repository = country_repository;
@@ -32,7 +33,7 @@ let CountryService = class CountryService {
         return country;
     }
     async create_country({ name }) {
-        const foundCountry = await this.country_repository.findOne({ where: { name: name } });
+        const foundCountry = await this.country_repository.findOne({ where: { name: dto_1.CreateCountryDto.name } });
         if (!foundCountry) {
             throw new common_1.NotFoundException(`Country with name ${name} not found`);
         }

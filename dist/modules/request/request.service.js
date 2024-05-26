@@ -23,51 +23,79 @@ const entities_4 = require("../user/entities");
 const role_enum_1 = require("../common/enums/role.enum");
 const transport_service_1 = require("../transport/transport.service");
 const request_transport_service_1 = require("../request_transport/request_transport.service");
+const car_service_1 = require("../car/car.service");
+const driver_service_1 = require("../driver/driver.service");
 let RequestService = class RequestService {
-    constructor(requestRepository, TGRepository, programingRepository, clientRepository, transportService, RtransportService) {
+    constructor(requestRepository, TGRepository, programingRepository, clientRepository, transportService, carService, driverService, RtransportService) {
         this.requestRepository = requestRepository;
         this.TGRepository = TGRepository;
         this.programingRepository = programingRepository;
         this.clientRepository = clientRepository;
         this.transportService = transportService;
+        this.carService = carService;
+        this.driverService = driverService;
         this.RtransportService = RtransportService;
     }
     async get_requests() {
-        return await this.requestRepository.find({ relations: ['turistic_group', 'programing'] });
+        return await this.requestRepository.find({
+            relations: ["turistic_group", "programing"],
+        });
     }
     async get_request(id) {
-        const foundRequest = await this.requestRepository.findOne({ where: { id }, relations: ['turistic_group', 'programing'] });
+        const foundRequest = await this.requestRepository.findOne({
+            where: { id },
+            relations: ["turistic_group", "programing"],
+        });
         if (!foundRequest) {
             throw new common_1.NotFoundException(`Request with id ${id} not found`);
         }
         return foundRequest;
     }
-    async create_request({ group, programing, request_date, client }, idTransport) {
+    async create_request({ group, programing, request_date, client }, id_car, id_driver, is_copilot) {
         if (client) {
-            var foundClient = await this.clientRepository.findOne({ where: { id: client.id } });
+            var foundClient = await this.clientRepository.findOne({
+                where: { id: client.id },
+            });
             if (!foundClient) {
                 throw new common_1.NotFoundException(`Client with id ${group.id} does not exist`);
             }
             if (foundClient.role.role !== role_enum_1.Role.Client) {
-                throw new common_1.NotFoundException(`User with id ${group.id} does not Client`);
+                throw new common_1.NotFoundException(`User with id ${client.id} does not Client`);
             }
         }
         if (group) {
-            var foundGroup = await this.TGRepository.findOne({ where: { id: group.id } });
+            var foundGroup = await this.TGRepository.findOne({
+                where: { id: group.id },
+            });
             if (!foundGroup) {
                 throw new common_1.NotFoundException(`Turistic Group withid ${group.id} does not exist`);
             }
         }
         if (programing) {
-            var foundPrograming = await this.programingRepository.findOne({ where: { id: programing.id } });
+            var foundPrograming = await this.programingRepository.findOne({
+                where: { id: programing.id },
+            });
             if (!foundPrograming) {
                 throw new common_1.NotFoundException(`Programing with id ${programing.id} does not exist`);
             }
         }
-        const newRequest = this.requestRepository.create({ group: foundGroup, programing: foundPrograming, request_date });
+        const car = this.carService.get_car(id_car);
+        const driver = this.driverService.get_driver(id_driver);
+        const transport = this.transportService.create_transport({
+            car: await car,
+            driver: await driver,
+            is_copilot,
+        });
+        const newRequest = this.requestRepository.create({
+            group: foundGroup,
+            programing: foundPrograming,
+            request_date,
+        });
         const savedRequest = await this.requestRepository.save(newRequest);
-        const transport = this.transportService.get_transport(idTransport);
-        this.RtransportService.create_request_trasnport({ request: newRequest, trasnport: await transport });
+        this.RtransportService.create_request_trasnport({
+            request: newRequest,
+            trasnport: await transport,
+        });
         return savedRequest;
     }
 };
@@ -83,6 +111,8 @@ exports.RequestService = RequestService = __decorate([
         typeorm_1.Repository,
         typeorm_1.Repository,
         transport_service_1.TransportService,
+        car_service_1.CarService,
+        driver_service_1.DriverService,
         request_transport_service_1.RequestTransportService])
 ], RequestService);
 //# sourceMappingURL=request.service.js.map

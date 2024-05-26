@@ -26,39 +26,52 @@ let TransportService = class TransportService {
         this.driverRepository = driverRepository;
     }
     async get_transports() {
-        return await this.transportRepository.find({ relations: ['car', 'driver'] });
+        return await this.transportRepository.find({
+            relations: ["car", "driver"],
+        });
     }
     async get_transport(id) {
-        const foundTranspor = await this.transportRepository.findOne({ where: { id }, relations: ['car', 'driver'] });
+        const foundTranspor = await this.transportRepository.findOne({
+            where: { id },
+            relations: ["car", "driver"],
+        });
         if (!foundTranspor) {
             throw new common_1.NotFoundException(`Transport with id ${id} not found`);
         }
         return foundTranspor;
     }
-    async create_transport({ is_copilot, car, driver }) {
-        const foundCar = await this.carRepository.findOne({ where: { id: car.id } });
-        if (!foundCar) {
-            throw new common_1.NotFoundException(`Car with type ${car.id} not found`);
+    async create_transport({ is_copilot, car, driver, }) {
+        const existingTransport = await this.transportRepository.findOne({
+            where: { car: { id: car.id }, driver: { id: driver.id } },
+        });
+        if (existingTransport) {
+            return existingTransport;
         }
-        const foundDriver = await this.driverRepository.findOne({ where: { id: driver.id } });
-        if (foundDriver) {
-            throw new common_1.NotFoundException(`Driver with id ${driver.id} not found`);
+        else {
+            const newTransport = this.transportRepository.create({
+                car: car,
+                driver: driver,
+                is_copilot: is_copilot,
+            });
+            const savedTransport = await this.transportRepository.save(newTransport);
+            return savedTransport;
         }
-        const newTransport = this.transportRepository.create({ is_copilot, car: foundCar, driver: foundDriver });
-        const savedTransport = await this.carRepository.save(newTransport);
-        return savedTransport;
     }
     async update_transport(id, { is_copilot, car, driver }) {
         const foundTransport = await this.get_transport(id);
         if (!foundTransport) {
             throw new common_1.NotFoundException(`Transport with type ${id} not found`);
         }
-        const foundCar = await this.carRepository.findOne({ where: { id: car.id } });
+        const foundCar = await this.carRepository.findOne({
+            where: { id: car.id },
+        });
         if (!foundCar) {
             throw new common_1.NotFoundException(`Car with type ${car.id} not found`);
         }
         foundTransport.car = foundCar;
-        const foundDriver = await this.driverRepository.findOne({ where: { id: driver.id } });
+        const foundDriver = await this.driverRepository.findOne({
+            where: { id: driver.id },
+        });
         if (foundDriver) {
             throw new common_1.NotFoundException(`Driver with id ${driver.id} not found`);
         }
@@ -70,7 +83,9 @@ let TransportService = class TransportService {
         return updatedTransport;
     }
     async delete_transport(id) {
-        const transportToDelete = await this.transportRepository.findOne({ where: { id } });
+        const transportToDelete = await this.transportRepository.findOne({
+            where: { id },
+        });
         if (!transportToDelete) {
             throw new common_1.NotFoundException(`Transport with id ${id} not found`);
         }

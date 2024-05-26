@@ -26,6 +26,9 @@ let DriverController = class DriverController {
     get_driver(id) {
         return this.driverService.get_driver(id);
     }
+    get_driver_available(plate, date) {
+        return this.driverService.getDriverAvailable(plate, date);
+    }
     create_driver(createDriverDto) {
         return this.driverService.create_driver(createDriverDto);
     }
@@ -59,6 +62,14 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], DriverController.prototype, "get_driver", null);
+__decorate([
+    (0, common_1.Get)("available"),
+    __param(0, (0, common_1.Body)("plate")),
+    __param(1, (0, common_1.Body)('date')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Date]),
+    __metadata("design:returntype", Promise)
+], DriverController.prototype, "get_driver_available", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

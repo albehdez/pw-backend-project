@@ -6,6 +6,7 @@ export declare class DriverController {
     constructor(driverService: DriverService);
     get_drivers(): Promise<driver[]>;
     get_driver(id: number): Promise<driver>;
+    get_driver_available(plate: string, date: Date): Promise<driver[]>;
     create_driver(createDriverDto: CreateDriverDto): Promise<driver>;
     update_driver(id: number, updateDriverDto: UpdateDriverDto): Promise<driver>;
     delete_driver(id: number): Promise<void>;

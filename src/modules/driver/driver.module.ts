@@ -7,10 +7,11 @@ import { driver_situation } from '../driver_situation/entities/driver_situation.
 import { driver_category } from '../driver_category/entities';
 import { vacation } from '../vacation/entities/vacation.entity';
 import { car } from '../car/entities';
+import { transport } from '../transport/entities';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([driver,driver_situation,driver_category,vacation,car])],
+  imports: [TypeOrmModule.forFeature([driver,driver_situation,driver_category,vacation,car,transport])],
   controllers: [DriverController],
   providers: [DriverService]
 })

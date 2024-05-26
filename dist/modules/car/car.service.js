@@ -31,6 +31,14 @@ let CarService = class CarService {
             relations: ["car_situation", "inside"],
         });
     }
+    async getCarsAvailableAndInTransport(date) {
+        return this.carRepository.createQueryBuilder("car")
+            .innerJoinAndSelect("car.transport", "transport")
+            .leftJoinAndSelect("transport.request_transport", "request_transport")
+            .leftJoinAndSelect("request_transport.request", "request")
+            .where("car.car_situation.type_situation = :situation AND transport.id IS NOT NULL AND request.request_date!= :date", { situation: 'available', date: date })
+            .getMany();
+    }
     async get_cars_simple() {
         const cars = await this.carRepository.find({
             relations: ["car_situation"],

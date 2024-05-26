@@ -25,6 +25,9 @@ let CarController = class CarController {
     get_cars() {
         return this.carService.get_cars();
     }
+    get_cars_available(date) {
+        return this.carService.getCarsAvailableAndInTransport(date);
+    }
     get_cars_simple() {
         return this.carService.get_cars_simple();
     }
@@ -60,6 +63,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], CarController.prototype, "get_cars", null);
+__decorate([
+    (0, common_1.Get)("available"),
+    __param(0, (0, common_1.Body)("date")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Date]),
+    __metadata("design:returntype", Promise)
+], CarController.prototype, "get_cars_available", null);
 __decorate([
     (0, common_1.Get)("simple"),
     __metadata("design:type", Function),

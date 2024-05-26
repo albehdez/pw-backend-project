@@ -10,6 +10,7 @@ export declare class CarService {
     private readonly insideRepository;
     constructor(carRepository: Repository<car>, car_situationRepository: Repository<car_situation>, insideRepository: Repository<inside>);
     get_cars(): Promise<car[]>;
+    getCarsAvailableAndInTransport(date: Date): Promise<car[]>;
     get_cars_simple(): Promise<{
         brand: string;
         number_seats: number;

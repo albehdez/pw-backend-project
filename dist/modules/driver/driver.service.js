@@ -21,14 +21,16 @@ const vacation_entity_1 = require("../vacation/entities/vacation.entity");
 const typeorm_2 = require("typeorm");
 const entities_1 = require("../car/entities");
 const entities_2 = require("../driver_category/entities");
+const entities_3 = require("../transport/entities");
 const PDFDocument = require('pdfkit-table');
 let DriverService = class DriverService {
-    constructor(driverRepository, driver_situationRepository, driver_categoryRepository, vacationRepository, carRepository) {
+    constructor(driverRepository, driver_situationRepository, driver_categoryRepository, vacationRepository, carRepository, transportRepository) {
         this.driverRepository = driverRepository;
         this.driver_situationRepository = driver_situationRepository;
         this.driver_categoryRepository = driver_categoryRepository;
         this.vacationRepository = vacationRepository;
         this.carRepository = carRepository;
+        this.transportRepository = transportRepository;
     }
     async get_drivers() {
         return await this.driverRepository.find({ relations: ['driver_situation', 'vacation', 'driver_category'] });
@@ -39,6 +41,28 @@ let DriverService = class DriverService {
             throw new common_1.NotFoundException(`Driver with id ${id} not found`);
         }
         return foundDriver;
+    }
+    async getDriverAvailable(plate, date) {
+        let driverWhithPC = await this.driverRepository.findOne({ where: { permanent_car: plate, driver_situation: { type_situation: "Available" } }, relations: ['driver_situation'] });
+        if (driverWhithPC) {
+            return [driverWhithPC];
+        }
+        else {
+            const subQuery = this.driverRepository.createQueryBuilder('driver')
+                .leftJoinAndSelect('driver.transport', 'transport')
+                .leftJoinAndSelect('transport.request_transport', 'request_transport')
+                .leftJoinAndSelect('request_transport.request', 'request')
+                .where('request.request_date = :date', { date })
+                .andWhere('transport.id = request_transport.transport')
+                .select('driver.id');
+            const driversQuery = this.driverRepository.createQueryBuilder('driver')
+                .leftJoinAndSelect('driver.driver_situations', 'driverSituation')
+                .where('driver.permanent_car IS NULL')
+                .andWhere('driver.id NOT IN (' + subQuery.getSql() + ')')
+                .andWhere('driverSituation.type_situation = :availableType', { availableType: 'Available' });
+            const driversWithoutPermanentCarAndNoRequests = await driversQuery.getMany();
+            return driversWithoutPermanentCarAndNoRequests;
+        }
     }
     async create_driver({ name, address, identify_card, permanent_car, situation, category, return_date }) {
         if (permanent_car) {
@@ -217,7 +241,9 @@ exports.DriverService = DriverService = __decorate([
     __param(2, (0, typeorm_1.InjectRepository)(entities_2.driver_category)),
     __param(3, (0, typeorm_1.InjectRepository)(vacation_entity_1.vacation)),
     __param(4, (0, typeorm_1.InjectRepository)(entities_1.car)),
+    __param(5, (0, typeorm_1.InjectRepository)(entities_3.transport)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,

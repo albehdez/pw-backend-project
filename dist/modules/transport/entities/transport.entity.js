@@ -27,21 +27,21 @@ __decorate([
     __metadata("design:type", Boolean)
 ], transport.prototype, "is_copilot", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => entities_1.car, car => car.transport),
-    (0, typeorm_1.JoinColumn)({ name: 'car_id' }),
+    (0, typeorm_1.ManyToOne)(() => entities_1.car, (car) => car.transport),
+    (0, typeorm_1.JoinColumn)({ name: "car_id" }),
     __metadata("design:type", entities_1.car)
 ], transport.prototype, "car", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => driver_entitty_1.driver, driver => driver.transport),
-    (0, typeorm_1.JoinColumn)({ name: 'driver_id' }),
+    (0, typeorm_1.ManyToOne)(() => driver_entitty_1.driver, (driver) => driver.transport),
+    (0, typeorm_1.JoinColumn)({ name: "driver_id" }),
     __metadata("design:type", driver_entitty_1.driver)
 ], transport.prototype, "driver", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => entities_2.request, request => request.transport),
+    (0, typeorm_1.ManyToMany)(() => entities_2.request, (request) => request.transport),
     __metadata("design:type", Array)
 ], transport.prototype, "request", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_3.request_transport, request_transport => request_transport.request),
+    (0, typeorm_1.OneToMany)(() => entities_3.request_transport, (request_transport) => request_transport.request),
     __metadata("design:type", Array)
 ], transport.prototype, "request_transport", void 0);
 exports.transport = transport = __decorate([

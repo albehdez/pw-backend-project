@@ -5,6 +5,7 @@ export declare class CarController {
     private readonly carService;
     constructor(carService: CarService);
     get_cars(): Promise<car[]>;
+    get_cars_available(date: Date): Promise<car[]>;
     get_cars_simple(): Promise<{
         brand: string;
         number_seats: number;
