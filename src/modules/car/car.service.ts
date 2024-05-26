@@ -28,6 +28,16 @@ export class CarService {
     });
   }
 
+  async getCarsAvailableAndInTransport(date: Date): Promise<car[]> {
+    return this.carRepository.createQueryBuilder("car")
+     .innerJoinAndSelect("car.transport", "transport") // Unimos la tabla de coches con la tabla de transportes
+     .leftJoinAndSelect("transport.request_transport", "request_transport") // Unimos la tabla de transportes con la tabla de request_transports
+     .leftJoinAndSelect("request_transport.request", "request") // Unimos la tabla de request_transports con la tabla de requests
+     .where("car.car_situation.type_situation = :situation AND transport.id IS NOT NULL AND request.request_date!= :date", 
+             { situation: 'available', date: date }) // Filtramos por coches disponibles que están en un transporte y no tienen un request en la fecha especificada
+     .getMany();
+  }
+
   async get_cars_simple(): Promise<
     {
       brand: string;
