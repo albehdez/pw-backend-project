@@ -2,12 +2,15 @@ import { request } from "./entities";
 import { Repository } from "typeorm";
 import { turistic_group } from "../turistic_group/entities";
 import { programing } from "../programing/entities";
-import { CreateRequestDto } from "./dto";
+import { CreateRequestDto, UpdateRequestDto } from "./dto";
 import { user } from "../user/entities";
 import { TransportService } from "../transport/transport.service";
 import { RequestTransportService } from "../request_transport/request_transport.service";
 import { CarService } from "../car/car.service";
 import { DriverService } from "../driver/driver.service";
+import { CreateTransportDto } from "../transport/dto";
+import { RoadmapService } from "../roadmap/roadmap.service";
+import { RoadmapRequestService } from "../roadmap_request/roadmap_request.service";
 export declare class RequestService {
     private readonly requestRepository;
     private readonly TGRepository;
@@ -17,8 +20,13 @@ export declare class RequestService {
     private carService;
     private driverService;
     private RtransportService;
-    constructor(requestRepository: Repository<request>, TGRepository: Repository<turistic_group>, programingRepository: Repository<programing>, clientRepository: Repository<user>, transportService: TransportService, carService: CarService, driverService: DriverService, RtransportService: RequestTransportService);
+    private roadmapService;
+    private RroadmapService;
+    constructor(requestRepository: Repository<request>, TGRepository: Repository<turistic_group>, programingRepository: Repository<programing>, clientRepository: Repository<user>, transportService: TransportService, carService: CarService, driverService: DriverService, RtransportService: RequestTransportService, roadmapService: RoadmapService, RroadmapService: RoadmapRequestService);
     get_requests(): Promise<request[]>;
     get_request(id: number): Promise<request>;
-    create_request({ group, programing, request_date, client }: CreateRequestDto, id_car: number, id_driver: number, is_copilot: boolean): Promise<request>;
+    create_request({ group, programing, request_date, client }: CreateRequestDto, { is_copilot, car, driver }: CreateTransportDto): Promise<request>;
+    update_request(id: number, { group, programing, request_date }: UpdateRequestDto): Promise<request>;
+    delete_request(id: number): Promise<void>;
+    handleCron(): Promise<void>;
 }

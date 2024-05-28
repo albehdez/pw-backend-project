@@ -10,4 +10,5 @@ export declare class ProgramingController {
     update_programing(id: number, updateProgramingDto: UpdateProgramingDto): Promise<programing>;
     delete_programing(id: number): Promise<void>;
     generatePDF(res: any): Promise<void>;
+    sendProgramingInfoByEmail(userEmail: string): Promise<void>;
 }

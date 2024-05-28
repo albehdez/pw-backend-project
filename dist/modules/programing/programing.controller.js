@@ -44,6 +44,9 @@ let ProgramingController = class ProgramingController {
         });
         res.end(buffer);
     }
+    async sendProgramingInfoByEmail(userEmail) {
+        await this.programingService.sendProgramingInfoEmailAndGeneratePdf(userEmail);
+    }
 };
 exports.ProgramingController = ProgramingController;
 __decorate([
@@ -88,6 +91,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ProgramingController.prototype, "generatePDF", null);
+__decorate([
+    (0, common_1.Post)("email"),
+    __param(0, (0, common_1.Body)("email")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProgramingController.prototype, "sendProgramingInfoByEmail", null);
 exports.ProgramingController = ProgramingController = __decorate([
     (0, common_1.Controller)("programing"),
     __metadata("design:paramtypes", [programing_service_1.ProgramingService])

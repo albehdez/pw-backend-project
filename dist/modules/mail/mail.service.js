@@ -26,6 +26,25 @@ let MailService = class MailService {
             },
         });
     }
+    async sendProgramingInfoEmail(userEmail, pdfBuffer) {
+        const mailOptions = {
+            to: userEmail,
+            subject: 'Información de Programaciones',
+            template: './programing',
+            attachments: [{
+                    filename: 'informacion_programaciones.pdf',
+                    content: pdfBuffer,
+                    type: 'application/pdf',
+                }],
+        };
+        try {
+            await this.mailerService.sendMail(mailOptions);
+            console.log('Correo enviado exitosamente');
+        }
+        catch (error) {
+            console.error('Error al enviar el correo:', error);
+        }
+    }
 };
 exports.MailService = MailService;
 exports.MailService = MailService = __decorate([

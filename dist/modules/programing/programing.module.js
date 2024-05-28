@@ -13,12 +13,13 @@ const programing_controller_1 = require("./programing.controller");
 const entities_1 = require("./entities");
 const typeorm_1 = require("@nestjs/typeorm");
 const entities_2 = require("../programing_type/entities");
+const mail_module_1 = require("../mail/mail.module");
 let ProgramingModule = class ProgramingModule {
 };
 exports.ProgramingModule = ProgramingModule;
 exports.ProgramingModule = ProgramingModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([entities_1.programing, entities_2.programing_type])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([entities_1.programing, entities_2.programing_type]), mail_module_1.MailModule],
         controllers: [programing_controller_1.ProgramingController],
         providers: [programing_service_1.ProgramingService]
     })

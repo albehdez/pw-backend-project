@@ -59,4 +59,13 @@ export class ProgramingController {
 
     res.end(buffer);
   }
+
+  @Post("email")
+  async sendProgramingInfoByEmail(
+    @Body("email") userEmail: string
+  ): Promise<void> {
+    await this.programingService.sendProgramingInfoEmailAndGeneratePdf(
+      userEmail
+    );
+  }
 }

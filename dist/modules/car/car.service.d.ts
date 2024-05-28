@@ -34,4 +34,5 @@ export declare class CarService {
     }): Promise<car>;
     delete_car(id: number): Promise<void>;
     generatePDF(): Promise<Buffer>;
+    update_car_km(id: number, km_available: number): Promise<car>;
 }

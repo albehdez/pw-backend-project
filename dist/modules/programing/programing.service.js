@@ -18,11 +18,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const entities_1 = require("./entities");
 const entities_2 = require("../programing_type/entities");
+const mail_service_1 = require("../mail/mail.service");
 const PDFDocument = require("pdfkit-table");
 let ProgramingService = class ProgramingService {
-    constructor(programingRepository, programing_typeRepository) {
+    constructor(programingRepository, programing_typeRepository, mailService) {
         this.programingRepository = programingRepository;
         this.programing_typeRepository = programing_typeRepository;
+        this.mailService = mailService;
     }
     async get_programings() {
         return await this.programingRepository.find({ relations: ['programing_type'] });
@@ -154,12 +156,18 @@ let ProgramingService = class ProgramingService {
         });
         return pdfBuffer;
     }
+    async sendProgramingInfoEmailAndGeneratePdf(userEmail) {
+        const pdfBuffer = await this.generatePDF();
+        await this.mailService.sendProgramingInfoEmail(userEmail, pdfBuffer);
+    }
 };
 exports.ProgramingService = ProgramingService;
 exports.ProgramingService = ProgramingService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(entities_1.programing)),
     __param(1, (0, typeorm_1.InjectRepository)(entities_2.programing_type)),
-    __metadata("design:paramtypes", [typeorm_2.Repository, typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        mail_service_1.MailService])
 ], ProgramingService);
 //# sourceMappingURL=programing.service.js.map

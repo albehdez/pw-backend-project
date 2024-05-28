@@ -5,12 +5,16 @@ import { Repository } from 'typeorm';
 import { programing } from './entities';
 import { programing_type } from '../programing_type/entities';
 import { CreateProgramingDto, UpdateProgramingDto } from './dto';
+import { MailService } from '../mail/mail.service';
 const PDFDocument = require("pdfkit-table");
 
 @Injectable()
 export class ProgramingService {
 
-    constructor(@InjectRepository(programing) private readonly programingRepository: Repository<programing>,@InjectRepository(programing_type) private readonly programing_typeRepository: Repository<programing_type>){}
+    constructor(@InjectRepository(programing) private readonly programingRepository: Repository<programing>,
+    @InjectRepository(programing_type) private readonly programing_typeRepository: Repository<programing_type>,
+    private readonly mailService: MailService 
+  ){}
 
     async get_programings():Promise<programing[]>{
         return await this.programingRepository.find({relations:['programing_type']});
@@ -166,5 +170,11 @@ export class ProgramingService {
     
         return pdfBuffer;
       }
+
+      async sendProgramingInfoEmailAndGeneratePdf(userEmail: string): Promise<void> {
+        const pdfBuffer = await this.generatePDF();
+        await this.mailService.sendProgramingInfoEmail(userEmail, pdfBuffer);
+      }
+      
 }
 
