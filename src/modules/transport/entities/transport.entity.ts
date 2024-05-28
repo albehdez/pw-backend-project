@@ -7,6 +7,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -31,6 +32,7 @@ export class transport {
   driver: driver;
 
   @ManyToMany(() => request, (request) => request.transport)
+  @JoinTable()
   request: request[];
 
   @OneToMany(

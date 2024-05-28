@@ -8,6 +8,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -55,8 +56,10 @@ export class driver {
   vacation: vacation[];
 
   @ManyToMany(() => car, (car) => car.drivers)
+  @JoinTable()
   cars: car[];
 
   @OneToMany(() => transport, (transport) => transport.driver)
+  @JoinTable()
   transport: transport[];
 }

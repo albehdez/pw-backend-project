@@ -14,7 +14,6 @@ import { CreateCarDto, UpdateCarDto } from "./dto";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
 
-@Auth(Role.Manager)
 @Controller("car")
 export class CarController {
   constructor(private readonly carService: CarService) {}
@@ -25,7 +24,7 @@ export class CarController {
   }
 
   @Get("available")
-  get_cars_available(@Body("date")date:Date): Promise<car[]> {
+  get_cars_available(@Body("date") date: Date): Promise<car[]> {
     return this.carService.getCarsAvailableAndInTransport(date);
   }
 
