@@ -55,10 +55,12 @@ __decorate([
 ], driver.prototype, "vacation", void 0);
 __decorate([
     (0, typeorm_1.ManyToMany)(() => entities_1.car, (car) => car.drivers),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], driver.prototype, "cars", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => entities_3.transport, (transport) => transport.driver),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], driver.prototype, "transport", void 0);
 exports.driver = driver = __decorate([

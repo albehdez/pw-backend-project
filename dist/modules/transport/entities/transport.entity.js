@@ -38,6 +38,7 @@ __decorate([
 ], transport.prototype, "driver", void 0);
 __decorate([
     (0, typeorm_1.ManyToMany)(() => entities_2.request, (request) => request.transport),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], transport.prototype, "request", void 0);
 __decorate([

@@ -20,7 +20,7 @@ let car = class car {
 };
 exports.car = car;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('increment'),
+    (0, typeorm_1.PrimaryGeneratedColumn)("increment"),
     __metadata("design:type", Number)
 ], car.prototype, "id", void 0);
 __decorate([
@@ -40,20 +40,24 @@ __decorate([
     __metadata("design:type", String)
 ], car.prototype, "license_plate", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => car_situation_entity_1.car_situation, (car_situation) => car_situation.cars, { cascade: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'car_situation_id' }),
+    (0, typeorm_1.ManyToOne)(() => car_situation_entity_1.car_situation, (car_situation) => car_situation.cars, {
+        cascade: true,
+    }),
+    (0, typeorm_1.JoinColumn)({ name: "car_situation_id" }),
     __metadata("design:type", car_situation_entity_1.car_situation)
 ], car.prototype, "car_situation", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => inside_entity_1.inside, (inside) => inside.car),
-    __metadata("design:type", Array)
+    __metadata("design:type", inside_entity_1.inside)
 ], car.prototype, "inside", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => driver_entitty_1.driver, driver => driver.cars),
+    (0, typeorm_1.ManyToMany)(() => driver_entitty_1.driver, (driver) => driver.cars),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], car.prototype, "drivers", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_1.transport, transport => transport.car),
+    (0, typeorm_1.OneToMany)(() => entities_1.transport, (transport) => transport.car),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], car.prototype, "transport", void 0);
 __decorate([
@@ -62,6 +66,6 @@ __decorate([
 ], car.prototype, "roadmap", void 0);
 exports.car = car = __decorate([
     (0, typeorm_1.Entity)(),
-    (0, typeorm_1.Unique)(['license_plate'])
+    (0, typeorm_1.Unique)(["license_plate"])
 ], car);
 //# sourceMappingURL=car.entity.js.map

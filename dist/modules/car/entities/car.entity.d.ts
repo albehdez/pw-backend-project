@@ -10,7 +10,7 @@ export declare class car {
     km_available: number;
     license_plate: string;
     car_situation: car_situation;
-    inside: inside[];
+    inside: inside;
     drivers: driver[];
     transport: transport[];
     roadmap: roadmap[];

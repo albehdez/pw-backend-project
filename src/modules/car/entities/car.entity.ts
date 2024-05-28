@@ -42,7 +42,7 @@ export class car {
   car_situation: car_situation;
 
   @OneToOne(() => inside, (inside) => inside.car)
-  inside: inside[];
+  inside: inside;
 
   @ManyToMany(() => driver, (driver) => driver.cars)
   @JoinTable()
