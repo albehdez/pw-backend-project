@@ -1,7 +1,11 @@
 import { Controller, Delete, Get, Param, Res } from "@nestjs/common";
 import { VacationService } from "./vacation.service";
 import { vacation } from "./entities/vacation.entity";
+import { Auth } from "../common/decorators/auth.decorador";
+import { Role } from "../common/enums/role.enum";
 
+@Auth(Role.Admin)
+@Auth(Role.Manager)
 @Controller("vacation")
 export class VacationController {
   constructor(private readonly vacation_service: VacationService) {}

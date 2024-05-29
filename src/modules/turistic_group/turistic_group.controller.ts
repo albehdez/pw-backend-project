@@ -7,13 +7,17 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Res,
 } from "@nestjs/common";
 import { TuristicGroupService } from "./turistic_group.service";
 import { turistic_group } from "./entities";
 import { CreateTuristicGroupDto, UpdateTuristicGroupDto } from "./dto";
+import { Auth } from "../common/decorators/auth.decorador";
+import { Role } from "../common/enums/role.enum";
 
-
+@Auth(Role.Admin)
+@Auth(Role.Manager)
 @Controller("turistic_group")
 export class TuristicGroupController {
   constructor(private readonly turistic_groupService: TuristicGroupService) {}
@@ -37,7 +41,7 @@ export class TuristicGroupController {
     );
   }
 
-  @Patch(":id")
+  @Put(":id")
   update_turistic_group(
     @Param("id") id: number,
     @Body() updateTuristicGroupDto: UpdateTuristicGroupDto
@@ -52,7 +56,7 @@ export class TuristicGroupController {
   delete_turistic_group(@Param("id") id: number): Promise<void> {
     return this.turistic_groupService.delete_turistic_group(id);
   }
-  
+
   @Get("pdf/generate")
   async generatePDF(@Res() res): Promise<void> {
     const buffer = await this.turistic_groupService.generatePDF();

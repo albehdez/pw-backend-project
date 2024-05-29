@@ -7,6 +7,7 @@ import {
   Body,
   Param,
   Res,
+  Put,
 } from "@nestjs/common";
 import { CarService } from "./car.service";
 import { car } from "./entities";
@@ -14,6 +15,8 @@ import { CreateCarDto, UpdateCarDto } from "./dto";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
 
+@Auth(Role.Admin)
+@Auth(Role.Manager)
 @Controller("car")
 export class CarController {
   constructor(private readonly carService: CarService) {}
@@ -64,7 +67,7 @@ export class CarController {
     return this.carService.create_car(createCarDto);
   }
 
-  @Patch(":id")
+  @Put(":id")
   update_car(@Param("id") id: number, @Body() updateCarDto: UpdateCarDto) {
     return this.carService.update_car(id, updateCarDto);
   }

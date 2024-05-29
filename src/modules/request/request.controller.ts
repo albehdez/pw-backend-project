@@ -4,7 +4,11 @@ import { request } from "./entities";
 import { CreateProgramingDto } from "../programing/dto";
 import { CreateTransportDto } from "../transport/dto";
 import { CreateRequestDto, UpdateRequestDto } from "./dto";
+import { Auth } from "../common/decorators/auth.decorador";
+import { Role } from "../common/enums/role.enum";
 
+@Auth(Role.Admin)
+@Auth(Role.Manager)
 @Controller("request")
 export class RequestController {
   constructor(private readonly requestService: RequestService) {}

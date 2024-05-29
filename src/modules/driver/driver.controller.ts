@@ -7,11 +7,16 @@ import {
   Delete,
   Get,
   Res,
+  Put,
 } from "@nestjs/common";
 import { DriverService } from "./driver.service";
 import { CreateDriverDto, UpdateDriverDto } from "./dto";
 import { driver } from "./entities/driver.entitty";
+import { Auth } from "../common/decorators/auth.decorador";
+import { Role } from "../common/enums/role.enum";
 
+@Auth(Role.Admin)
+@Auth(Role.Manager)
 @Controller("driver")
 export class DriverController {
   constructor(private readonly driverService: DriverService) {}
@@ -27,8 +32,11 @@ export class DriverController {
   }
 
   @Get("available")
-  get_driver_available(@Body("plate") plate:string, @Body('date') date:Date): Promise<driver[]> {
-    return this.driverService.getDriverAvailable(plate,date);
+  get_driver_available(
+    @Body("plate") plate: string,
+    @Body("date") date: Date
+  ): Promise<driver[]> {
+    return this.driverService.getDriverAvailable(plate, date);
   }
 
   @Post()
@@ -36,7 +44,7 @@ export class DriverController {
     return this.driverService.create_driver(createDriverDto);
   }
 
-  @Patch(":id")
+  @Put(":id")
   update_driver(
     @Param("id") id: number,
     @Body() updateDriverDto: UpdateDriverDto

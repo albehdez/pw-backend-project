@@ -7,12 +7,17 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Res,
 } from "@nestjs/common";
 import { ProgramingService } from "./programing.service";
 import { programing } from "./entities";
 import { CreateProgramingDto, UpdateProgramingDto } from "./dto";
+import { Auth } from "../common/decorators/auth.decorador";
+import { Role } from "../common/enums/role.enum";
 
+@Auth(Role.Admin)
+@Auth(Role.Manager)
 @Controller("programing")
 export class ProgramingController {
   constructor(private readonly programingService: ProgramingService) {}
@@ -34,7 +39,7 @@ export class ProgramingController {
     return this.programingService.create_programing(createProgramingDto);
   }
 
-  @Patch(":id")
+  @Put(":id")
   update_programing(
     @Param("id") id: number,
     @Body() updateProgramingDto: UpdateProgramingDto

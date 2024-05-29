@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -18,6 +19,7 @@ import { Role } from "../common/enums/role.enum";
 import { Roles } from "../common/decorators/roles.decoradors";
 import { Auth } from "../common/decorators/auth.decorador";
 
+@Auth(Role.Admin)
 @UsePipes(new ValidationPipe())
 @Controller("user")
 export class UserController {
@@ -43,7 +45,7 @@ export class UserController {
     return this.userService.findOneByEmail(email);
   }
 
-  @Patch(":email")
+  @Post(":email")
   updateUser(
     @Param("email") email: string,
     @Body() updateUserDto: UpdateUserDto
@@ -52,7 +54,7 @@ export class UserController {
   }
 
   @Auth(Role.Admin)
-  @Patch("role/:id")
+  @Put("role/:id")
   update_user_role(
     @Param("id") id: number,
     @Body() updateUserRoleDto: UpdateUserRoleDto
