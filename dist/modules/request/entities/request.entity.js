@@ -27,18 +27,22 @@ __decorate([
     __metadata("design:type", Number)
 ], request.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => entities_7.turistic_group, (turistic_group) => turistic_group.request, { cascade: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'id_group' }),
+    (0, typeorm_1.ManyToOne)(() => entities_7.turistic_group, (turistic_group) => turistic_group.request, {
+        cascade: true,
+    }),
+    (0, typeorm_1.JoinColumn)({ name: "id_turistic_group" }),
     __metadata("design:type", entities_7.turistic_group)
-], request.prototype, "group", void 0);
+], request.prototype, "turistic_group", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => entities_2.programing, (programing) => programing.request, { cascade: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'id_programing' }),
+    (0, typeorm_1.ManyToOne)(() => entities_2.programing, (programing) => programing.request, {
+        cascade: true,
+    }),
+    (0, typeorm_1.JoinColumn)({ name: "id_programing" }),
     __metadata("design:type", entities_2.programing)
 ], request.prototype, "programing", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => entities_8.user, (user) => user.requests, { cascade: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
+    (0, typeorm_1.JoinColumn)({ name: "user_id" }),
     __metadata("design:type", entities_8.user)
 ], request.prototype, "user", void 0);
 __decorate([
@@ -46,24 +50,25 @@ __decorate([
     __metadata("design:type", Date)
 ], request.prototype, "request_date", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_1.change, change => change.request),
-    (0, typeorm_1.JoinColumn)({ name: "change_id" }),
+    (0, typeorm_1.OneToMany)(() => entities_1.change, (change) => change.request),
     __metadata("design:type", Array)
 ], request.prototype, "change", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => entities_4.roadmap, roadmap => roadmap.requests),
+    (0, typeorm_1.ManyToMany)(() => entities_4.roadmap, (roadmap) => roadmap.requests),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], request.prototype, "roadmaps", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_5.roadmap_request, roadmap_request => roadmap_request.request),
+    (0, typeorm_1.OneToMany)(() => entities_5.roadmap_request, (roadmap_request) => roadmap_request.request),
     __metadata("design:type", Array)
 ], request.prototype, "roadmap_request", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => entities_6.transport, transport => transport.request),
+    (0, typeorm_1.ManyToMany)(() => entities_6.transport, (transport) => transport.request),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], request.prototype, "transport", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_3.request_transport, request_transport => request_transport.request),
+    (0, typeorm_1.OneToMany)(() => entities_3.request_transport, (request_transport) => request_transport.request, { onDelete: "CASCADE" }),
     __metadata("design:type", Array)
 ], request.prototype, "request_transport", void 0);
 exports.request = request = __decorate([

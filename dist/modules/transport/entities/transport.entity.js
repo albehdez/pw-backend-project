@@ -43,6 +43,7 @@ __decorate([
 ], transport.prototype, "request", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => entities_3.request_transport, (request_transport) => request_transport.request),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Array)
 ], transport.prototype, "request_transport", void 0);
 exports.transport = transport = __decorate([

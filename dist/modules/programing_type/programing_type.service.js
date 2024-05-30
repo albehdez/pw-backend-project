@@ -25,14 +25,18 @@ let ProgramingTypeService = class ProgramingTypeService {
         return await this.programing_typeRepository.find();
     }
     async get_programing_type(id) {
-        const programing_type = await this.programing_typeRepository.findOne({ where: { id } });
+        const programing_type = await this.programing_typeRepository.findOne({
+            where: { id },
+        });
         if (!programing_type) {
             throw new common_1.NotFoundException(`Programing Type with id ${id} not found`);
         }
         return programing_type;
     }
     async create_programing_type({ programing_type }) {
-        const programing_type_create = this.programing_typeRepository.create({ programing_type });
+        const programing_type_create = this.programing_typeRepository.create({
+            programing_type,
+        });
         return this.programing_typeRepository.save(programing_type_create);
     }
     async delete_programing_type(id) {

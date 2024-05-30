@@ -16,6 +16,8 @@ exports.DriverController = void 0;
 const common_1 = require("@nestjs/common");
 const driver_service_1 = require("./driver.service");
 const dto_1 = require("./dto");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let DriverController = class DriverController {
     constructor(driverService) {
         this.driverService = driverService;
@@ -63,9 +65,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DriverController.prototype, "get_driver", null);
 __decorate([
-    (0, common_1.Get)("available"),
+    (0, common_1.Put)("available"),
     __param(0, (0, common_1.Body)("plate")),
-    __param(1, (0, common_1.Body)('date')),
+    __param(1, (0, common_1.Body)("date")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Date]),
     __metadata("design:returntype", Promise)
@@ -78,7 +80,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DriverController.prototype, "create_driver", null);
 __decorate([
-    (0, common_1.Patch)(":id"),
+    (0, common_1.Put)(":id"),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -100,6 +102,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DriverController.prototype, "generatePDF", null);
 exports.DriverController = DriverController = __decorate([
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
     (0, common_1.Controller)("driver"),
     __metadata("design:paramtypes", [driver_service_1.DriverService])
 ], DriverController);

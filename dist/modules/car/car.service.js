@@ -32,13 +32,30 @@ let CarService = class CarService {
         });
     }
     async getCarsAvailableAndInTransport(date) {
-        return this.carRepository
-            .createQueryBuilder("car")
-            .innerJoinAndSelect("car.transport", "transport")
-            .leftJoinAndSelect("transport.request_transport", "request_transport")
-            .leftJoinAndSelect("request_transport.request", "request")
-            .where("car.car_situation.type_situation = :situation AND transport.id IS NOT NULL AND request.request_date!= :date", { situation: "available", date: date })
-            .getMany();
+        const cars = await this.carRepository.find({
+            where: { car_situation: { type_situation: "Available" } },
+        });
+        const filteredCarsPromises = cars.map(async (car) => {
+            const hasTransports = car.transport && car.transport.length > 0;
+            if (hasTransports) {
+                let foundCar = false;
+                for (const transport of car.transport) {
+                    for (const request of transport.request) {
+                        if (new Date(request.request_date).getTime() === date.getTime()) {
+                            foundCar = true;
+                            break;
+                        }
+                    }
+                    if (foundCar)
+                        break;
+                }
+                return foundCar ? null : car;
+            }
+            return car;
+        });
+        const filteredCars = await Promise.all(filteredCarsPromises);
+        const availableCars = filteredCars.filter((car) => car !== null);
+        return availableCars;
     }
     async get_cars_simple() {
         const cars = await this.carRepository.find({

@@ -1,5 +1,5 @@
-import { RoadmapRequestService } from './roadmap_request.service';
-import { roadmap_request } from './entities';
+import { RoadmapRequestService } from "./roadmap_request.service";
+import { roadmap_request } from "./entities";
 export declare class RoadmapRequestController {
     private readonly roadmap_request_service;
     constructor(roadmap_request_service: RoadmapRequestService);

@@ -19,8 +19,8 @@ let MailService = class MailService {
     async sendMail(mail, name) {
         await this.mailerService.sendMail({
             to: mail,
-            subject: 'Bienvenido al sistema!',
-            template: './welcome',
+            subject: "Bienvenido al sistema!",
+            template: "./welcome",
             context: {
                 name: name,
             },
@@ -29,21 +29,38 @@ let MailService = class MailService {
     async sendProgramingInfoEmail(userEmail, pdfBuffer) {
         const mailOptions = {
             to: userEmail,
-            subject: 'Información de Programaciones',
-            template: './programing',
-            attachments: [{
-                    filename: 'informacion_programaciones.pdf',
+            subject: "Información de Programaciones",
+            template: "./programing",
+            attachments: [
+                {
+                    filename: "informacion_programaciones.pdf",
                     content: pdfBuffer,
-                    type: 'application/pdf',
-                }],
+                    type: "application/pdf",
+                },
+            ],
         };
         try {
             await this.mailerService.sendMail(mailOptions);
-            console.log('Correo enviado exitosamente');
+            console.log("Correo enviado exitosamente");
         }
         catch (error) {
-            console.error('Error al enviar el correo:', error);
+            console.error("Error al enviar el correo:", error);
         }
+    }
+    async sendRequestMailToUser(mail, name, brand, groupCode, programmingDescription, requestedDate, start_time) {
+        await this.mailerService.sendMail({
+            to: mail,
+            subject: "Solicitud realizada",
+            template: "./request",
+            context: {
+                name: name,
+                brand: brand,
+                groupCode: groupCode,
+                programmingDescription: programmingDescription,
+                requestedDate: requestedDate,
+                start_time: start_time
+            },
+        });
     }
 };
 exports.MailService = MailService;

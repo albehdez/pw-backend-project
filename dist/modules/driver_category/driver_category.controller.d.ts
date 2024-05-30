@@ -1,6 +1,6 @@
-import { DriverCategoryService } from './driver_category.service';
-import { driver_category } from './entities';
-import { CreateDriverCategoryDto } from './dto';
+import { DriverCategoryService } from "./driver_category.service";
+import { driver_category } from "./entities";
+import { CreateDriverCategoryDto } from "./dto";
 export declare class DriverCategoryController {
     private readonly driver_category_service;
     constructor(driver_category_service: DriverCategoryService);

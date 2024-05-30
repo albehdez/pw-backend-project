@@ -31,15 +31,17 @@ __decorate([
 ], roadmap.prototype, "km_end", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => entities_1.car, { cascade: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'car_id' }),
+    (0, typeorm_1.JoinColumn)({ name: "car_id" }),
     __metadata("design:type", entities_1.car)
 ], roadmap.prototype, "car", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => entities_2.request, request => request.roadmaps),
+    (0, typeorm_1.ManyToMany)(() => entities_2.request, (request) => request.roadmaps),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Array)
 ], roadmap.prototype, "requests", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_3.roadmap_request, roadmap_request => roadmap_request.roadmap),
+    (0, typeorm_1.OneToMany)(() => entities_3.roadmap_request, (roadmap_request) => roadmap_request.roadmap),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Array)
 ], roadmap.prototype, "roadmap_request", void 0);
 exports.roadmap = roadmap = __decorate([

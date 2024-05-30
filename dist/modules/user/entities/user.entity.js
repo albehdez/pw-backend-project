@@ -38,7 +38,8 @@ __decorate([
     __metadata("design:type", role_entity_1.role)
 ], user.prototype, "role", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_1.request, request => request.user),
+    (0, typeorm_1.OneToMany)(() => entities_1.request, (request) => request.user),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Array)
 ], user.prototype, "requests", void 0);
 exports.user = user = __decorate([

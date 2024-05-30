@@ -1,5 +1,5 @@
-import { request_transport } from './entities';
-import { RequestTransportService } from './request_transport.service';
+import { request_transport } from "./entities";
+import { RequestTransportService } from "./request_transport.service";
 export declare class RequestTransportController {
     private readonly request_transport_service;
     constructor(request_transport_service: RequestTransportService);

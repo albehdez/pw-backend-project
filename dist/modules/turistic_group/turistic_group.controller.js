@@ -16,6 +16,8 @@ exports.TuristicGroupController = void 0;
 const common_1 = require("@nestjs/common");
 const turistic_group_service_1 = require("./turistic_group.service");
 const dto_1 = require("./dto");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let TuristicGroupController = class TuristicGroupController {
     constructor(turistic_groupService) {
         this.turistic_groupService = turistic_groupService;
@@ -67,7 +69,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TuristicGroupController.prototype, "create_turistic_group", null);
 __decorate([
-    (0, common_1.Patch)(":id"),
+    (0, common_1.Put)(":id"),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -89,6 +91,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TuristicGroupController.prototype, "generatePDF", null);
 exports.TuristicGroupController = TuristicGroupController = __decorate([
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
     (0, common_1.Controller)("turistic_group"),
     __metadata("design:paramtypes", [turistic_group_service_1.TuristicGroupService])
 ], TuristicGroupController);

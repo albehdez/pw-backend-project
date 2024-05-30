@@ -27,8 +27,4 @@ __decorate([
     (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)
 ], UpdateRequestDto.prototype, "request_date", void 0);
-__decorate([
-    (0, class_validator_1.IsObject)(),
-    __metadata("design:type", Object)
-], UpdateRequestDto.prototype, "client", void 0);
 //# sourceMappingURL=update-request.dto.js.map

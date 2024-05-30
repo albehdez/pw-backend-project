@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VacationController = void 0;
 const common_1 = require("@nestjs/common");
 const vacation_service_1 = require("./vacation.service");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let VacationController = class VacationController {
     constructor(vacation_service) {
         this.vacation_service = vacation_service;
@@ -67,6 +69,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], VacationController.prototype, "generatePDF", null);
 exports.VacationController = VacationController = __decorate([
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
     (0, common_1.Controller)("vacation"),
     __metadata("design:paramtypes", [vacation_service_1.VacationService])
 ], VacationController);

@@ -21,7 +21,8 @@ exports.CarModule = CarModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([entities_1.car, entities_2.car_situation, inside_entity_1.inside])],
         controllers: [car_controller_1.CarController],
-        providers: [car_service_1.CarService]
+        providers: [car_service_1.CarService],
+        exports: [car_service_1.CarService],
     })
 ], CarModule);
 //# sourceMappingURL=car.module.js.map

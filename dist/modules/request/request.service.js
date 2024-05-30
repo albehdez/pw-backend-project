@@ -28,8 +28,9 @@ const driver_service_1 = require("../driver/driver.service");
 const schedule_1 = require("@nestjs/schedule");
 const roadmap_service_1 = require("../roadmap/roadmap.service");
 const roadmap_request_service_1 = require("../roadmap_request/roadmap_request.service");
+const mail_service_1 = require("../mail/mail.service");
 let RequestService = class RequestService {
-    constructor(requestRepository, TGRepository, programingRepository, clientRepository, transportService, carService, driverService, RtransportService, roadmapService, RroadmapService) {
+    constructor(requestRepository, TGRepository, programingRepository, clientRepository, transportService, carService, driverService, RtransportService, roadmapService, RroadmapService, mailService) {
         this.requestRepository = requestRepository;
         this.TGRepository = TGRepository;
         this.programingRepository = programingRepository;
@@ -40,6 +41,7 @@ let RequestService = class RequestService {
         this.RtransportService = RtransportService;
         this.roadmapService = roadmapService;
         this.RroadmapService = RroadmapService;
+        this.mailService = mailService;
     }
     async get_requests() {
         return await this.requestRepository.find({
@@ -56,10 +58,11 @@ let RequestService = class RequestService {
         }
         return foundRequest;
     }
-    async create_request({ group, programing, request_date, client }, { is_copilot, car, driver }) {
+    async create_request({ group, programing, request_date, client, is_copilot, car, driver, }) {
         if (client) {
             var foundClient = await this.clientRepository.findOne({
                 where: { id: client.id },
+                relations: ["role"],
             });
             if (!foundClient) {
                 throw new common_1.NotFoundException(`Client with id ${group.id} does not exist`);
@@ -84,6 +87,24 @@ let RequestService = class RequestService {
                 throw new common_1.NotFoundException(`Programing with id ${programing.id} does not exist`);
             }
         }
+        const newRequest = this.requestRepository.create({
+            turistic_group: foundGroup,
+            programing: foundPrograming,
+            request_date,
+            user: foundClient,
+        });
+        const savedRequest = await this.requestRepository.save(newRequest);
+        this.add_transport({ car, driver, is_copilot }, newRequest.id);
+        try {
+            await this.mailService.sendRequestMailToUser(foundClient.email, foundClient.name, car.license_plate, foundGroup.id_group, foundPrograming.description, request_date, foundPrograming.start_time);
+        }
+        catch (error) {
+            console.error("Failed to send request email:", error);
+            throw new common_1.InternalServerErrorException("Failed to send request email", error);
+        }
+        return savedRequest;
+    }
+    async add_transport({ car, driver, is_copilot }, id_request) {
         const Ncar = this.carService.get_car(car.id);
         const Ndriver = this.driverService.get_driver(driver.id);
         const transport = this.transportService.create_transport({
@@ -91,17 +112,12 @@ let RequestService = class RequestService {
             driver: await Ndriver,
             is_copilot,
         });
-        const newRequest = this.requestRepository.create({
-            group: foundGroup,
-            programing: foundPrograming,
-            request_date,
-        });
-        const savedRequest = await this.requestRepository.save(newRequest);
+        const Request = await this.get_request(id_request);
         this.RtransportService.create_request_trasnport({
-            request: newRequest,
+            request: Request,
             trasnport: await transport,
         });
-        return savedRequest;
+        return transport;
     }
     async update_request(id, { group, programing, request_date }) {
         const requestUpdate = await this.get_request(id);
@@ -118,7 +134,7 @@ let RequestService = class RequestService {
             if (!group_u) {
                 throw new common_1.NotFoundException(`Turistic Group whith id ${group.id} not found`);
             }
-            requestUpdate.group = group_u;
+            requestUpdate.turistic_group = group_u;
         }
         if (programing) {
             const programing_u = await this.programingRepository.findOne({
@@ -198,6 +214,7 @@ exports.RequestService = RequestService = __decorate([
         driver_service_1.DriverService,
         request_transport_service_1.RequestTransportService,
         roadmap_service_1.RoadmapService,
-        roadmap_request_service_1.RoadmapRequestService])
+        roadmap_request_service_1.RoadmapRequestService,
+        mail_service_1.MailService])
 ], RequestService);
 //# sourceMappingURL=request.service.js.map

@@ -19,9 +19,13 @@ let RoadmapRequestModule = class RoadmapRequestModule {
 exports.RoadmapRequestModule = RoadmapRequestModule;
 exports.RoadmapRequestModule = RoadmapRequestModule = __decorate([
     (0, common_1.Module)({
-        imports: [RoadmapRequestModule, typeorm_1.TypeOrmModule.forFeature([entities_1.request, entities_2.roadmap, entities_3.roadmap_request])],
+        imports: [
+            RoadmapRequestModule,
+            typeorm_1.TypeOrmModule.forFeature([entities_1.request, entities_2.roadmap, entities_3.roadmap_request]),
+        ],
         controllers: [roadmap_request_controller_1.RoadmapRequestController],
-        providers: [roadmap_request_service_1.RoadmapRequestService]
+        providers: [roadmap_request_service_1.RoadmapRequestService],
+        exports: [roadmap_request_service_1.RoadmapRequestService],
     })
 ], RoadmapRequestModule);
 //# sourceMappingURL=roadmap_request.module.js.map

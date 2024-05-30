@@ -16,6 +16,8 @@ exports.TransportController = void 0;
 const common_1 = require("@nestjs/common");
 const dto_1 = require("./dto");
 const transport_service_1 = require("./transport.service");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let TransportController = class TransportController {
     constructor(transportService) {
         this.transportService = transportService;
@@ -44,8 +46,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TransportController.prototype, "get_transports", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -58,22 +60,23 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TransportController.prototype, "create_transport", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Put)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, dto_1.UpdateTransportDto]),
     __metadata("design:returntype", void 0)
 ], TransportController.prototype, "update_transport", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], TransportController.prototype, "delete_transport", null);
 exports.TransportController = TransportController = __decorate([
-    (0, common_1.Controller)('transport'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("transport"),
     __metadata("design:paramtypes", [transport_service_1.TransportService])
 ], TransportController);
 //# sourceMappingURL=transport.controller.js.map

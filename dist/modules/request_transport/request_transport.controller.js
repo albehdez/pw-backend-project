@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequestTransportController = void 0;
 const common_1 = require("@nestjs/common");
 const request_transport_service_1 = require("./request_transport.service");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let RequestTransportController = class RequestTransportController {
     constructor(request_transport_service) {
         this.request_transport_service = request_transport_service;
@@ -37,21 +39,22 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RequestTransportController.prototype, "get_request_transports", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], RequestTransportController.prototype, "get_request_transport", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], RequestTransportController.prototype, "delete_request_transport", null);
 exports.RequestTransportController = RequestTransportController = __decorate([
-    (0, common_1.Controller)('request-transport'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("request-transport"),
     __metadata("design:paramtypes", [request_transport_service_1.RequestTransportService])
 ], RequestTransportController);
 //# sourceMappingURL=request_transport.controller.js.map

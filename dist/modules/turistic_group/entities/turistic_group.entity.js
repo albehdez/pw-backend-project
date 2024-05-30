@@ -17,7 +17,7 @@ let turistic_group = class turistic_group {
 };
 exports.turistic_group = turistic_group;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('increment'),
+    (0, typeorm_1.PrimaryGeneratedColumn)("increment"),
     __metadata("design:type", Number)
 ], turistic_group.prototype, "id", void 0);
 __decorate([
@@ -29,12 +29,15 @@ __decorate([
     __metadata("design:type", Number)
 ], turistic_group.prototype, "number_turist", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => entities_1.country, (country) => country.turistic_group, { cascade: true }),
+    (0, typeorm_1.ManyToOne)(() => entities_1.country, (country) => country.turistic_group, {
+        cascade: true,
+    }),
     (0, typeorm_1.JoinColumn)({ name: "country_id" }),
     __metadata("design:type", entities_1.country)
 ], turistic_group.prototype, "country", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_2.request, (request) => request.group),
+    (0, typeorm_1.OneToMany)(() => entities_2.request, (request) => request.turistic_group),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Array)
 ], turistic_group.prototype, "request", void 0);
 exports.turistic_group = turistic_group = __decorate([

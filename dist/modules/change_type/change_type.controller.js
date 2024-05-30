@@ -16,6 +16,8 @@ exports.ChangeTypeController = void 0;
 const common_1 = require("@nestjs/common");
 const change_type_service_1 = require("./change_type.service");
 const dto_1 = require("./dto");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let ChangeTypeController = class ChangeTypeController {
     constructor(change_type_service) {
         this.change_type_service = change_type_service;
@@ -41,8 +43,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChangeTypeController.prototype, "get_changes_type", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -55,14 +57,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChangeTypeController.prototype, "create_changes_type", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ChangeTypeController.prototype, "delete_changes_type", null);
 exports.ChangeTypeController = ChangeTypeController = __decorate([
-    (0, common_1.Controller)('change-type'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("change-type"),
     __metadata("design:paramtypes", [change_type_service_1.ChangeTypeService])
 ], ChangeTypeController);
 //# sourceMappingURL=change_type.controller.js.map

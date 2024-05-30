@@ -16,6 +16,8 @@ exports.ProgramingController = void 0;
 const common_1 = require("@nestjs/common");
 const programing_service_1 = require("./programing.service");
 const dto_1 = require("./dto");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let ProgramingController = class ProgramingController {
     constructor(programingService) {
         this.programingService = programingService;
@@ -70,7 +72,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProgramingController.prototype, "create_programing", null);
 __decorate([
-    (0, common_1.Patch)(":id"),
+    (0, common_1.Put)(":id"),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -99,6 +101,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProgramingController.prototype, "sendProgramingInfoByEmail", null);
 exports.ProgramingController = ProgramingController = __decorate([
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
     (0, common_1.Controller)("programing"),
     __metadata("design:paramtypes", [programing_service_1.ProgramingService])
 ], ProgramingController);

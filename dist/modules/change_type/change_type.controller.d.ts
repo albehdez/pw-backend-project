@@ -1,6 +1,6 @@
-import { ChangeTypeService } from './change_type.service';
-import { change_type } from './entities';
-import { CreateChangeTypeDto } from './dto';
+import { ChangeTypeService } from "./change_type.service";
+import { change_type } from "./entities";
+import { CreateChangeTypeDto } from "./dto";
 export declare class ChangeTypeController {
     private readonly change_type_service;
     constructor(change_type_service: ChangeTypeService);

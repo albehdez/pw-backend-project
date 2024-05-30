@@ -2,7 +2,7 @@ import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { AuthService } from "./auth.service";
 import { UpdateUserCredentialsDto } from "./dto/update-user-credentials.dto";
-import { Role } from '../common/enums/role.enum';
+import { Role } from "../common/enums/role.enum";
 import { UserInterface } from "../common/interfaces/user.interface";
 export declare class AuthController {
     private readonly authService;

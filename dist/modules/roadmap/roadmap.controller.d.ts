@@ -1,6 +1,6 @@
-import { RoadmapService } from './roadmap.service';
-import { roadmap } from './entities';
-import { CreateRoadmapDto } from './dto';
+import { RoadmapService } from "./roadmap.service";
+import { roadmap } from "./entities";
+import { CreateRoadmapDto } from "./dto";
 export declare class RoadmapController {
     private readonly roadmapService;
     constructor(roadmapService: RoadmapService);

@@ -8,7 +8,7 @@ import { turistic_group } from "src/modules/turistic_group/entities";
 import { user } from "src/modules/user/entities";
 export declare class request {
     id: number;
-    group: turistic_group;
+    turistic_group: turistic_group;
     programing: programing;
     user: user;
     request_date: Date;

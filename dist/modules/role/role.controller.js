@@ -16,6 +16,8 @@ exports.RoleController = void 0;
 const common_1 = require("@nestjs/common");
 const dto_1 = require("./dto");
 const role_service_1 = require("./role.service");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let RoleController = class RoleController {
     constructor(role_service) {
         this.role_service = role_service;
@@ -41,8 +43,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RoleController.prototype, "get_roles", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -55,14 +57,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RoleController.prototype, "create_role", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], RoleController.prototype, "delete_role", null);
 exports.RoleController = RoleController = __decorate([
-    (0, common_1.Controller)('role'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("role"),
     __metadata("design:paramtypes", [role_service_1.RoleService])
 ], RoleController);
 //# sourceMappingURL=role.controller.js.map

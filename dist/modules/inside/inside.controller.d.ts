@@ -1,5 +1,5 @@
-import { InsideService } from './inside.service';
-import { inside } from './entities/inside.entity';
+import { InsideService } from "./inside.service";
+import { inside } from "./entities/inside.entity";
 export declare class InsideController {
     private readonly inside_service;
     constructor(inside_service: InsideService);

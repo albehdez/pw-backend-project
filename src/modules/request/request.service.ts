@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from "@nestjs/common";
 import { request } from "./entities";
 import { Between, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -16,6 +20,7 @@ import { Cron } from "@nestjs/schedule";
 import { RoadmapService } from "../roadmap/roadmap.service";
 import { RoadmapRequestService } from "../roadmap_request/roadmap_request.service";
 import { transport } from "../transport/entities";
+import { MailService } from "../mail/mail.service";
 
 @Injectable()
 export class RequestService {
@@ -32,7 +37,8 @@ export class RequestService {
     private driverService: DriverService,
     private RtransportService: RequestTransportService,
     private roadmapService: RoadmapService,
-    private RroadmapService: RoadmapRequestService
+    private RroadmapService: RoadmapRequestService,
+    private readonly mailService: MailService
   ) {}
   // @InjectRepository(car) private readonly carRepository: Repository<car>) {}
 
@@ -109,6 +115,24 @@ export class RequestService {
     const savedRequest = await this.requestRepository.save(newRequest);
 
     this.add_transport({ car, driver, is_copilot }, newRequest.id);
+
+    try {
+      await this.mailService.sendRequestMailToUser(
+        foundClient.email,
+        foundClient.name,
+        car.license_plate,
+        foundGroup.id_group,
+        foundPrograming.description,
+        request_date,
+        foundPrograming.start_time
+      );
+    } catch (error) {
+      console.error("Failed to send request email:", error);
+      throw new InternalServerErrorException(
+        "Failed to send request email",
+        error
+      );
+    }
 
     return savedRequest;
   }

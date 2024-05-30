@@ -1,6 +1,6 @@
-import { role } from './entities';
-import { CreateRoleDto } from './dto';
-import { RoleService } from './role.service';
+import { role } from "./entities";
+import { CreateRoleDto } from "./dto";
+import { RoleService } from "./role.service";
 export declare class RoleController {
     private readonly role_service;
     constructor(role_service: RoleService);

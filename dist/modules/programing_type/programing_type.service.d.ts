@@ -1,6 +1,6 @@
-import { programing_type } from './entities';
-import { Repository } from 'typeorm';
-import { CreateProgramingTypeDto } from './dto/crate_programing_type.dto';
+import { programing_type } from "./entities";
+import { Repository } from "typeorm";
+import { CreateProgramingTypeDto } from "./dto/crate_programing_type.dto";
 export declare class ProgramingTypeService {
     private readonly programing_typeRepository;
     constructor(programing_typeRepository: Repository<programing_type>);

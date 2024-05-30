@@ -22,9 +22,19 @@ let DriverModule = class DriverModule {
 exports.DriverModule = DriverModule;
 exports.DriverModule = DriverModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([driver_entitty_1.driver, driver_situation_entity_1.driver_situation, entities_1.driver_category, vacation_entity_1.vacation, entities_2.car, entities_3.transport])],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([
+                driver_entitty_1.driver,
+                driver_situation_entity_1.driver_situation,
+                entities_1.driver_category,
+                vacation_entity_1.vacation,
+                entities_2.car,
+                entities_3.transport,
+            ]),
+        ],
         controllers: [driver_controller_1.DriverController],
-        providers: [driver_service_1.DriverService]
+        providers: [driver_service_1.DriverService],
+        exports: [driver_service_1.DriverService]
     })
 ], DriverModule);
 //# sourceMappingURL=driver.module.js.map

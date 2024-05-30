@@ -21,6 +21,7 @@ exports.RoadmapModule = RoadmapModule = __decorate([
         providers: [roadmap_service_1.RoadmapService],
         controllers: [roadmap_controller_1.RoadmapController],
         imports: [typeorm_1.TypeOrmModule.forFeature([entities_1.roadmap, entities_2.car])],
+        exports: [roadmap_service_1.RoadmapService],
     })
 ], RoadmapModule);
 //# sourceMappingURL=roadmap.module.js.map

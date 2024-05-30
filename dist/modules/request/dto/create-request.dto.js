@@ -31,4 +31,17 @@ __decorate([
     (0, class_validator_1.IsObject)(),
     __metadata("design:type", Object)
 ], CreateRequestDto.prototype, "client", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], CreateRequestDto.prototype, "is_copilot", void 0);
+__decorate([
+    (0, class_validator_1.IsObject)(),
+    __metadata("design:type", Object)
+], CreateRequestDto.prototype, "car", void 0);
+__decorate([
+    (0, class_validator_1.IsObject)(),
+    __metadata("design:type", Object)
+], CreateRequestDto.prototype, "driver", void 0);
 //# sourceMappingURL=create-request.dto.js.map

@@ -11,6 +11,8 @@ import { DriverService } from "../driver/driver.service";
 import { CreateTransportDto } from "../transport/dto";
 import { RoadmapService } from "../roadmap/roadmap.service";
 import { RoadmapRequestService } from "../roadmap_request/roadmap_request.service";
+import { transport } from "../transport/entities";
+import { MailService } from "../mail/mail.service";
 export declare class RequestService {
     private readonly requestRepository;
     private readonly TGRepository;
@@ -22,10 +24,12 @@ export declare class RequestService {
     private RtransportService;
     private roadmapService;
     private RroadmapService;
-    constructor(requestRepository: Repository<request>, TGRepository: Repository<turistic_group>, programingRepository: Repository<programing>, clientRepository: Repository<user>, transportService: TransportService, carService: CarService, driverService: DriverService, RtransportService: RequestTransportService, roadmapService: RoadmapService, RroadmapService: RoadmapRequestService);
+    private readonly mailService;
+    constructor(requestRepository: Repository<request>, TGRepository: Repository<turistic_group>, programingRepository: Repository<programing>, clientRepository: Repository<user>, transportService: TransportService, carService: CarService, driverService: DriverService, RtransportService: RequestTransportService, roadmapService: RoadmapService, RroadmapService: RoadmapRequestService, mailService: MailService);
     get_requests(): Promise<request[]>;
     get_request(id: number): Promise<request>;
-    create_request({ group, programing, request_date, client }: CreateRequestDto, { is_copilot, car, driver }: CreateTransportDto): Promise<request>;
+    create_request({ group, programing, request_date, client, is_copilot, car, driver, }: CreateRequestDto): Promise<request>;
+    add_transport({ car, driver, is_copilot }: CreateTransportDto, id_request: number): Promise<transport>;
     update_request(id: number, { group, programing, request_date }: UpdateRequestDto): Promise<request>;
     delete_request(id: number): Promise<void>;
     handleCron(): Promise<void>;

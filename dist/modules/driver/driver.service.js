@@ -22,7 +22,7 @@ const typeorm_2 = require("typeorm");
 const entities_1 = require("../car/entities");
 const entities_2 = require("../driver_category/entities");
 const entities_3 = require("../transport/entities");
-const PDFDocument = require('pdfkit-table');
+const PDFDocument = require("pdfkit-table");
 let DriverService = class DriverService {
     constructor(driverRepository, driver_situationRepository, driver_categoryRepository, vacationRepository, carRepository, transportRepository) {
         this.driverRepository = driverRepository;
@@ -33,53 +33,77 @@ let DriverService = class DriverService {
         this.transportRepository = transportRepository;
     }
     async get_drivers() {
-        return await this.driverRepository.find({ relations: ['driver_situation', 'vacation', 'driver_category'] });
+        return await this.driverRepository.find({
+            relations: ["driver_situation", "vacation", "driver_category"],
+        });
     }
     async get_driver(id) {
-        const foundDriver = await this.driverRepository.findOne({ where: { id }, relations: ['driver_situation', 'vacation', 'driver_category'] });
+        const foundDriver = await this.driverRepository.findOne({
+            where: { id },
+            relations: ["driver_situation", "vacation", "driver_category"],
+        });
         if (!foundDriver) {
             throw new common_1.NotFoundException(`Driver with id ${id} not found`);
         }
         return foundDriver;
     }
     async getDriverAvailable(plate, date) {
-        let driverWhithPC = await this.driverRepository.findOne({ where: { permanent_car: plate, driver_situation: { type_situation: "Available" } }, relations: ['driver_situation'] });
-        if (driverWhithPC) {
-            return [driverWhithPC];
+        let driversAvailable = await this.driverRepository.find({
+            where: { driver_situation: { type_situation: "Available" } },
+            relations: ["driver_situation", "vacation", "driver_category"],
+        });
+        const driverWithSpedificPlate = driversAvailable.filter((driver) => driver.permanent_car === plate);
+        if (driverWithSpedificPlate.length === 0) {
+            const filteredDriversPromises = driversAvailable.map(async (driver) => {
+                const hasTransports = driver.transport && driver.transport.length > 0;
+                if (hasTransports) {
+                    let foundDriver = false;
+                    for (const transport of driver.transport) {
+                        for (const request of transport.request) {
+                            if (new Date(request.request_date).getTime() === date.getTime()) {
+                                foundDriver = true;
+                                break;
+                            }
+                        }
+                        if (foundDriver)
+                            break;
+                    }
+                    return foundDriver ? null : driver;
+                }
+                return driver;
+            });
+            const filteredDrivers = await Promise.all(filteredDriversPromises);
+            const availableDrives = filteredDrivers.filter((driver) => driver !== null);
+            return availableDrives;
         }
         else {
-            const subQuery = this.driverRepository.createQueryBuilder('driver')
-                .leftJoinAndSelect('driver.transport', 'transport')
-                .leftJoinAndSelect('transport.request_transport', 'request_transport')
-                .leftJoinAndSelect('request_transport.request', 'request')
-                .where('request.request_date = :date', { date })
-                .andWhere('transport.id = request_transport.transport')
-                .select('driver.id');
-            const driversQuery = this.driverRepository.createQueryBuilder('driver')
-                .leftJoinAndSelect('driver.driver_situations', 'driverSituation')
-                .where('driver.permanent_car IS NULL')
-                .andWhere('driver.id NOT IN (' + subQuery.getSql() + ')')
-                .andWhere('driverSituation.type_situation = :availableType', { availableType: 'Available' });
-            const driversWithoutPermanentCarAndNoRequests = await driversQuery.getMany();
-            return driversWithoutPermanentCarAndNoRequests;
+            return driverWithSpedificPlate;
         }
     }
-    async create_driver({ name, address, identify_card, permanent_car, situation, category, return_date }) {
+    async create_driver({ name, address, identify_card, permanent_car, situation, category, return_date, }) {
         if (permanent_car) {
-            const foundCar = await this.carRepository.findOne({ where: { license_plate: permanent_car } });
+            const foundCar = await this.carRepository.findOne({
+                where: { license_plate: permanent_car },
+            });
             if (!foundCar) {
                 throw new common_1.NotFoundException(`Car with license plate ${permanent_car} does not exist`);
             }
         }
-        const foundSituation = await this.driver_situationRepository.findOne({ where: { type_situation: situation.type_situation } });
-        const foundCategory = await this.driver_categoryRepository.findOne({ where: { type_category: category.type_category } });
+        const foundSituation = await this.driver_situationRepository.findOne({
+            where: { type_situation: situation.type_situation },
+        });
+        const foundCategory = await this.driver_categoryRepository.findOne({
+            where: { type_category: category.type_category },
+        });
         if (!foundSituation) {
             throw new common_1.NotFoundException(`Driver situation with type ${situation.type_situation} not found`);
         }
         if (!foundCategory) {
             throw new common_1.NotFoundException(`Driver category with type ${category.type_category} not found`);
         }
-        const foundIdentifyCard = await this.driverRepository.findOne({ where: { identify_card } });
+        const foundIdentifyCard = await this.driverRepository.findOne({
+            where: { identify_card },
+        });
         if (foundIdentifyCard) {
             throw new common_1.NotFoundException(`Driver with identify card ${identify_card} already exists`);
         }
@@ -96,19 +120,21 @@ let DriverService = class DriverService {
             const newVacation = this.vacationRepository.create({
                 return_date,
                 situation: foundSituation,
-                driver: savedDriver
+                driver: savedDriver,
             });
             await this.vacationRepository.save(newVacation);
         }
         return savedDriver;
     }
-    async update_driver(id, { name, address, identify_card, permanent_car, situation, return_date }) {
+    async update_driver(id, { name, address, identify_card, permanent_car, situation, return_date, }) {
         const driverToUpdate = await this.get_driver(id);
         if (!driverToUpdate) {
             throw new common_1.NotFoundException(`Driver with id ${id} not found`);
         }
         if (situation) {
-            const foundSituation = await this.driver_situationRepository.findOne({ where: { type_situation: situation.type_situation } });
+            const foundSituation = await this.driver_situationRepository.findOne({
+                where: { type_situation: situation.type_situation },
+            });
             if (!foundSituation) {
                 throw new common_1.NotFoundException(`Driver situation with type ${situation.type_situation} not found`);
             }
@@ -124,7 +150,9 @@ let DriverService = class DriverService {
             driverToUpdate.identify_card = identify_card;
         }
         if (permanent_car) {
-            const foundCar = await this.carRepository.findOne({ where: { license_plate: permanent_car } });
+            const foundCar = await this.carRepository.findOne({
+                where: { license_plate: permanent_car },
+            });
             if (!foundCar) {
                 throw new common_1.NotFoundException(`Car with license plate ${permanent_car} does not exist`);
             }
@@ -135,13 +163,21 @@ let DriverService = class DriverService {
         }
         const updatedDriver = await this.driverRepository.save(driverToUpdate);
         if (situation && return_date && situation.type_situation === "Vacation") {
-            const foundSituation = await this.driver_situationRepository.findOne({ where: { type_situation: situation.type_situation } });
+            const foundSituation = await this.driver_situationRepository.findOne({
+                where: { type_situation: situation.type_situation },
+            });
             if (!foundSituation) {
                 throw new common_1.NotFoundException(`Driver situation with type ${situation.type_situation} not found`);
             }
-            let vacationEntry = await this.vacationRepository.findOne({ where: { driver: updatedDriver } });
+            let vacationEntry = await this.vacationRepository.findOne({
+                where: { driver: updatedDriver },
+            });
             if (!vacationEntry) {
-                const newVacation = this.vacationRepository.create({ return_date, situation: foundSituation, driver: updatedDriver });
+                const newVacation = this.vacationRepository.create({
+                    return_date,
+                    situation: foundSituation,
+                    driver: updatedDriver,
+                });
                 vacationEntry = await this.vacationRepository.save(newVacation);
             }
             else {
@@ -153,62 +189,72 @@ let DriverService = class DriverService {
         else {
             await this.vacationRepository.delete({ driver: updatedDriver });
         }
-        const updatedDriverWithVacation = await this.driverRepository.findOne({ where: { id: updatedDriver.id }, relations: ['vacation'] });
+        const updatedDriverWithVacation = await this.driverRepository.findOne({
+            where: { id: updatedDriver.id },
+            relations: ["vacation"],
+        });
         return updatedDriverWithVacation;
     }
     async delete_driver(id) {
-        const driverToDelete = await this.driverRepository.findOne({ where: { id } });
+        const driverToDelete = await this.driverRepository.findOne({
+            where: { id },
+        });
         if (!driverToDelete) {
             throw new common_1.NotFoundException(`Driver with id ${id} not found`);
         }
-        const vacationEntry = await this.vacationRepository.findOne({ where: { driver: driverToDelete } });
+        const vacationEntry = await this.vacationRepository.findOne({
+            where: { driver: driverToDelete },
+        });
         if (vacationEntry) {
             await this.vacationRepository.remove(vacationEntry);
         }
         await this.driverRepository.remove(driverToDelete);
     }
     async generatePDF() {
-        const drivers = await this.driverRepository.find({ relations: ['driver_situation', 'driver_category'] });
-        const pdfBuffer = await new Promise(resolve => {
+        const drivers = await this.driverRepository.find({
+            relations: ["driver_situation", "driver_category"],
+        });
+        const pdfBuffer = await new Promise((resolve) => {
             const doc = new PDFDocument({
                 size: "LETTER",
                 bufferPages: true,
                 autoFirstPage: false,
             });
             let pageNumber = 0;
-            doc.on('pageAdded', () => {
+            doc.on("pageAdded", () => {
                 pageNumber++;
                 let bottom = doc.page.margins.bottom;
                 if (pageNumber > 1) {
-                    doc.moveTo(50, 55)
+                    doc
+                        .moveTo(50, 55)
                         .lineTo(doc.page.width - 50, 55)
                         .stroke();
                 }
                 doc.page.margins.bottom = 0;
                 doc.font("Helvetica").fontSize(14);
-                doc.text('Pág. ' + pageNumber, 0.5 * (doc.page.width - 100), doc.page.height - 50, {
+                doc.text("Pág. " + pageNumber, 0.5 * (doc.page.width - 100), doc.page.height - 50, {
                     width: 100,
-                    align: 'center',
+                    align: "center",
                     lineBreak: false,
                 });
                 doc.page.margins.bottom = bottom;
             });
             doc.addPage();
-            doc.text('', 0, 400);
+            doc.text("", 0, 400);
             doc.font("Helvetica-Bold").fontSize(24);
             doc.text("CubaTour", {
                 width: doc.page.width,
-                align: 'center'
+                align: "center",
             });
             doc.moveDown();
             doc.addPage();
-            doc.text('', 50, 70);
+            doc.text("", 50, 70);
             doc.fontSize(24);
             doc.moveDown();
             doc.font("Helvetica").fontSize(20);
-            const rows = drivers.map(driver => [
+            const rows = drivers.map((driver) => [
                 driver.name,
-                driver.permanent_car ? driver.permanent_car : '-',
+                driver.permanent_car ? driver.permanent_car : "-",
                 driver.driver_situation.type_situation,
                 driver.driver_category.type_category,
                 driver.address,
@@ -216,15 +262,22 @@ let DriverService = class DriverService {
             ]);
             const table = {
                 title: "Choferes",
-                headers: ["Nombre", "Carro permanernte", "Situación", "Categoría", "Dirección", "Identificación"],
-                rows: rows
+                headers: [
+                    "Nombre",
+                    "Carro permanernte",
+                    "Situación",
+                    "Categoría",
+                    "Dirección",
+                    "Identificación",
+                ],
+                rows: rows,
             };
             doc.table(table, {
                 columnsSize: [100, 100, 100, 100, 100, 100],
             });
             const buffer = [];
-            doc.on('data', buffer.push.bind(buffer));
-            doc.on('end', () => {
+            doc.on("data", buffer.push.bind(buffer));
+            doc.on("end", () => {
                 const data = Buffer.concat(buffer);
                 resolve(data);
             });

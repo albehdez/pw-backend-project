@@ -16,6 +16,8 @@ exports.ProgramingTypeController = void 0;
 const common_1 = require("@nestjs/common");
 const programing_type_service_1 = require("./programing_type.service");
 const crate_programing_type_dto_1 = require("./dto/crate_programing_type.dto");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let ProgramingTypeController = class ProgramingTypeController {
     constructor(programing_type_service) {
         this.programing_type_service = programing_type_service;
@@ -42,7 +44,7 @@ __decorate([
 ], ProgramingTypeController.prototype, "get_programings_type", null);
 __decorate([
     (0, common_1.Get)(":id"),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -55,14 +57,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProgramingTypeController.prototype, "create_programing_type", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ProgramingTypeController.prototype, "delete_programing_type", null);
 exports.ProgramingTypeController = ProgramingTypeController = __decorate([
-    (0, common_1.Controller)('programing-type'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("programing-type"),
     __metadata("design:paramtypes", [programing_type_service_1.ProgramingTypeService])
 ], ProgramingTypeController);
 //# sourceMappingURL=programing_type.controller.js.map

@@ -73,7 +73,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findOneByEmail", null);
 __decorate([
-    (0, common_1.Patch)(":email"),
+    (0, common_1.Post)(":email"),
     __param(0, (0, common_1.Param)("email")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -81,8 +81,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "updateUser", null);
 __decorate([
-    (0, auth_decorador_1.Auth)(role_enum_1.Role.Admin),
-    (0, common_1.Patch)("role/:id"),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Admin]),
+    (0, common_1.Post)("role/:id"),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -97,6 +97,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "delete_user", null);
 exports.UserController = UserController = __decorate([
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Admin]),
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Controller)("user"),
     __metadata("design:paramtypes", [user_service_1.UserService])

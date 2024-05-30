@@ -1,6 +1,6 @@
-import { ProgramingTypeService } from './programing_type.service';
-import { programing_type } from './entities';
-import { CreateProgramingTypeDto } from './dto/crate_programing_type.dto';
+import { ProgramingTypeService } from "./programing_type.service";
+import { programing_type } from "./entities";
+import { CreateProgramingTypeDto } from "./dto/crate_programing_type.dto";
 export declare class ProgramingTypeController {
     private readonly programing_type_service;
     constructor(programing_type_service: ProgramingTypeService);

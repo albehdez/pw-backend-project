@@ -16,6 +16,8 @@ exports.CountryController = void 0;
 const common_1 = require("@nestjs/common");
 const country_service_1 = require("./country.service");
 const dto_1 = require("./dto");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let CountryController = class CountryController {
     constructor(country_service) {
         this.country_service = country_service;
@@ -41,8 +43,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CountryController.prototype, "get_countrys", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -55,14 +57,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CountryController.prototype, "create_country", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], CountryController.prototype, "delete_country", null);
 exports.CountryController = CountryController = __decorate([
-    (0, common_1.Controller)('country'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("country"),
     __metadata("design:paramtypes", [country_service_1.CountryService])
 ], CountryController);
 //# sourceMappingURL=country.controller.js.map

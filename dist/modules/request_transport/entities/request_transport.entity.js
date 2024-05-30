@@ -21,13 +21,17 @@ __decorate([
     __metadata("design:type", Number)
 ], request_transport.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => entities_1.request, request => request.request_transport),
-    (0, typeorm_1.JoinColumn)({ name: 'request_id' }),
+    (0, typeorm_1.ManyToOne)(() => entities_1.request, (request) => request.request_transport, {
+        onDelete: "CASCADE",
+    }),
+    (0, typeorm_1.JoinColumn)({ name: "request_id" }),
     __metadata("design:type", entities_1.request)
 ], request_transport.prototype, "request", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => entities_2.transport, transport => transport.request_transport),
-    (0, typeorm_1.JoinColumn)({ name: 'trasnport_id' }),
+    (0, typeorm_1.ManyToOne)(() => entities_2.transport, (transport) => transport.request_transport, {
+        onDelete: "CASCADE",
+    }),
+    (0, typeorm_1.JoinColumn)({ name: "trasnport_id" }),
     __metadata("design:type", entities_2.transport)
 ], request_transport.prototype, "transport", void 0);
 exports.request_transport = request_transport = __decorate([

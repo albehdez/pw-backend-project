@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InsideController = void 0;
 const common_1 = require("@nestjs/common");
 const inside_service_1 = require("./inside.service");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let InsideController = class InsideController {
     constructor(inside_service) {
         this.inside_service = inside_service;
@@ -46,15 +48,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], InsideController.prototype, "get_cars_inside", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], InsideController.prototype, "get_car_inside", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -67,7 +69,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], InsideController.prototype, "generatePDF", null);
 exports.InsideController = InsideController = __decorate([
-    (0, common_1.Controller)('inside'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("inside"),
     __metadata("design:paramtypes", [inside_service_1.InsideService])
 ], InsideController);
 //# sourceMappingURL=inside.controller.js.map

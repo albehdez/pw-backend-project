@@ -66,7 +66,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
 __decorate([
-    (0, auth_decorador_1.Auth)(role_enum_1.Role.Admin),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Admin]),
     (0, common_1.Get)("profile"),
     __param(0, (0, active_user_decorator_1.ActiveUser)()),
     __metadata("design:type", Function),

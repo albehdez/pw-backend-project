@@ -16,6 +16,8 @@ exports.DriverCategoryController = void 0;
 const common_1 = require("@nestjs/common");
 const driver_category_service_1 = require("./driver_category.service");
 const dto_1 = require("./dto");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let DriverCategoryController = class DriverCategoryController {
     constructor(driver_category_service) {
         this.driver_category_service = driver_category_service;
@@ -41,8 +43,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DriverCategoryController.prototype, "get_drivers_category", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -55,14 +57,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DriverCategoryController.prototype, "create_driver_category", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], DriverCategoryController.prototype, "delete_driver_category", null);
 exports.DriverCategoryController = DriverCategoryController = __decorate([
-    (0, common_1.Controller)('driver-category'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("driver-category"),
     __metadata("design:paramtypes", [driver_category_service_1.DriverCategoryService])
 ], DriverCategoryController);
 //# sourceMappingURL=driver_category.controller.js.map

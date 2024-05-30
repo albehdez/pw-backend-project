@@ -22,6 +22,7 @@ exports.TransportModule = TransportModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([entities_2.car, driver_entitty_1.driver, entities_1.transport])],
         providers: [transport_service_1.TransportService],
         controllers: [transport_controller_1.TransportController],
+        exports: [transport_service_1.TransportService],
     })
 ], TransportModule);
 //# sourceMappingURL=transport.module.js.map

@@ -15,6 +15,7 @@ import { DriverModule } from "../driver/driver.module";
 import { RequestTransportModule } from "../request_transport/request_transport.module";
 import { RoadmapModule } from "../roadmap/roadmap.module";
 import { RoadmapRequestModule } from "../roadmap_request/roadmap_request.module";
+import { MailModule } from "../mail/mail.module";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { RoadmapRequestModule } from "../roadmap_request/roadmap_request.module"
     RequestTransportModule,
     RoadmapModule,
     RoadmapRequestModule,
+    MailModule
   ],
   controllers: [RequestController],
   providers: [RequestService],

@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoadmapRequestController = void 0;
 const common_1 = require("@nestjs/common");
 const roadmap_request_service_1 = require("./roadmap_request.service");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let RoadmapRequestController = class RoadmapRequestController {
     constructor(roadmap_request_service) {
         this.roadmap_request_service = roadmap_request_service;
@@ -37,21 +39,22 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RoadmapRequestController.prototype, "get_roadmaps_request", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], RoadmapRequestController.prototype, "get_roadmap_request", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], RoadmapRequestController.prototype, "delete_roadmap_request", null);
 exports.RoadmapRequestController = RoadmapRequestController = __decorate([
-    (0, common_1.Controller)('roadmap-request'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("roadmap-request"),
     __metadata("design:paramtypes", [roadmap_request_service_1.RoadmapRequestService])
 ], RoadmapRequestController);
 //# sourceMappingURL=roadmap_request.controller.js.map

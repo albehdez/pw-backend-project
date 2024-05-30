@@ -16,6 +16,8 @@ exports.CarSituationController = void 0;
 const common_1 = require("@nestjs/common");
 const car_situation_service_1 = require("./car_situation.service");
 const create_car_situation_dto_1 = require("./dto/create-car_situation.dto");
+const auth_decorador_1 = require("../common/decorators/auth.decorador");
+const role_enum_1 = require("../common/enums/role.enum");
 let CarSituationController = class CarSituationController {
     constructor(car_situation_service) {
         this.car_situation_service = car_situation_service;
@@ -41,8 +43,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CarSituationController.prototype, "get_cars_situation", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -55,14 +57,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CarSituationController.prototype, "create_car_situation", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], CarSituationController.prototype, "delete_car_situation", null);
 exports.CarSituationController = CarSituationController = __decorate([
-    (0, common_1.Controller)('car-situation'),
+    (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
+    (0, common_1.Controller)("car-situation"),
     __metadata("design:paramtypes", [car_situation_service_1.CarSituationService])
 ], CarSituationController);
 //# sourceMappingURL=car_situation.controller.js.map

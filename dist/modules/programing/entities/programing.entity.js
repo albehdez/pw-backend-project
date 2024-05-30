@@ -17,12 +17,12 @@ let programing = class programing {
 };
 exports.programing = programing;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('increment'),
+    (0, typeorm_1.PrimaryGeneratedColumn)("increment"),
     __metadata("design:type", Number)
 ], programing.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => programing_type_entity_1.programing_type, (programing_type) => programing_type.programing, { cascade: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'programing_type_id' }),
+    (0, typeorm_1.JoinColumn)({ name: "programing_type_id" }),
     __metadata("design:type", programing_type_entity_1.programing_type)
 ], programing.prototype, "programing_type", void 0);
 __decorate([
@@ -46,11 +46,19 @@ __decorate([
     __metadata("design:type", Number)
 ], programing.prototype, "delay", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => entities_1.request, (request) => request.group),
+    (0, typeorm_1.OneToMany)(() => entities_1.request, (request) => request.turistic_group),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Array)
 ], programing.prototype, "request", void 0);
 exports.programing = programing = __decorate([
     (0, typeorm_1.Entity)(),
-    (0, typeorm_1.Unique)(['programing_type', 'start_time', 'end_time', 'description', 'km_to_travel', 'delay'])
+    (0, typeorm_1.Unique)([
+        "programing_type",
+        "start_time",
+        "end_time",
+        "description",
+        "km_to_travel",
+        "delay",
+    ])
 ], programing);
 //# sourceMappingURL=programing.entity.js.map

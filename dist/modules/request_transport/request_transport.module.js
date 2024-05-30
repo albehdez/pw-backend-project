@@ -21,7 +21,8 @@ exports.RequestTransportModule = RequestTransportModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([entities_1.request, entities_2.transport, entities_3.request_transport])],
         controllers: [request_transport_controller_1.RequestTransportController],
-        providers: [request_transport_service_1.RequestTransportService]
+        providers: [request_transport_service_1.RequestTransportService],
+        exports: [request_transport_service_1.RequestTransportService],
     })
 ], RequestTransportModule);
 //# sourceMappingURL=request_transport.module.js.map

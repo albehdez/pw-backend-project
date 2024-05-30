@@ -1,6 +1,6 @@
-import { DriverSituationService } from './driver_situation.service';
-import { driver_situation } from './entities/driver_situation.entity';
-import { CreateCarSituationDto } from '../car_situation/dto';
+import { DriverSituationService } from "./driver_situation.service";
+import { driver_situation } from "./entities/driver_situation.entity";
+import { CreateCarSituationDto } from "../car_situation/dto";
 export declare class DriverSituationController {
     private readonly driver_situation_service;
     constructor(driver_situation_service: DriverSituationService);

@@ -1,6 +1,6 @@
-import { transport } from './entities';
-import { CreateTransportDto, UpdateTransportDto } from './dto';
-import { TransportService } from './transport.service';
+import { transport } from "./entities";
+import { CreateTransportDto, UpdateTransportDto } from "./dto";
+import { TransportService } from "./transport.service";
 export declare class TransportController {
     private readonly transportService;
     constructor(transportService: TransportService);

@@ -1,6 +1,6 @@
-import { CountryService } from './country.service';
-import { country } from './entities';
-import { CreateCountryDto } from './dto';
+import { CountryService } from "./country.service";
+import { country } from "./entities";
+import { CreateCountryDto } from "./dto";
 export declare class CountryController {
     private readonly country_service;
     constructor(country_service: CountryService);
