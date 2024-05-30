@@ -3,9 +3,7 @@ import { request_transport } from "./entities";
 import { RequestTransportService } from "./request_transport.service";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
-
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("request-transport")
 export class RequestTransportController {
   constructor(

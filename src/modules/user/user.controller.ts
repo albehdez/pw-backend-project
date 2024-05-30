@@ -19,7 +19,7 @@ import { Role } from "../common/enums/role.enum";
 import { Roles } from "../common/decorators/roles.decoradors";
 import { Auth } from "../common/decorators/auth.decorador";
 
-@Auth(Role.Admin)
+@Auth([Role.Admin])
 @UsePipes(new ValidationPipe())
 @Controller("user")
 export class UserController {
@@ -53,8 +53,8 @@ export class UserController {
     return this.userService.update_user(email, updateUserDto);
   }
 
-  @Auth(Role.Admin)
-  @Put("role/:id")
+  @Auth([Role.Admin])
+  @Post("role/:id")
   update_user_role(
     @Param("id") id: number,
     @Body() updateUserRoleDto: UpdateUserRoleDto

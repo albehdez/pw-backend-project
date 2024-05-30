@@ -15,9 +15,7 @@ import { turistic_group } from "./entities";
 import { CreateTuristicGroupDto, UpdateTuristicGroupDto } from "./dto";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
-
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("turistic_group")
 export class TuristicGroupController {
   constructor(private readonly turistic_groupService: TuristicGroupService) {}

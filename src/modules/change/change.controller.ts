@@ -6,8 +6,7 @@ import { CreateChangeDto } from './dto';
 import { Auth } from '../common/decorators/auth.decorador';
 import { Role } from '../common/enums/role.enum';
 
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("change")
 export class ChangeController {
   constructor(private readonly changeService: ChangeService) {}

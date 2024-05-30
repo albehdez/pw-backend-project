@@ -4,8 +4,7 @@ import { inside } from "./entities/inside.entity";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
 
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("inside")
 export class InsideController {
   constructor(private readonly inside_service: InsideService) {}

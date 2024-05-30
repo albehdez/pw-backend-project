@@ -1,13 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { ProgramingTypeService } from './programing_type.service';
-import { programing_type } from './entities';
-import { CreateProgramingTypeDto } from './dto/crate_programing_type.dto';
-import { Auth } from '../common/decorators/auth.decorador';
-import { Role } from '../common/enums/role.enum';
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { ProgramingTypeService } from "./programing_type.service";
+import { programing_type } from "./entities";
+import { CreateProgramingTypeDto } from "./dto/crate_programing_type.dto";
+import { Auth } from "../common/decorators/auth.decorador";
+import { Role } from "../common/enums/role.enum";
 
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("programing-type")
 export class ProgramingTypeController {
   constructor(

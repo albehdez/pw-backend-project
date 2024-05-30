@@ -1,13 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { CountryService } from './country.service';
-import { country } from './entities';
-import { CreateCountryDto } from './dto';
-import { Auth } from '../common/decorators/auth.decorador';
-import { Role } from '../common/enums/role.enum';
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { CountryService } from "./country.service";
+import { country } from "./entities";
+import { CreateCountryDto } from "./dto";
+import { Auth } from "../common/decorators/auth.decorador";
+import { Role } from "../common/enums/role.enum";
 
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("country")
 export class CountryController {
   constructor(private readonly country_service: CountryService) {}

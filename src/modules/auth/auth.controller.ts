@@ -16,12 +16,10 @@ import { RegisterDto } from "./dto/register.dto";
 import { AuthService } from "./auth.service";
 import { UpdateUserCredentialsDto } from "./dto/update-user-credentials.dto";
 import { Request } from "express";
-import { Role } from '../common/enums/role.enum';
+import { Role } from "../common/enums/role.enum";
 import { Auth } from "../common/decorators/auth.decorador";
 import { ActiveUser } from "../common/decorators/active-user.decorator";
 import { UserInterface } from "../common/interfaces/user.interface";
-
-
 
 /* interface role {
   id: number;
@@ -65,7 +63,7 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-/*   @UseGuards(AuthGuard,RolesGuard) // Para cualquier endpoint hace falta copiar estos 2 decoradores para garantizar la autorización
+  /*   @UseGuards(AuthGuard,RolesGuard) // Para cualquier endpoint hace falta copiar estos 2 decoradores para garantizar la autorización
   @Roles(Role.Admin) //Estos son los roles que se le permite. Puede ser un array  @Roles('Admin','Manager')
   @Get("profile")
   get_profile(@Req() req: RequestWithUser) {
@@ -75,16 +73,15 @@ export class AuthController {
     });
   } */
 
-/*   La funcion de arriba es la misma que la de abajo, se ocupa el decorador @Auth creado por el desarrollador 
+  /*   La funcion de arriba es la misma que la de abajo, se ocupa el decorador @Auth creado por el desarrollador 
   que engloba los decoradores @Roles() y @UseGuards() */
 
-  
-  @Auth(Role.Admin) // Para cualquier endpoint hace falta copiar este decoreador para garantizar la autorización
+  @Auth([Role.Admin]) // Para cualquier endpoint hace falta copiar este decoreador para garantizar la autorización
   @Get("profile")
-  get_profile(@ActiveUser()user:UserInterface) {
+  get_profile(@ActiveUser() user: UserInterface) {
     return this.authService.get_profile({
-      email:user.email,
-      role:user.role.role,
+      email: user.email,
+      role: user.role.role,
     });
   }
 

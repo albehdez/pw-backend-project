@@ -1,11 +1,10 @@
-import { Controller, Delete, Get, Param } from '@nestjs/common';
-import { RoadmapRequestService } from './roadmap_request.service';
-import { roadmap_request } from './entities';
-import { Auth } from '../common/decorators/auth.decorador';
-import { Role } from '../common/enums/role.enum';
+import { Controller, Delete, Get, Param } from "@nestjs/common";
+import { RoadmapRequestService } from "./roadmap_request.service";
+import { roadmap_request } from "./entities";
+import { Auth } from "../common/decorators/auth.decorador";
+import { Role } from "../common/enums/role.enum";
 
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("roadmap-request")
 export class RoadmapRequestController {
   constructor(

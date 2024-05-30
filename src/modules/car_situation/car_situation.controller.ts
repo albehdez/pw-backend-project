@@ -5,9 +5,7 @@ import { car_situation } from "./entities/car_situation.entity";
 import { CreateCarSituationDto } from "./dto/create-car_situation.dto";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
-
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("car-situation")
 export class CarSituationController {
   constructor(private readonly car_situation_service: CarSituationService) {}

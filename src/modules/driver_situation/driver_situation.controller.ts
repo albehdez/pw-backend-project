@@ -5,8 +5,7 @@ import { CreateCarSituationDto } from "../car_situation/dto";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
 
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("driver-situation")
 export class DriverSituationController {
   constructor(

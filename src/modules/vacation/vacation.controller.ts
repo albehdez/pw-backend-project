@@ -4,8 +4,7 @@ import { vacation } from "./entities/vacation.entity";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
 
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("vacation")
 export class VacationController {
   constructor(private readonly vacation_service: VacationService) {}

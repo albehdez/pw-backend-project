@@ -15,8 +15,7 @@ import { driver } from "./entities/driver.entitty";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
 
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("driver")
 export class DriverController {
   constructor(private readonly driverService: DriverService) {}

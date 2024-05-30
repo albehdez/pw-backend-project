@@ -5,8 +5,7 @@ import { CreateDriverCategoryDto } from "./dto";
 import { Auth } from "../common/decorators/auth.decorador";
 import { Role } from "../common/enums/role.enum";
 
-@Auth(Role.Admin)
-@Auth(Role.Manager)
+@Auth([Role.Manager, Role.Admin])
 @Controller("driver-category")
 export class DriverCategoryController {
   constructor(
