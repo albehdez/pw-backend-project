@@ -31,7 +31,7 @@ export class DriverController {
     return this.driverService.get_driver(id);
   }
 
-  @Get("available")
+  @Put("available")
   get_driver_available(
     @Body("plate") plate: string,
     @Body("date") date: Date
