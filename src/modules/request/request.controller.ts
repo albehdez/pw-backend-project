@@ -30,6 +30,17 @@ export class RequestController {
     return this.requestService.get_request(id);
   }
 
+  @Get("solved/request")
+  get_solved_requests(): Promise<request[]> {
+    return this.requestService.get_solved_requests();
+  }
+
+  @Get("no/solved/request")
+  get_no_solved_requests(): Promise<request[]> {
+    return this.requestService.get_no_solved_requests();
+  }
+
+
   @Post()
   create_request(
     @Body() createrequestDto: CreateRequestDto,

@@ -49,6 +49,9 @@ let DriverController = class DriverController {
         });
         res.end(buffer);
     }
+    getDriversWithoutPermanentCar() {
+        return this.driverService.getDriversWithoutPermanentCar();
+    }
 };
 exports.DriverController = DriverController;
 __decorate([
@@ -101,6 +104,12 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], DriverController.prototype, "generatePDF", null);
+__decorate([
+    (0, common_1.Get)("driver/no/car"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DriverController.prototype, "getDriversWithoutPermanentCar", null);
 exports.DriverController = DriverController = __decorate([
     (0, auth_decorador_1.Auth)([role_enum_1.Role.Manager, role_enum_1.Role.Admin]),
     (0, common_1.Controller)("driver"),

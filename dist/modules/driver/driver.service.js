@@ -285,6 +285,14 @@ let DriverService = class DriverService {
         });
         return pdfBuffer;
     }
+    async getDriversWithoutPermanentCar() {
+        let drivers_no_car = await this.driverRepository.find({
+            where: {
+                permanent_car: (0, typeorm_2.IsNull)(),
+            },
+        });
+        return drivers_no_car;
+    }
 };
 exports.DriverService = DriverService;
 exports.DriverService = DriverService = __decorate([

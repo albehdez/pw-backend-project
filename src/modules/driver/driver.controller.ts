@@ -68,4 +68,9 @@ export class DriverController {
 
     res.end(buffer);
   }
+
+  @Get("driver/no/car")
+  getDriversWithoutPermanentCar(): Promise<driver[]> {
+    return this.driverService.getDriversWithoutPermanentCar();
+  }
 }

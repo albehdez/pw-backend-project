@@ -3,7 +3,7 @@ import { driver_situation } from "../driver_situation/entities/driver_situation.
 import { InjectRepository } from "@nestjs/typeorm";
 import { driver } from "./entities/driver.entitty";
 import { vacation } from "../vacation/entities/vacation.entity";
-import { Repository } from "typeorm";
+import { IsNull, Repository } from "typeorm";
 import { CreateDriverDto, UpdateDriverDto } from "./dto";
 import { car } from "../car/entities";
 import { driver_category } from "../driver_category/entities";
@@ -356,4 +356,15 @@ export class DriverService {
 
     return pdfBuffer;
   }
+
+  async getDriversWithoutPermanentCar(): Promise<driver[]> {
+    let drivers_no_car = await this.driverRepository.find({
+      where: {
+        permanent_car: IsNull(),
+      },
+    });
+    return drivers_no_car;
+  }
+  
+  
 }

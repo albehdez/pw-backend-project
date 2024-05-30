@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { request } from "./entities";
-import { Between, Repository } from "typeorm";
+import { Between, LessThan, MoreThan, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { turistic_group } from "../turistic_group/entities";
 import { programing } from "../programing/entities";
@@ -44,6 +44,26 @@ export class RequestService {
 
   async get_requests(): Promise<request[]> {
     return await this.requestRepository.find({
+      relations: ["turistic_group", "programing"],
+    });
+  }
+
+  async get_solved_requests(): Promise<request[]> {
+    const currentDate = new Date();
+    return await this.requestRepository.find({
+      where: {
+        request_date: LessThan(currentDate),
+      },
+      relations: ["turistic_group", "programing"],
+    });
+  }
+
+  async get_no_solved_requests(): Promise<request[]> {
+    const currentDate = new Date();
+    return await this.requestRepository.find({
+      where: {
+        request_date: MoreThan(currentDate),
+      },
       relations: ["turistic_group", "programing"],
     });
   }

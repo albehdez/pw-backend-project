@@ -26,4 +26,5 @@ export declare class DriverService {
     }): Promise<driver>;
     delete_driver(id: number): Promise<void>;
     generatePDF(): Promise<Buffer>;
+    getDriversWithoutPermanentCar(): Promise<driver[]>;
 }

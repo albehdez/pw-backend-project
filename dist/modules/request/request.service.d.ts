@@ -27,6 +27,8 @@ export declare class RequestService {
     private readonly mailService;
     constructor(requestRepository: Repository<request>, TGRepository: Repository<turistic_group>, programingRepository: Repository<programing>, clientRepository: Repository<user>, transportService: TransportService, carService: CarService, driverService: DriverService, RtransportService: RequestTransportService, roadmapService: RoadmapService, RroadmapService: RoadmapRequestService, mailService: MailService);
     get_requests(): Promise<request[]>;
+    get_solved_requests(): Promise<request[]>;
+    get_no_solved_requests(): Promise<request[]>;
     get_request(id: number): Promise<request>;
     create_request({ group, programing, request_date, client, is_copilot, car, driver, }: CreateRequestDto): Promise<request>;
     add_transport({ car, driver, is_copilot }: CreateTransportDto, id_request: number): Promise<transport>;

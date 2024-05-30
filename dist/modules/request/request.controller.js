@@ -29,6 +29,12 @@ let RequestController = class RequestController {
     get_request(id) {
         return this.requestService.get_request(id);
     }
+    get_solved_requests() {
+        return this.requestService.get_solved_requests();
+    }
+    get_no_solved_requests() {
+        return this.requestService.get_no_solved_requests();
+    }
     create_request(createrequestDto, createtransportDto) {
         return this.requestService.create_request(createrequestDto);
     }
@@ -53,6 +59,18 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], RequestController.prototype, "get_request", null);
+__decorate([
+    (0, common_1.Get)("solved/request"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], RequestController.prototype, "get_solved_requests", null);
+__decorate([
+    (0, common_1.Get)("no/solved/request"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], RequestController.prototype, "get_no_solved_requests", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

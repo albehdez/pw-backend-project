@@ -11,4 +11,5 @@ export declare class DriverController {
     update_driver(id: number, updateDriverDto: UpdateDriverDto): Promise<driver>;
     delete_driver(id: number): Promise<void>;
     generatePDF(res: any): Promise<void>;
+    getDriversWithoutPermanentCar(): Promise<driver[]>;
 }

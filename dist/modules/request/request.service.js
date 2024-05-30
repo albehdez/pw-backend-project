@@ -48,6 +48,24 @@ let RequestService = class RequestService {
             relations: ["turistic_group", "programing"],
         });
     }
+    async get_solved_requests() {
+        const currentDate = new Date();
+        return await this.requestRepository.find({
+            where: {
+                request_date: (0, typeorm_1.LessThan)(currentDate),
+            },
+            relations: ["turistic_group", "programing"],
+        });
+    }
+    async get_no_solved_requests() {
+        const currentDate = new Date();
+        return await this.requestRepository.find({
+            where: {
+                request_date: (0, typeorm_1.MoreThan)(currentDate),
+            },
+            relations: ["turistic_group", "programing"],
+        });
+    }
     async get_request(id) {
         const foundRequest = await this.requestRepository.findOne({
             where: { id },
