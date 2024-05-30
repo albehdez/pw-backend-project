@@ -32,6 +32,7 @@ export class user {
   @JoinColumn({ name: "role_id" })
   role: role;
 
-  @OneToMany(() => request, request => request.user)
+  @OneToMany(() => request, (request) => request.user)
+  @JoinColumn()
   requests: request[];
 }

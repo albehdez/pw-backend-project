@@ -7,46 +7,63 @@ import { roadmap_request } from "src/modules/roadmap_request/entities";
 import { transport } from "src/modules/transport/entities";
 import { turistic_group } from "src/modules/turistic_group/entities";
 import { user } from "src/modules/user/entities";
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity()
 //@Unique([''])
-export class request{
-    @PrimaryGeneratedColumn("increment")
-    id:number;    
+export class request {
+  @PrimaryGeneratedColumn("increment")
+  id: number;
 
-    @ManyToOne(() => turistic_group, (turistic_group) => turistic_group.request, { cascade: true})
-    @JoinColumn({ name: 'id_group' })
-    group: turistic_group;
+  @ManyToOne(() => turistic_group, (turistic_group) => turistic_group.request, {
+    cascade: true,
+  })
+  @JoinColumn({ name: "id_turistic_group" })
+  turistic_group: turistic_group;
 
-    @ManyToOne(() => programing, (programing) => programing.request, { cascade: true})
-    @JoinColumn({ name: 'id_programing' })
-    programing: programing;
+  @ManyToOne(() => programing, (programing) => programing.request, {
+    cascade: true,
+  })
+  @JoinColumn({ name: "id_programing" })
+  programing: programing;
 
-    //@ManyToOne(() => turistic_group, (turistic_group) => turistic_group.request, { cascade: true})
-    //@JoinColumn({ name: 'id_group' })
-   // client: client;
-    @ManyToOne(() => user, (user) => user.requests, { cascade: true})
-    @JoinColumn({ name: 'user_id' })
-    user: user;
+  @ManyToOne(() => user, (user) => user.requests, { cascade: true })
+  @JoinColumn({ name: "user_id" })
+  user: user;
 
-    @Column()
-    request_date: Date;
+  @Column()
+  request_date: Date;
 
-    @OneToMany(() => change, change => change.request)
-    @JoinColumn({name:"change_id"})
-    change: change[];
-    
-    @ManyToMany(() => roadmap, roadmap => roadmap.requests)
-    roadmaps: roadmap[];
+  @OneToMany(() => change, (change) => change.request)
+  change: change[];
 
-    @OneToMany(() => roadmap_request, roadmap_request => roadmap_request.request)
-    roadmap_request: roadmap_request[];
+  @ManyToMany(() => roadmap, (roadmap) => roadmap.requests)
+  @JoinTable()
+  roadmaps: roadmap[];
 
-    @ManyToMany(() => transport, transport => transport.request)
-    transport: transport[];
+  @OneToMany(
+    () => roadmap_request,
+    (roadmap_request) => roadmap_request.request
+  )
+  roadmap_request: roadmap_request[];
 
-    @OneToMany(() => request_transport, request_transport => request_transport.request)
-    request_transport: request_transport[];
+  @ManyToMany(() => transport, (transport) => transport.request)
+  @JoinTable()
+  transport: transport[];
+
+  @OneToMany(
+    () => request_transport,
+    (request_transport) => request_transport.request,
+    { onDelete: "CASCADE" }
+  )
+  request_transport: request_transport[];
 }
-

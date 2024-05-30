@@ -9,14 +9,13 @@ import { user } from "../user/entities";
 import { Role } from "../common/enums/role.enum";
 import { TransportService } from "../transport/transport.service";
 import { RequestTransportService } from "../request_transport/request_transport.service";
-import { CreateRequestTransportDto } from "../request_transport/dto";
 import { CarService } from "../car/car.service";
 import { DriverService } from "../driver/driver.service";
 import { CreateTransportDto } from "../transport/dto";
 import { Cron } from "@nestjs/schedule";
 import { RoadmapService } from "../roadmap/roadmap.service";
 import { RoadmapRequestService } from "../roadmap_request/roadmap_request.service";
-import { CreateRoadmapDto } from "../roadmap/dto";
+import { transport } from "../transport/entities";
 
 @Injectable()
 export class RequestService {
@@ -54,13 +53,19 @@ export class RequestService {
     return foundRequest;
   }
 
-  async create_request(
-    { group, programing, request_date, client }: CreateRequestDto,
-    { is_copilot, car, driver }: CreateTransportDto
-  ): Promise<request> {
+  async create_request({
+    group,
+    programing,
+    request_date,
+    client,
+    is_copilot,
+    car,
+    driver,
+  }: CreateRequestDto): Promise<request> {
     if (client) {
       var foundClient = await this.clientRepository.findOne({
         where: { id: client.id },
+        relations: ["role"],
       });
       if (!foundClient) {
         throw new NotFoundException(
@@ -84,7 +89,6 @@ export class RequestService {
         );
       }
     }
-
     if (programing) {
       var foundPrograming = await this.programingRepository.findOne({
         where: { id: programing.id },
@@ -96,6 +100,23 @@ export class RequestService {
       }
     }
 
+    const newRequest = this.requestRepository.create({
+      turistic_group: foundGroup,
+      programing: foundPrograming,
+      request_date,
+      user: foundClient,
+    });
+    const savedRequest = await this.requestRepository.save(newRequest);
+
+    this.add_transport({ car, driver, is_copilot }, newRequest.id);
+
+    return savedRequest;
+  }
+
+  async add_transport(
+    { car, driver, is_copilot }: CreateTransportDto,
+    id_request: number
+  ): Promise<transport> {
     const Ncar = this.carService.get_car(car.id);
     const Ndriver = this.driverService.get_driver(driver.id);
     const transport = this.transportService.create_transport({
@@ -103,20 +124,14 @@ export class RequestService {
       driver: await Ndriver,
       is_copilot,
     });
-
-    const newRequest = this.requestRepository.create({
-      group: foundGroup,
-      programing: foundPrograming,
-      request_date,
-    });
-    const savedRequest = await this.requestRepository.save(newRequest);
+    const Request = await this.get_request(id_request);
 
     this.RtransportService.create_request_trasnport({
-      request: newRequest,
+      request: Request,
       trasnport: await transport,
     });
 
-    return savedRequest;
+    return transport;
   }
 
   async update_request(
@@ -142,7 +157,7 @@ export class RequestService {
           `Turistic Group whith id ${group.id} not found`
         );
       }
-      requestUpdate.group = group_u;
+      requestUpdate.turistic_group = group_u;
     }
 
     if (programing) {
@@ -168,7 +183,6 @@ export class RequestService {
 
   async delete_request(id: number): Promise<void> {
     const requestdelete = await this.get_request(id);
-
     if (!requestdelete) {
       throw new NotFoundException(`Request with id ${id} not found`);
     }

@@ -11,8 +11,18 @@ import { transport } from '../transport/entities';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([driver,driver_situation,driver_category,vacation,car,transport])],
+  imports: [
+    TypeOrmModule.forFeature([
+      driver,
+      driver_situation,
+      driver_category,
+      vacation,
+      car,
+      transport,
+    ]),
+  ],
   controllers: [DriverController],
-  providers: [DriverService]
+  providers: [DriverService],
+  exports: [DriverService]
 })
 export class DriverModule {}

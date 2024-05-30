@@ -10,13 +10,9 @@ export class UpdateRequestDto{
     @IsObject()
     programing: Partial<programing>;
 
-    //@IsObject()
-   //client: Partial<client>;
-
     @IsNotEmpty()
     @IsDate()
     request_date: Date;
 
-    @IsObject()
-    client: Partial<user>;
+    
 }

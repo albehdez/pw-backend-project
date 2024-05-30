@@ -39,5 +39,6 @@ export class transport {
     () => request_transport,
     (request_transport) => request_transport.request
   )
+  @JoinColumn()
   request_transport: request_transport[];
 }

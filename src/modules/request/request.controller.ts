@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from "@nestjs/common";
 import { RequestService } from "./request.service";
 import { request } from "./entities";
 import { CreateProgramingDto } from "../programing/dto";
@@ -27,13 +35,10 @@ export class RequestController {
     @Body() createrequestDto: CreateRequestDto,
     createtransportDto: CreateTransportDto
   ): Promise<request> {
-    return this.requestService.create_request(
-      createrequestDto,
-      createtransportDto
-    );
+    return this.requestService.create_request(createrequestDto);
   }
 
-  @Post(":id")
+  @Put(":id")
   update_request(
     @Param("id") id: number,
     @Body() updateRequestDto: UpdateRequestDto
