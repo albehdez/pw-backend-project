@@ -234,8 +234,7 @@ export class RequestService {
     await this.requestRepository.remove(requestdelete);
   }
 
-  @Cron("0 0 * *")
-  async handleCron() {
+  async attend_request(): Promise<void> {
     const today = new Date();
 
     const currentYear = today.getFullYear();
@@ -258,26 +257,35 @@ export class RequestService {
       where: {
         request_date: Between(new Date(startOfToday), new Date(endOfToday)),
       },
-      relations: ["request_transport", "request_transport.transport"],
+      relations: [
+        "request_transport",
+        "request_transport.transport",
+        "request_transport.transport.car",
+        "programing",
+      ],
     });
 
     request.forEach(async (req) => {
-      for (const rt of req.request_transport) {
-        const car = await this.carService.get_car(rt.transport.car.id);
-        if (car) {
-          var km_star = car.km_available;
-          var km_end = km_star + req.programing.km_to_travel;
-          var roadmap = await this.roadmapService.create_roadmap({
-            km_start: km_star,
-            km_end: km_end,
-            car,
-          });
-          await this.RroadmapService.create_roadmap_request({
-            request: req,
-            roadmap: roadmap,
-          });
-          await this.carService.update_car_km(car.id, km_end);
+      try {
+        for (const rt of req.request_transport) {
+          const car = await this.carService.get_car(rt.transport.car.id);
+          if (car) {
+            var km_star = car.km_available;
+            var km_end = km_star + req.programing.km_to_travel;
+            var roadmap = await this.roadmapService.create_roadmap({
+              km_start: km_star,
+              km_end: km_end,
+              car,
+            });
+            await this.RroadmapService.create_roadmap_request({
+              request: req,
+              roadmap: roadmap,
+            });
+            await this.carService.update_car_km(car.id, km_end);
+          }
         }
+      } catch (error) {
+      
       }
     });
   }

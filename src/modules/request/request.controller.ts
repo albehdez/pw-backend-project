@@ -40,6 +40,10 @@ export class RequestController {
     return this.requestService.get_no_solved_requests();
   }
 
+  @Put("attend")
+  get_requests_attend(): Promise<void> {
+    return this.requestService.attend_request();
+  }
 
   @Post()
   create_request(
